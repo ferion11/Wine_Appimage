@@ -5,7 +5,8 @@ services:
   - docker
 
 before_install:
-  - wget -nv -c https://www.playonlinux.com/wine/binaries/linux-x86/PlayOnLinux-wine-3.10-linux-x86.pol
+  - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/trusty/main/binary-i386/wine-staging_4.3~trusty_i386.deb
+  - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/trusty/main/binary-i386/wine-staging-i386_4.3~trusty_i386.deb
   - wget -nv -c "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage" -O  appimagetool.AppImage
 
 script:

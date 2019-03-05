@@ -5,8 +5,11 @@ apt update
 apt install -y aptitude wget file bzip2
 
 # Get Wine
-wget -nv -c https://www.playonlinux.com/wine/binaries/linux-x86/PlayOnLinux-wine-3.10-linux-x86.pol
-tar xfj PlayOnLinux-wine-*-linux-x86.pol wineversion/
+wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/trusty/main/binary-i386/wine-staging_4.3~trusty_i386.deb
+wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/trusty/main/binary-i386/wine-staging-i386_4.3~trusty_i386.deb
+
+dpkg -x wine-staging_4.3~trusty_i386.deb wineversion/
+dpkg -x wine-staging-i386_4.3~trusty_i386.deb wineversion/
 
 wineworkdir=(wineversion/*)
 cd $wineworkdir
