@@ -23,12 +23,16 @@ after_success:
   # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wineappimage.arch.latest cp Wine-x86_64.AppImage /tmp/apps/Wine-x86_64-arch.latest.AppImage
   # - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
   # - bash upload.sh apps/*
+  - find . -type f \( -name '*.appimage' -o -name '*.AppImage' \) | grep -e 'wine' -e 'Wine'
+
 
 deploy:
   provider: releases
   api_key:
     secure: SxHa54Jb8f8yT0gxmwmGSXR8Vu6BKkuIJqP0e1+lUZ6t+GWAJt1UcIbxbutx2js1DCPIpW2dlZ7CWC/TXZr7J+Q8zTwtjLNxFiw5j7mFX1iM6+gmTHtDU08pWU2OT/5ZWy5IfvrjNveV3zMuxf2p2LDz7aMfhk/w9wzCTOCgefqWRORW/UtIjFwoYWDz4PlsYvOgBbaiUl1FtxPDMeyG4EjqbO0JdSPsr7mlPiQzAII3XngM0brJ9OcveN2lnuVOo2ycGgacL7zLstl0+O8sP/yTJjkxbZP9Ak3QcAcjlBH1r77l5pmC14d/Om7jt17lRmb0MaIK8JREsupqHwaJoGP1sC1PLVeLR9s45yi2//FvM2eJjr/FU/Pcz5FZZvKSk1eUYukfyO9H/3nvWaPPmMUxDyiCUfFXoe2yS7xWyy2crxtV/zJ+jlG42e3sZlGuNszXIKcjGAJKBKr041KZXt/KyKv6zJw114FEvF6a/TSKQkAbf/F2IAAJ9pVxAbF9+p0obdcNVzvTOceynMikgwTDr1CPrqgVIDjB91U7BORFLiL0qh/5c7vCUp18vcKChka+jGQKDMKqyuUbW4w2fdK8WvtkxM2zXYGtdbqE3gJ17i6PR+bDzStybpgxJGczpX3YawXOolOLtoWvVshKd7mw6rTdAPaIqsWrQ/0qpM0=
-  file: "/tmp/apps/Wine-x86_64-ubuntu.latest.AppImage"
+  file: "$(find . -type f \( -name '*.appimage' -o -name '*.AppImage' \) | grep -e 'wine' -e 'Wine' 2>/dev/null)" 
+
+
   on:
     repo: mmtrt/Wine_Appimage
     branch: test
