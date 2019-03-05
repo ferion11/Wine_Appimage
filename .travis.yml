@@ -23,20 +23,13 @@ after_success:
   # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wineappimage.arch.latest cp Wine-x86_64.AppImage /tmp/apps/Wine-x86_64-arch.latest.AppImage
   # - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
   # - bash upload.sh apps/*
-  - export VERSION=`git rev-parse --short HEAD`
 
-before_deploy:
- - export TRAVIS_TAG=build-$VERSION
- - git tag $TRAVIS_TAG
 deploy:
   provider: releases
   api_key:
     secure: BeOOfqq20XoulInaEcM3aMjCZSjc0lmHefMlm3Uh9nQLebIUtciSyr/zL+d8RjGZZywOFOjelJmhj3prPVwrw9eS2qw1hNeDEDTAX2aUK9l5qHHDSmJH6Kv5XlNBPDvu3DHF4571jOKlVv5Tom12OI2FEdILnFhnKaRctYfsbNuCKeWOAdqgTLMo4dX5Wl1VPvWdaMwfKRwpoXGq6Ges8Ivc7LNfBHiyXpt2w6CmJsS7jwkcW1vRKkq3bYORHzL36n8luPEriWBRjDYdF9vfDeHf4VB/GlhHfmVULFm8zKJLAm8u38weBQ/zMpgA9B6y1vZ5mCS0mqImDkJM0SmJ1DYeoPZYqee/l0AiH2NCGPxxxEnY1CdAzHBEDv7g+cQlq83NqWhmOeH8TnV7zUeHbbg+2lovgj8wCMBrLM7Ht14pFSF3D3rF3iigd+rQ48UCvpMIb3I2wwmVjcoc5cQDvyzn4uPWdgeh5LHOcMq+dI/SDZc6iYEgzQYkIAZebdVsb8D+xginbmGQlVTdiOoNFOavAFgTZOPDUFllf2TusR3hBIClXw3v8FSJiPjnPGPzIJNFf66W/gm5B9eIpzEyvgR0jLXcroKFiqlDdJU1WRjWFNa2p2nvyYge5hKr4bvTSFE4gyt1GxOnpr/Oq2kvH0qkx5GbvZLlo1y5ylZT6vE=
-  file:
-   - $TRAVIS_BUILD_DIR/Wine-*.AppImage*
+  file: /tmp/apps/Wine-x86_64-ubuntu.latest.AppImage
   skip_cleanup: true
-  file_glob: true
-  name: Automatic build
   prerelease: true
   on:
     repo: mmtrt/Wine_Appimage
