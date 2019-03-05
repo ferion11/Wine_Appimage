@@ -15,6 +15,7 @@ wineworkdir=(wineversion/*)
 cd $wineworkdir
 
 # Add a dependency library, such as freetype font library
+mkdir bin
 wget -nv -c https://github.com/Hackerl/Wine_Appimage/releases/download/v0.9/libhookexecv.so -O bin/libhookexecv.so
 wget -nv -c https://github.com/Hackerl/Wine_Appimage/releases/download/v0.9/wine-preloader_hook -O bin/wine-preloader_hook
 
