@@ -23,7 +23,7 @@ chmod +x bin/wine-preloader_hook
 pkgcachedir='/tmp/.winedeploycache'
 mkdir -p $pkgcachedir
 
-aptitude -y -d -o dir::cache::archives="$pkgcachedir" install libwine:i386
+aptitude -y -d -o dir::cache::archives="$pkgcachedir" install libwine:i386 winetricks
 
 find $pkgcachedir -name '*deb' ! -name 'libwine*' -exec dpkg -x {} . \;
 
