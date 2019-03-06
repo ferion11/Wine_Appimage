@@ -11,6 +11,9 @@ wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i3
 dpkg -x wine-staging_4.3~bionic_i386.deb wineversion/
 dpkg -x wine-staging-i386_4.3~bionic_i386.deb wineversion/
 
+cp -r "wineversion/opt/wine-staging/"* "wineversion"
+rm -r "wineversion/opt"
+
 wineworkdir=(wineversion/*)
 cd $wineworkdir
 
