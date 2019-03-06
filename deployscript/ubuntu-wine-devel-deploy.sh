@@ -47,4 +47,4 @@ cp resource/* $wineworkdir
 
 ./appimagetool.AppImage --appimage-extract
 
-export ARCH=x86_64; squashfs-root/AppRun $wineworkdir
+export ARCH=x86_64; squashfs-root/AppRun -g $wineworkdir
