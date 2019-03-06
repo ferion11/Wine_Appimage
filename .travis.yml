@@ -5,19 +5,27 @@ services:
   - docker
 
 before_install:
+  - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-stable_4.3~bionic_i386.deb
+  - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-stable-i386_4.3~bionic_i386.deb
+  - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-devel_4.3~bionic_i386.deb
+  - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-devel-i386_4.3~bionic_i386.deb
   - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-staging_4.3~bionic_i386.deb
   - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-staging-i386_4.3~bionic_i386.deb
   - wget -nv -c "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage" -O  appimagetool.AppImage
 
 script:
-  - docker build . -f deploydocker/Dockerfile.winedeploy.ubuntu.latest -t wineappimage.ubuntu.latest
+  - docker build . -f deploydocker/Dockerfile.wine-stable-deploy.ubuntu.latest -t wine-stable-appimage.ubuntu.latest
+  - docker build . -f deploydocker/Dockerfile.wine-devel-deploy.ubuntu.latest -t wine-devel-appimage.ubuntu.latest
+  - docker build . -f deploydocker/Dockerfile.wine-staging-deploy.ubuntu.latest -t wine-staging-appimage.ubuntu.latest
   # - docker build . -f deploydocker/Dockerfile.winedeploy.debian.buster -t wineappimage.debian.buster
   # - docker build . -f deploydocker/Dockerfile.winedeploy.debian.stretch -t wineappimage.debian.stretch
   # - docker build . -f deploydocker/Dockerfile.winedeploy.arch.latest -t wineappimage.arch.latest
 
 after_success:
   - mkdir apps
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wineappimage.ubuntu.latest cp Wine-x86_64.AppImage /tmp/apps/Wine-x86_64-ubuntu.latest.AppImage
+  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-stable-appimage.ubuntu.latest cp Wine-x86_64.AppImage /tmp/apps/Wine-stable-x86_64-ubuntu.latest.AppImage
+  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-devel-appimage.ubuntu.latest cp Wine-x86_64.AppImage /tmp/apps/Wine-devel-x86_64-ubuntu.latest.AppImage
+  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.ubuntu.latest cp Wine-x86_64.AppImage /tmp/apps/Wine-staging-x86_64-ubuntu.latest.AppImage
   # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wineappimage.debian.buster cp Wine-x86_64.AppImage /tmp/apps/Wine-x86_64-debian.buster.AppImage
   # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wineappimage.debian.stretch cp Wine-x86_64.AppImage /tmp/apps/Wine-x86_64-debian.stretch.AppImage
   # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wineappimage.arch.latest cp Wine-x86_64.AppImage /tmp/apps/Wine-x86_64-arch.latest.AppImage
