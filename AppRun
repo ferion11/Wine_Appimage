@@ -16,4 +16,8 @@ export FONTCONFIG_PATH="$HERE/etc/fonts"
 #LD
 export WINELDLIBRARY="$HERE/lib/ld-linux.so.2"
 
-LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$HERE/bin/wine" "$@" | cat
+if [ -n "$*" ] ; then
+    LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$HERE/bin/$@" | cat
+else
+    LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$HERE/bin/wine" "$@" | cat
+fi
