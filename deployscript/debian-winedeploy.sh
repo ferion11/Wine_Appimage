@@ -13,6 +13,7 @@ dpkg -x wine-staging-i386_4.3~bionic_i386.deb wineversion/
 
 cp -r "wineversion/opt/"* "wineversion"
 rm -r "wineversion/opt"
+rm -rf "wineversion/usr"
 
 wineworkdir=(wineversion/*)
 cd $wineworkdir
