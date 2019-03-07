@@ -3,4 +3,4 @@ FROM debian:stretch
 COPY . /srv/wineappimage
 
 WORKDIR /srv/wineappimage
-RUN /srv/wineappimage/deployscript/debian-winedeploy.sh
+RUN /srv/wineappimage/deployscript/stretch-wine-stable-deploy.sh

@@ -3,4 +3,4 @@ FROM ubuntu
 COPY . /srv/wineappimage
 
 WORKDIR /srv/wineappimage
-RUN /srv/wineappimage/deployscript/ubuntu-wine-stable-deploy.sh
+RUN /srv/wineappimage/deployscript/bionic-wine-staging-deploy.sh

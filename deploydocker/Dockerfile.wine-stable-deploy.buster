@@ -3,4 +3,4 @@ FROM debian:buster
 COPY . /srv/wineappimage
 
 WORKDIR /srv/wineappimage
-RUN /srv/wineappimage/deployscript/debian-winedeploy.sh
+RUN /srv/wineappimage/deployscript/buster-wine-stable-deploy.sh
