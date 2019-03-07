@@ -49,4 +49,4 @@ cp resource/* $wineworkdir
 
 export ARCH=x86_64; squashfs-root/AppRun -g $wineworkdir
 
-ls -l
+mv Wine-${ARCH}.AppImage Wine-stable-x86_64-ubuntu.latest.AppImage

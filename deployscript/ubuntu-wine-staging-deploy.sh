@@ -48,3 +48,5 @@ cp resource/* $wineworkdir
 ./appimagetool.AppImage --appimage-extract
 
 export ARCH=x86_64; squashfs-root/AppRun -g $wineworkdir
+
+mv Wine-${ARCH}.AppImage Wine-staging-x86_64-ubuntu.latest.AppImage
