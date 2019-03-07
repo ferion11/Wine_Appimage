@@ -46,4 +46,4 @@ cp resource/* $wineworkdir
 
 ./appimagetool.AppImage --appimage-extract
 
-export ARCH=x86_64; squashfs-root/AppRun -v $wineworkdir -u 'gh-releases-zsync|mmtrt|Wine_Appimage|continuous|Wine-x86_64.AppImage.zsync'
+export ARCH=x86_64; squashfs-root/AppRun -v $wineworkdir -u 'gh-releases-zsync|mmtrt|Wine_Appimage|continuous|Wine-staging-x86_64-ubuntu.latest.AppImage.zsync'
