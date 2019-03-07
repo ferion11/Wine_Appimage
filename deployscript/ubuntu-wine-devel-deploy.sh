@@ -2,7 +2,7 @@
 # Pre install
 dpkg --add-architecture i386
 apt update
-apt install -y aptitude wget file bzip2
+apt install -y aptitude wget file bzip2 fuse
 
 # Get Wine
 wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-devel_4.3~bionic_i386.deb
