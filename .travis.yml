@@ -23,9 +23,9 @@ script:
 
 after_success:
   - mkdir apps
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-stable-appimage.ubuntu.latest cp Wine-*x86_64*.AppImage* /tmp/apps
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-devel-appimage.ubuntu.latest cp Wine-*x86_64*.AppImage* /tmp/apps
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.ubuntu.latest cp Wine-*x86_64*.AppImage* /tmp/apps
+  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-stable-appimage.ubuntu.latest cp Wine-x86_64.AppImage /tmp/apps/Wine-stable-x86_64-ubuntu.latest.AppImage && Wine-x86_64.AppImage.zsync /tmp/apps/Wine-stable-x86_64-ubuntu.latest.AppImage.zsync
+  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-devel-appimage.ubuntu.latest cp Wine-x86_64.AppImage /tmp/apps/Wine-devel-x86_64-ubuntu.latest.AppImage && cp Wine-x86_64.AppImage.zsync /tmp/apps/Wine-devel-x86_64-ubuntu.latest.AppImage.zsync
+  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.ubuntu.latest cp Wine-x86_64.AppImage /tmp/apps/Wine-staging-x86_64-ubuntu.latest.AppImage && Wine-x86_64.AppImage.zsync /tmp/apps/Wine-staging-x86_64-ubuntu.latest.AppImage.zsync
   # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wineappimage.debian.buster cp Wine-x86_64.AppImage /tmp/apps/Wine-x86_64-debian.buster.AppImage
   # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wineappimage.debian.stretch cp Wine-x86_64.AppImage /tmp/apps/Wine-x86_64-debian.stretch.AppImage
   # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wineappimage.arch.latest cp Wine-x86_64.AppImage /tmp/apps/Wine-x86_64-arch.latest.AppImage
