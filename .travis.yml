@@ -14,20 +14,20 @@ before_install:
   - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-staging-i386_4.3~bionic_i386.deb
 
   # debian buster
-  - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/buster/main/binary-i386/wine-stable_4.0~buster_i386.deb
-  - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/buster/main/binary-i386/wine-stable-i386_4.0~buster_i386.deb
-  - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/buster/main/binary-i386/wine-devel_4.3~buster_i386.deb
-  - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/buster/main/binary-i386/wine-devel-i386_4.3~buster_i386.deb
-  - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/buster/main/binary-i386/wine-staging_4.3~buster_i386.deb
-  - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/buster/main/binary-i386/wine-staging-i386_4.3~buster_i386.deb
+  # - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/buster/main/binary-i386/wine-stable_4.0~buster_i386.deb
+  # - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/buster/main/binary-i386/wine-stable-i386_4.0~buster_i386.deb
+  # - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/buster/main/binary-i386/wine-devel_4.3~buster_i386.deb
+  # - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/buster/main/binary-i386/wine-devel-i386_4.3~buster_i386.deb
+  # - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/buster/main/binary-i386/wine-staging_4.3~buster_i386.deb
+  # - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/buster/main/binary-i386/wine-staging-i386_4.3~buster_i386.deb
 
   # debian stretch
-  - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/stretch/main/binary-i386/wine-stable_4.0~stretch_i386.deb
-  - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/stretch/main/binary-i386/wine-stable-i386_4.0~stretch_i386.deb
-  - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/stretch/main/binary-i386/wine-devel_4.3~stretch_i386.deb
-  - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/stretch/main/binary-i386/wine-devel-i386_4.3~stretch_i386.deb
-  - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/stretch/main/binary-i386/wine-staging_4.3~stretch_i386.deb
-  - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/stretch/main/binary-i386/wine-staging-i386_4.3~stretch_i386.deb
+  # - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/stretch/main/binary-i386/wine-stable_4.0~stretch_i386.deb
+  # - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/stretch/main/binary-i386/wine-stable-i386_4.0~stretch_i386.deb
+  # - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/stretch/main/binary-i386/wine-devel_4.3~stretch_i386.deb
+  # - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/stretch/main/binary-i386/wine-devel-i386_4.3~stretch_i386.deb
+  # - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/stretch/main/binary-i386/wine-staging_4.3~stretch_i386.deb
+  # - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/stretch/main/binary-i386/wine-staging-i386_4.3~stretch_i386.deb
 
   # appimagetool
   - wget -nv -c "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage" -O  appimagetool.AppImage
