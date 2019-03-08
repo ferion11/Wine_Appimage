@@ -39,14 +39,14 @@ script:
   - docker build . -f deploydocker/Dockerfile.wine-staging-deploy.bionic -t wine-staging-appimage.bionic
 
   # debian buster
-  - docker build . -f deploydocker/Dockerfile.wine-stable-deploy.buster -t wine-stable-appimage.buster
-  - docker build . -f deploydocker/Dockerfile.wine-devel-deploy.buster -t wine-devel-appimage.buster
-  - docker build . -f deploydocker/Dockerfile.wine-staging-deploy.buster -t wine-staging-appimage.buster
+  # - docker build . -f deploydocker/Dockerfile.wine-stable-deploy.buster -t wine-stable-appimage.buster
+  # - docker build . -f deploydocker/Dockerfile.wine-devel-deploy.buster -t wine-devel-appimage.buster
+  # - docker build . -f deploydocker/Dockerfile.wine-staging-deploy.buster -t wine-staging-appimage.buster
 
   # debian stretch
-  - docker build . -f deploydocker/Dockerfile.wine-stable-deploy.stretch -t wine-stable-appimage.stretch
-  - docker build . -f deploydocker/Dockerfile.wine-devel-deploy.stretch -t wine-devel-appimage.stretch
-  - docker build . -f deploydocker/Dockerfile.wine-staging-deploy.stretch -t wine-staging-appimage.stretch
+  # - docker build . -f deploydocker/Dockerfile.wine-stable-deploy.stretch -t wine-stable-appimage.stretch
+  # - docker build . -f deploydocker/Dockerfile.wine-devel-deploy.stretch -t wine-devel-appimage.stretch
+  # - docker build . -f deploydocker/Dockerfile.wine-staging-deploy.stretch -t wine-staging-appimage.stretch
 
   # archlinux
   # - docker build . -f deploydocker/Dockerfile.winedeploy.arch.latest -t wineappimage.arch.latest
@@ -63,20 +63,20 @@ after_success:
   - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.bionic cp Wine-x86_64.AppImage.zsync /tmp/apps/Wine-staging-x86_64-bionic.AppImage.zsync
 
   # debian buster
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-stable-appimage.buster cp Wine-x86_64.AppImage /tmp/apps/Wine-stable-x86_64-buster.AppImage
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-stable-appimage.buster cp Wine-x86_64.AppImage.zsync /tmp/apps/Wine-stable-x86_64-buster.AppImage.zsync
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-devel-appimage.buster cp Wine-x86_64.AppImage /tmp/apps/Wine-devel-x86_64-buster.AppImage
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-devel-appimage.buster cp Wine-x86_64.AppImage.zsync /tmp/apps/Wine-devel-x86_64-buster.AppImage.zsync
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.buster cp Wine-x86_64.AppImage /tmp/apps/Wine-staging-x86_64-buster.AppImage
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.buster cp Wine-x86_64.AppImage.zsync /tmp/apps/Wine-staging-x86_64-buster.AppImage.zsync
+  # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-stable-appimage.buster cp Wine-x86_64.AppImage /tmp/apps/Wine-stable-x86_64-buster.AppImage
+  # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-stable-appimage.buster cp Wine-x86_64.AppImage.zsync /tmp/apps/Wine-stable-x86_64-buster.AppImage.zsync
+  # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-devel-appimage.buster cp Wine-x86_64.AppImage /tmp/apps/Wine-devel-x86_64-buster.AppImage
+  # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-devel-appimage.buster cp Wine-x86_64.AppImage.zsync /tmp/apps/Wine-devel-x86_64-buster.AppImage.zsync
+  # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.buster cp Wine-x86_64.AppImage /tmp/apps/Wine-staging-x86_64-buster.AppImage
+  # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.buster cp Wine-x86_64.AppImage.zsync /tmp/apps/Wine-staging-x86_64-buster.AppImage.zsync
 
   # debian stretch
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-stable-appimage.stretch cp Wine-x86_64.AppImage /tmp/apps/Wine-stable-x86_64-stretch.AppImage
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-stable-appimage.stretch cp Wine-x86_64.AppImage.zsync /tmp/apps/Wine-stable-x86_64-stretch.AppImage.zsync
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-devel-appimage.stretch cp Wine-x86_64.AppImage /tmp/apps/Wine-devel-x86_64-stretch.AppImage
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-devel-appimage.stretch cp Wine-x86_64.AppImage.zsync /tmp/apps/Wine-devel-x86_64-stretch.AppImage.zsync
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.stretch cp Wine-x86_64.AppImage /tmp/apps/Wine-staging-x86_64-stretch.AppImage
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.stretch cp Wine-x86_64.AppImage.zsync /tmp/apps/Wine-staging-x86_64-stretch.AppImage.zsync
+  # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-stable-appimage.stretch cp Wine-x86_64.AppImage /tmp/apps/Wine-stable-x86_64-stretch.AppImage
+  # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-stable-appimage.stretch cp Wine-x86_64.AppImage.zsync /tmp/apps/Wine-stable-x86_64-stretch.AppImage.zsync
+  # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-devel-appimage.stretch cp Wine-x86_64.AppImage /tmp/apps/Wine-devel-x86_64-stretch.AppImage
+  # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-devel-appimage.stretch cp Wine-x86_64.AppImage.zsync /tmp/apps/Wine-devel-x86_64-stretch.AppImage.zsync
+  # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.stretch cp Wine-x86_64.AppImage /tmp/apps/Wine-staging-x86_64-stretch.AppImage
+  # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.stretch cp Wine-x86_64.AppImage.zsync /tmp/apps/Wine-staging-x86_64-stretch.AppImage.zsync
 
   # archlinux
   # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wineappimage.arch.latest cp Wine-x86_64.AppImage /tmp/apps/Wine-x86_64-arch.latest.AppImage
