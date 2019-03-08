@@ -11,7 +11,7 @@ mkdir wineversion
 tar xfv PlayOnLinux-wine-* wineversion/
 ls -al
 
-wineworkdir=(wineversion/*)
+wineworkdir=(wineversion)
 cd $wineworkdir
 
 # Add a dependency library, such as freetype font library
