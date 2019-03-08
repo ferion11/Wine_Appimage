@@ -6,8 +6,8 @@ pacman -Syy
 pacman -S --noconfirm wget file pacman-contrib
 
 # Get Wine
-wget -nv -c https://www.playonlinux.com/wine/binaries/linux-x86/PlayOnLinux-wine-3.10-linux-x86.pol
-tar xfj PlayOnLinux-wine-*-linux-x86.pol wineversion/
+wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.3-upstream-linux-x86.tar.gz
+tar xfv PlayOnLinux-wine-* wineversion/
 
 wineworkdir=(wineversion/*)
 cd $wineworkdir
@@ -53,7 +53,11 @@ export FONTCONFIG_PATH="$HERE/etc/fonts"
 #LD
 export WINELDLIBRARY="$HERE/usr/lib/ld-linux.so.2"
 
-LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$HERE/bin/wine" "$@" | cat
+if [ -n "$*" ] ; then
+    LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$HERE/bin/$@" | cat
+else
+    LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$HERE/bin/wine" "$@" | cat
+fi
 EOF
 
 chmod +x AppRun

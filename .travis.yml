@@ -29,6 +29,9 @@ before_install:
   # - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/stretch/main/binary-i386/wine-staging_4.3~stretch_i386.deb
   # - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/stretch/main/binary-i386/wine-staging-i386_4.3~stretch_i386.deb
 
+  # archlinux
+  - wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.3-upstream-linux-x86.tar.gz
+
   # appimagetool
   - wget -nv -c "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage" -O  appimagetool.AppImage
 
@@ -49,7 +52,7 @@ script:
   # - docker build . -f deploydocker/Dockerfile.wine-staging-deploy.stretch -t wine-staging-appimage.stretch
 
   # archlinux
-  # - docker build . -f deploydocker/Dockerfile.winedeploy.arch.latest -t wineappimage.arch.latest
+  - docker build . -f deploydocker/Dockerfile.winedeploy.arch.latest -t wineappimage.arch.latest
 
 after_success:
   - mkdir apps
@@ -79,8 +82,9 @@ after_success:
   # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.stretch cp Wine-x86_64.AppImage.zsync /tmp/apps/Wine-staging-x86_64-stretch.AppImage.zsync
 
   # archlinux
-  # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wineappimage.arch.latest cp Wine-x86_64.AppImage /tmp/apps/Wine-x86_64-arch.latest.AppImage
-  
+  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wineappimage.arch.latest cp Wine-x86_64.AppImage /tmp/apps/Wine-x86_64-arch.latest.AppImage
+  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wineappimage.arch.latest cp Wine-x86_64.AppImage.zsync /tmp/apps/Wine-x86_64-arch.latest.AppImage.zsync
+
   # uploadtool
   - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
   - bash upload.sh apps/*
