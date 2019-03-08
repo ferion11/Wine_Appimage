@@ -8,12 +8,10 @@ before_install:
   # ubuntu bionic
   - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-stable_4.0~bionic_i386.deb
   - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-stable-i386_4.0~bionic_i386.deb
-  - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/wine-stable_4.0~bionic_amd64.deb
-  - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/wine-stable-amd64_4.0~bionic_amd64.deb
-  # - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-devel_4.3~bionic_i386.deb
-  # - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-devel-i386_4.3~bionic_i386.deb
-  # - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-staging_4.3~bionic_i386.deb
-  # - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-staging-i386_4.3~bionic_i386.deb
+  - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-devel_4.3~bionic_i386.deb
+  - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-devel-i386_4.3~bionic_i386.deb
+  - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-staging_4.3~bionic_i386.deb
+  - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-staging-i386_4.3~bionic_i386.deb
 
   # debian buster
   # - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/buster/main/binary-i386/wine-stable_4.0~buster_i386.deb
@@ -32,7 +30,7 @@ before_install:
   # - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/stretch/main/binary-i386/wine-staging-i386_4.3~stretch_i386.deb
 
   # archlinux
-  # - wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.3-upstream-linux-x86.tar.gz
+  - wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.3-upstream-linux-x86.tar.gz
 
   # appimagetool
   - wget -nv -c "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage" -O  appimagetool.AppImage
@@ -40,8 +38,8 @@ before_install:
 script:
   # ubuntu bionic
   - docker build . -f deploydocker/Dockerfile.wine-stable-deploy.bionic -t wine-stable-appimage.bionic
-  # - docker build . -f deploydocker/Dockerfile.wine-devel-deploy.bionic -t wine-devel-appimage.bionic
-  # - docker build . -f deploydocker/Dockerfile.wine-staging-deploy.bionic -t wine-staging-appimage.bionic
+  - docker build . -f deploydocker/Dockerfile.wine-devel-deploy.bionic -t wine-devel-appimage.bionic
+  - docker build . -f deploydocker/Dockerfile.wine-staging-deploy.bionic -t wine-staging-appimage.bionic
 
   # debian buster
   # - docker build . -f deploydocker/Dockerfile.wine-stable-deploy.buster -t wine-stable-appimage.buster
@@ -54,7 +52,7 @@ script:
   # - docker build . -f deploydocker/Dockerfile.wine-staging-deploy.stretch -t wine-staging-appimage.stretch
 
   # archlinux
-  # - docker build . -f deploydocker/Dockerfile.winedeploy.arch.latest -t wineappimage.arch.latest
+  - docker build . -f deploydocker/Dockerfile.winedeploy.arch.latest -t wineappimage.arch.latest
 
 after_success:
   - mkdir apps
@@ -62,10 +60,10 @@ after_success:
   # ubuntu bionic
   - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-stable-appimage.bionic cp Wine-stable-x86_64-bionic.AppImage /tmp/apps
   - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-stable-appimage.bionic cp Wine-stable-x86_64-bionic.AppImage.zsync /tmp/apps
-  # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-devel-appimage.bionic cp Wine-devel-x86_64-bionic.AppImage /tmp/apps
-  # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-devel-appimage.bionic cp Wine-devel-x86_64-bionic.AppImage.zsync /tmp/apps
-  # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.bionic cp Wine-staging-x86_64-bionic.AppImage /tmp/apps
-  # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.bionic cp Wine-staging-x86_64-bionic.AppImage.zsync /tmp/apps
+  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-devel-appimage.bionic cp Wine-devel-x86_64-bionic.AppImage /tmp/apps
+  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-devel-appimage.bionic cp Wine-devel-x86_64-bionic.AppImage.zsync /tmp/apps
+  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.bionic cp Wine-staging-x86_64-bionic.AppImage /tmp/apps
+  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.bionic cp Wine-staging-x86_64-bionic.AppImage.zsync /tmp/apps
 
   # debian buster
   # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-stable-appimage.buster cp Wine-x86_64.AppImage /tmp/apps/Wine-stable-x86_64-buster.AppImage
@@ -84,8 +82,8 @@ after_success:
   # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.stretch cp Wine-x86_64.AppImage.zsync /tmp/apps/Wine-staging-x86_64-stretch.AppImage.zsync
 
   # archlinux
-  # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wineappimage.arch.latest cp Wine-x86_64-arch.latest.AppImage /tmp/apps
-  # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wineappimage.arch.latest cp Wine-x86_64-arch.latest.AppImage.zsync /tmp/apps
+  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wineappimage.arch.latest cp Wine-x86_64-arch.latest.AppImage /tmp/apps
+  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wineappimage.arch.latest cp Wine-x86_64-arch.latest.AppImage.zsync /tmp/apps
 
   # uploadtool
   - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
