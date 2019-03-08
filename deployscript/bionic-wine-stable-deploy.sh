@@ -7,9 +7,13 @@ apt install -y aptitude wget file bzip2
 # Get Wine
 wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-stable_4.0~bionic_i386.deb
 wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-stable-i386_4.0~bionic_i386.deb
+wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/wine-stable_4.0~bionic_amd64.deb
+wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/wine-stable-amd64_4.0~bionic_amd64.deb
 
 dpkg -x wine-stable_4.0~bionic_i386.deb wineversion/
 dpkg -x wine-stable-i386_4.0~bionic_i386.deb wineversion/
+dpkg -x wine-stable_4.0~bionic_amd64.deb wineversion/
+dpkg -x wine-stable-amd64_4.0~bionic_amd64.deb wineversion/
 
 cp -r "wineversion/opt/"* "wineversion"
 rm -r "wineversion/opt"
