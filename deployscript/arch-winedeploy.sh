@@ -7,6 +7,7 @@ pacman -S --noconfirm wget file pacman-contrib tar grep
 
 # Get Wine
 wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.3-upstream-linux-x86.tar.gz
+mkdir wineversion
 tar xfv PlayOnLinux-wine-* wineversion/
 
 wineworkdir=(wineversion/*)
@@ -15,6 +16,7 @@ cd $wineworkdir
 # Add a dependency library, such as freetype font library
 dependencys=$(pactree -s -u wine |grep lib32 | xargs)
 
+mkdir bin
 wget -nv -c https://github.com/Hackerl/Wine_Appimage/releases/download/v0.9/libhookexecv.so -O bin/libhookexecv.so
 wget -nv -c https://github.com/Hackerl/Wine_Appimage/releases/download/v0.9/wine-preloader_hook -O bin/wine-preloader_hook
 
