@@ -9,6 +9,7 @@ pacman -S --noconfirm wget file pacman-contrib tar grep
 wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.3-upstream-linux-x86.tar.gz
 mkdir wineversion
 tar xfv PlayOnLinux-wine-* wineversion/
+ls -al
 
 wineworkdir=(wineversion/*)
 cd $wineworkdir
