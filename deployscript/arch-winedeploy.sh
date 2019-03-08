@@ -73,4 +73,4 @@ ls -al $wineworkdir
 
 ./appimagetool.AppImage --appimage-extract
 
-export ARCH=x86_64; squashfs-root/AppRun -v $wineworkdir -u 'gh-releases-zsync|mmtrt|Wine_Appimage|continuous|Wine*arch*.AppImage.zsync'
+export ARCH=x86_64; squashfs-root/AppRun -v $wineworkdir -u 'gh-releases-zsync|mmtrt|Wine_Appimage|continuous|Wine*arch*.AppImage.zsync' Wine-${ARCH}-arch.latest.AppImage

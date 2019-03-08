@@ -58,12 +58,12 @@ after_success:
   - mkdir apps
 
   # ubuntu bionic
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-stable-appimage.bionic cp Wine-x86_64.AppImage /tmp/apps/Wine-stable-x86_64-bionic.AppImage
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-stable-appimage.bionic cp Wine-x86_64.AppImage.zsync /tmp/apps/Wine-stable-x86_64-bionic.AppImage.zsync
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-devel-appimage.bionic cp Wine-x86_64.AppImage /tmp/apps/Wine-devel-x86_64-bionic.AppImage
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-devel-appimage.bionic cp Wine-x86_64.AppImage.zsync /tmp/apps/Wine-devel-x86_64-bionic.AppImage.zsync
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.bionic cp Wine-x86_64.AppImage /tmp/apps/Wine-staging-x86_64-bionic.AppImage
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.bionic cp Wine-x86_64.AppImage.zsync /tmp/apps/Wine-staging-x86_64-bionic.AppImage.zsync
+  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-stable-appimage.bionic cp Wine-stable-x86_64-bionic.AppImage /tmp/apps
+  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-stable-appimage.bionic cp Wine-stable-x86_64-bionic.AppImage.zsync /tmp/apps
+  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-devel-appimage.bionic cp Wine-devel-x86_64-bionic.AppImage /tmp/apps
+  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-devel-appimage.bionic cp Wine-devel-x86_64-bionic.AppImage.zsync /tmp/apps
+  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.bionic cp Wine-staging-x86_64-bionic.AppImage /tmp/apps
+  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.bionic cp Wine-staging-x86_64-bionic.AppImage.zsync /tmp/apps
 
   # debian buster
   # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-stable-appimage.buster cp Wine-x86_64.AppImage /tmp/apps/Wine-stable-x86_64-buster.AppImage
@@ -82,8 +82,8 @@ after_success:
   # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.stretch cp Wine-x86_64.AppImage.zsync /tmp/apps/Wine-staging-x86_64-stretch.AppImage.zsync
 
   # archlinux
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wineappimage.arch.latest cp Wine-x86_64.AppImage /tmp/apps/Wine-x86_64-arch.latest.AppImage
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wineappimage.arch.latest cp Wine-x86_64.AppImage.zsync /tmp/apps/Wine-x86_64-arch.latest.AppImage.zsync
+  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wineappimage.arch.latest cp Wine-x86_64-arch.latest.AppImage /tmp/apps
+  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wineappimage.arch.latest cp Wine-x86_64-arch.latest.AppImage.zsync /tmp/apps
 
   # uploadtool
   - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
