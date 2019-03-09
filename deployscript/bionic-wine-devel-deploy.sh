@@ -31,7 +31,7 @@ aptitude -y -d -o dir::cache::archives="$pkgcachedir" install libwine:i386 libva
 
 find $pkgcachedir -name '*deb' ! -name 'libwine*' -exec dpkg -x {} . \;
 
-rm -rf $pkgcachedir
+rm -rf $pkgcachedir ; rm -rf lib/x86_64-linux-gnu ; rm -rf usr/lib/x86_64-linux-gnu ; rm -rf share/man ; rm -rf usr/share/doc ; rm -rf usr/share/lintian ; rm -rf var ; rm -rf sbin
 
 # appimage
 cd -
