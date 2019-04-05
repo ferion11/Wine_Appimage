@@ -46,6 +46,6 @@ cp resource/* $wineworkdir
 
 ./appimagetool.AppImage --appimage-extract
 
-export ARCH=x86_64; squashfs-root/AppRun -v $wineworkdir -u 'gh-releases-zsync|mmtrt|Wine_Appimage|continuous|Wine-stable*bionic.AppImage.zsync' Wine-stable-${ARCH}-bionic.AppImage
+export ARCH=x86_64; squashfs-root/AppRun -v $wineworkdir -u 'gh-releases-zsync|mmtrt|Wine_Appimage|continuous|Wine-stable*bionic.AppImage.zsync' Wine-stable-i386-${ARCH}-bionic.AppImage
 
 ls -l
