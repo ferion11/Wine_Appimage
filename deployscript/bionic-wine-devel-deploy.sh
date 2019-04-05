@@ -5,11 +5,11 @@ apt update
 apt install -y aptitude wget file bzip2
 
 # Get Wine
-wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-devel_4.3~bionic_i386.deb
-wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-devel-i386_4.3~bionic_i386.deb
+wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-devel_4.5~bionic_i386.deb
+wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-devel-i386_4.5~bionic_i386.deb
 
-dpkg -x wine-devel_4.3~bionic_i386.deb wineversion/
-dpkg -x wine-devel-i386_4.3~bionic_i386.deb wineversion/
+dpkg -x wine-devel_4.5~bionic_i386.deb wineversion/
+dpkg -x wine-devel-i386_4.5~bionic_i386.deb wineversion/
 
 cp -r "wineversion/opt/"* "wineversion"
 rm -r "wineversion/opt"

@@ -6,7 +6,7 @@ pacman -Syy
 pacman -S --noconfirm wget file pacman-contrib tar grep
 
 # Get Wine
-wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.3-upstream-linux-x86.tar.gz
+wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.5-upstream-linux-x86.tar.gz
 mkdir wineversion
 tar xfv PlayOnLinux-wine-* -C wineversion/
 ls -al

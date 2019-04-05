@@ -5,11 +5,11 @@ apt update
 apt install -y aptitude wget file bzip2
 
 # Get Wine
-wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/buster/main/binary-i386/wine-staging_4.3~buster_i386.deb
-wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/buster/main/binary-i386/wine-staging-i386_4.3~buster_i386.deb
+wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/buster/main/binary-i386/wine-staging_4.5~buster_i386.deb
+wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/buster/main/binary-i386/wine-staging-i386_4.5~buster_i386.deb
 
-dpkg -x wine-staging_4.3~buster_i386.deb wineversion/
-dpkg -x wine-staging-i386_4.3~buster_i386.deb wineversion/
+dpkg -x wine-staging_4.5~buster_i386.deb wineversion/
+dpkg -x wine-staging-i386_4.5~buster_i386.deb wineversion/
 
 cp -r "wineversion/opt/"* "wineversion"
 rm -r "wineversion/opt"
