@@ -93,3 +93,5 @@ branches:
   except:
     - # Do not build tags that we create when we upload to GitHub Releases
     - /^(?i:continuous)$/
+    - /^release-[0-9a-z\-]*/
+    - /^(?i:untagged)-.*$/
