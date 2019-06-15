@@ -10,8 +10,8 @@ before_install:
   - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-stable-i386_4.0.1~bionic_i386.deb
   # - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-devel_4.9~bionic_i386.deb
   # - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-devel-i386_4.9~bionic_i386.deb
-  - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-staging_4.9~bionic_i386.deb
-  - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-staging-i386_4.9~bionic_i386.deb
+  - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-staging_4.10~bionic_i386.deb
+  - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-staging-i386_4.10~bionic_i386.deb
 
   # debian buster
   # - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/buster/main/binary-i386/wine-stable_4.0.1~buster_i386.deb
