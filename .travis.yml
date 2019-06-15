@@ -6,8 +6,8 @@ services:
 
 before_install:
   # ubuntu bionic
-  # - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-stable_4.0.1~bionic_i386.deb
-  # - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-stable-i386_4.0.1~bionic_i386.deb
+  - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-stable_4.0.1~bionic_i386.deb
+  - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-stable-i386_4.0.1~bionic_i386.deb
   # - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-devel_4.9~bionic_i386.deb
   # - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-devel-i386_4.9~bionic_i386.deb
   - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-staging_4.9~bionic_i386.deb
@@ -37,7 +37,7 @@ before_install:
 
 script:
   # ubuntu bionic
-  # - docker build . -f deploydocker/Dockerfile.wine-stable-deploy.bionic -t wine-stable-appimage.bionic
+  - docker build . -f deploydocker/Dockerfile.wine-stable-deploy.bionic -t wine-stable-appimage.bionic
   # - docker build . -f deploydocker/Dockerfile.wine-devel-deploy.bionic -t wine-devel-appimage.bionic
   - docker build . -f deploydocker/Dockerfile.wine-staging-deploy.bionic -t wine-staging-appimage.bionic
 
@@ -58,8 +58,8 @@ after_success:
   - mkdir apps
 
   # ubuntu bionic
-  # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-stable-appimage.bionic cp wine-stable-i386_x86_64-bionic.AppImage /tmp/apps
-  # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-stable-appimage.bionic cp wine-stable-i386_x86_64-bionic.AppImage.zsync /tmp/apps
+  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-stable-appimage.bionic cp wine-stable-i386_x86_64-bionic.AppImage /tmp/apps
+  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-stable-appimage.bionic cp wine-stable-i386_x86_64-bionic.AppImage.zsync /tmp/apps
   # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-devel-appimage.bionic cp wine-devel-i386_x86_64-bionic.AppImage /tmp/apps
   # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-devel-appimage.bionic cp wine-devel-i386_x86_64-bionic.AppImage.zsync /tmp/apps
   - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.bionic cp wine-staging-i386_x86_64-bionic.AppImage /tmp/apps
