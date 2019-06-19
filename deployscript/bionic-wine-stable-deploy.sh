@@ -15,15 +15,14 @@ cp -r "wineversion/opt/"* "wineversion"
 rm -r "wineversion/opt"
 rm -rf "wineversion/usr"
 
+# compile & strip libhookexecv wine-preloader_hook
+gcc -shared -fPIC -m32 -ldl src/libhookexecv.c -o src/libhookexecv.so
+gcc -std=c99 -m32 -static src/preloaderhook.c -o src/wine-preloader_hook
+strip src/libhookexecv.so src/wine-preloader_hook
+chmod +x src/wine-preloader_hook
+
 wineworkdir=(wineversion/*)
 cd $wineworkdir
-
-# compile & strip libhookexecv wine-preloader_hook
-ls -al # for logging purpose
-gcc -shared -fPIC -m32 -ldl "../src/libhookexecv.c" -o "bin/libhookexecv.so"
-gcc -std=c99 -m32 -static "../src/preloaderhook.c" -o "bin/wine-preloader_hook"
-strip bin/libhookexecv.so bin/wine-preloader_hook
-chmod +x bin/wine-preloader_hook
 
 pkgcachedir='/tmp/.winedeploycache'
 mkdir -p $pkgcachedir
@@ -52,9 +51,10 @@ chmod +x appimagetool.AppImage
 
 chmod +x AppRun
 
+cp src/{libhookexecv.so,wine-preloader_hook} $wineworkdir/bin
 cp AppRun $wineworkdir
 cp resource/* $wineworkdir
-
+ls -al $wineworkdir/bin # for logging purpose
 ./appimagetool.AppImage --appimage-extract
 
 export ARCH=x86_64; squashfs-root/AppRun -v $wineworkdir -u 'gh-releases-zsync|mmtrt|Wine_Appimage|continuous|wine-stable*bionic.AppImage.zsync' wine-stable-i386_${ARCH}-bionic.AppImage
