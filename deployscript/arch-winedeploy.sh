@@ -3,8 +3,7 @@
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 
 pacman -Syy
-pacman -S --noconfirm wget file pacman-contrib tar grep gcc lib32-glibc
-
+pacman -S --noconfirm wget file pacman-contrib tar grep gcc lib32-gcc-libs
 # Get Wine
 wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.10-upstream-linux-x86.tar.gz
 mkdir wineversion
