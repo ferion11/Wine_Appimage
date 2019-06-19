@@ -2,7 +2,7 @@
 # Pre install
 dpkg --add-architecture i386
 apt update
-apt install -y aptitude wget file bzip2
+apt install -y aptitude wget file bzip2 gcc-multilib
 
 # Get Wine
 wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-staging_4.10~bionic_i386.deb
@@ -18,10 +18,10 @@ rm -rf "wineversion/usr"
 wineworkdir=(wineversion/*)
 cd $wineworkdir
 
-# Add a dependency library, such as freetype font library
-wget -nv -c https://github.com/Hackerl/Wine_Appimage/releases/download/v0.9/libhookexecv.so -O bin/libhookexecv.so
-wget -nv -c https://github.com/Hackerl/Wine_Appimage/releases/download/v0.9/wine-preloader_hook -O bin/wine-preloader_hook
-
+# compile & strip libhookexecv wine-preloader_hook
+gcc -shared -fPIC -m32 -ldl ../src/libhookexecv.c -o bin/libhookexecv.so
+gcc -std=c99 -m32 -static ../src/preloaderhook.c -o bin/wine-preloader_hook
+strip bin/libhookexecv.so bin/wine-preloader_hook
 chmod +x bin/wine-preloader_hook
 
 pkgcachedir='/tmp/.winedeploycache'
