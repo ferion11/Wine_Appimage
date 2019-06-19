@@ -40,6 +40,9 @@ sed -i -e 's|/usr/lib|/ooo/ooo|g' lib/ld-linux.so.2
 # Remove duplicate (why is it there?)
 rm -f lib/i386-linux-gnu/ld-*.so
 
+# Disable winemenubuilder
+sed -i 's/winemenubuilder.exe -a -r/winemenubuilder.exe -r/g' share/wine/wine.inf
+
 # appimage
 cd -
 
