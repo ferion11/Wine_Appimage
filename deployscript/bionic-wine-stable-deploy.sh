@@ -20,8 +20,8 @@ cd $wineworkdir
 
 # compile & strip libhookexecv wine-preloader_hook
 ls -al # for logging purpose
-gcc -shared -fPIC -m32 -ldl ../src/libhookexecv.c -o bin/libhookexecv.so
-gcc -std=c99 -m32 -static ../src/preloaderhook.c -o bin/wine-preloader_hook
+gcc -shared -fPIC -m32 -ldl "../src/libhookexecv.c" -o "bin/libhookexecv.so"
+gcc -std=c99 -m32 -static "../src/preloaderhook.c" -o "bin/wine-preloader_hook"
 strip bin/libhookexecv.so bin/wine-preloader_hook
 chmod +x bin/wine-preloader_hook
 
