@@ -33,6 +33,13 @@ find $pkgcachedir -name '*deb' ! -name 'libwine*' -exec dpkg -x {} . \;
 
 rm -rf $pkgcachedir ; rm -rf lib/x86_64-linux-gnu ; rm -rf usr/lib/x86_64-linux-gnu ; rm -rf share/man ; rm -rf usr/share/doc ; rm -rf usr/share/lintian ; rm -rf var ; rm -rf sbin ; rm -rf usr/share/man ; rm -rf usr/share/mime ; rm -rf usr/share/pkgconfig ; rm -rf usr/share/wine
 
+# Make absolutely sure it will not load stuff from /lib or /usr
+sed -i -e 's|/usr|/xxx|g' lib/ld-linux.so.2
+sed -i -e 's|/usr/lib|/ooo/ooo|g' lib/ld-linux.so.2
+
+# Remove duplicate (why is it there?)
+rm -f lib/i386-linux-gnu/ld-*.so
+
 # appimage
 cd -
 
