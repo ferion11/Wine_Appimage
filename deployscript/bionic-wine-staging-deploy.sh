@@ -15,14 +15,14 @@ cp -r "wineversion/opt/"* "wineversion"
 rm -r "wineversion/opt"
 rm -rf "wineversion/usr"
 
+# compile & strip libhookexecv wine-preloader_hook
+gcc -shared -fPIC -m32 -ldl src/libhookexecv.c -o src/libhookexecv.so
+gcc -std=c99 -m32 -static src/preloaderhook.c -o src/wine-preloader_hook
+strip src/libhookexecv.so src/wine-preloader_hook
+chmod +x src/wine-preloader_hook
+
 wineworkdir=(wineversion/*)
 cd $wineworkdir
-
-# compile & strip libhookexecv wine-preloader_hook
-gcc -shared -fPIC -m32 -ldl ../src/libhookexecv.c -o bin/libhookexecv.so
-gcc -std=c99 -m32 -static ../src/preloaderhook.c -o bin/wine-preloader_hook
-strip bin/libhookexecv.so bin/wine-preloader_hook
-chmod +x bin/wine-preloader_hook
 
 pkgcachedir='/tmp/.winedeploycache'
 mkdir -p $pkgcachedir
@@ -50,6 +50,9 @@ wget -nv -c "https://github.com/AppImage/AppImageKit/releases/download/continuou
 chmod +x appimagetool.AppImage
 
 chmod +x AppRun
+
+cp src/{libhookexecv.so,wine-preloader_hook} $wineworkdir/bin
+rm src/{libhookexecv.so,wine-preloader_hook}
 
 cp AppRun $wineworkdir
 cp resource/* $wineworkdir
