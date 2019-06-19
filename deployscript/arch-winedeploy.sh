@@ -78,7 +78,8 @@ cp AppRun $wineworkdir
 cp resource/* $wineworkdir
 
 ls -al
-ls -al $wineworkdir
+ls -al $wineworkdir/
+ls -al $wineworkdir/bin
 
 ./appimagetool.AppImage --appimage-extract
 
