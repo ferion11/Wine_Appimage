@@ -3,7 +3,7 @@
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 
 pacman -Syy
-pacman -S --noconfirm wget file pacman-contrib tar grep
+pacman -S --noconfirm wget file pacman-contrib tar grep gcc
 
 # Get Wine
 wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.8-upstream-linux-x86.tar.gz
@@ -11,17 +11,17 @@ mkdir wineversion
 tar xfv PlayOnLinux-wine-* -C wineversion/
 ls -al
 
+# compile & strip libhookexecv wine-preloader_hook
+gcc -shared -fPIC -m32 -ldl src/libhookexecv.c -o src/libhookexecv.so
+gcc -std=c99 -m32 -static src/preloaderhook.c -o src/wine-preloader_hook
+strip src/libhookexecv.so src/wine-preloader_hook
+chmod +x src/wine-preloader_hook
+
 wineworkdir=(wineversion)
 cd $wineworkdir
 
 # Add a dependency library, such as freetype font library
 dependencys=$(pactree -s -u wine |grep lib32 | xargs)
-
-mkdir bin
-wget -nv -c https://github.com/Hackerl/Wine_Appimage/releases/download/v0.9/libhookexecv.so -O bin/libhookexecv.so
-wget -nv -c https://github.com/Hackerl/Wine_Appimage/releases/download/v0.9/wine-preloader_hook -O bin/wine-preloader_hook
-
-chmod +x bin/wine-preloader_hook
 
 mkdir cache
 
@@ -31,6 +31,9 @@ pacman -Syw  --noconfirm --cachedir cache fontconfig $dependencys
 find ./cache -name '*tar.xz' -exec tar --warning=no-unknown-keyword -xJf {} \;
 
 rm -rf cache
+
+# Disable winemenubuilder
+sed -i 's/winemenubuilder.exe -a -r/winemenubuilder.exe -r/g' share/wine/wine.inf
 
 # appimage
 cd -
@@ -56,6 +59,9 @@ export FONTCONFIG_PATH="$HERE/etc/fonts"
 #LD
 export WINELDLIBRARY="$HERE/usr/lib/ld-linux.so.2"
 
+#Wine env
+export WINEDEBUG=fixme-all
+
 if [ -n "$*" ] ; then
     LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$HERE/bin/$@" | cat
 else
@@ -64,6 +70,9 @@ fi
 EOF
 
 chmod +x AppRun
+
+cp src/{libhookexecv.so,wine-preloader_hook} $wineworkdir/bin
+rm src/{libhookexecv.so,wine-preloader_hook}
 
 cp AppRun $wineworkdir
 cp resource/* $wineworkdir
