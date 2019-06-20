@@ -29,7 +29,7 @@ pacman -Syw  --noconfirm --cachedir cache fontconfig lib32-gst-plugins-base-libs
 
 find ./cache -name '*tar.xz' -exec tar --warning=no-unknown-keyword -xJf {} \;
 
-rm -rf cache
+rm -rf cache; rm -rf include; rm -rf lib; ln -s lib32 lib; rm -rf share/man; rm -rf usr/include; rm -rf usr/share/{applications,doc,emacs,gtk-doc,java,licenses,man,info,pkgconfig}
 
 # Disable winemenubuilder
 sed -i 's/winemenubuilder.exe -a -r/winemenubuilder.exe -r/g' share/wine/wine.inf
