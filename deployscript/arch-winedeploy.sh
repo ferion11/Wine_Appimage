@@ -55,6 +55,9 @@ export LD_LIBRARY_PATH="$HERE/usr/lib32/alsa-lib":$LD_LIBRARY_PATH
 #Font Config
 export FONTCONFIG_PATH="$HERE/etc/fonts"
 
+#libGL drivers
+export LIBGL_DRIVERS_PATH="$HERE/usr/lib32/dri":$LIBGL_DRIVERS_PATH
+
 #LD
 export WINELDLIBRARY="$HERE/usr/lib32/ld-linux.so.2"
 
