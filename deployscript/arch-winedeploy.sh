@@ -2,13 +2,13 @@
 # Enable Multilib
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 
-pacman -Syy
+pacman -Syyu --noconfirm
 pacman -S --noconfirm wget file pacman-contrib tar grep gcc lib32-gcc-libs
+
 # Get Wine
 wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.10-upstream-linux-x86.tar.gz
 mkdir wineversion
 tar xfv PlayOnLinux-wine-* -C wineversion/
-ls -al
 
 # compile & strip libhookexecv wine-preloader_hook
 gcc -shared -fPIC -m32 -ldl src/libhookexecv.c -o src/libhookexecv.so
