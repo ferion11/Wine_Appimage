@@ -25,7 +25,7 @@ dependencys=$(pactree -s -u wine |grep lib32 | xargs)
 mkdir cache
 
 pacman -Scc --noconfirm
-pacman -Syw  --noconfirm --cachedir cache fontconfig $dependencys
+pacman -Syw  --noconfirm --cachedir cache fontconfig lib32-gst-plugins-base-libs lib32-mpg123 $dependencys
 
 find ./cache -name '*tar.xz' -exec tar --warning=no-unknown-keyword -xJf {} \;
 
