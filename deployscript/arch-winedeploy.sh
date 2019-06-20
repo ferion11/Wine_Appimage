@@ -56,7 +56,7 @@ export LD_LIBRARY_PATH="$HERE/usr/lib32/alsa-lib":$LD_LIBRARY_PATH
 export FONTCONFIG_PATH="$HERE/etc/fonts"
 
 #LD
-export WINELDLIBRARY="$HERE/usr/lib/ld-linux.so.2"
+export WINELDLIBRARY="$HERE/usr/lib32/ld-linux.so.2"
 
 #Wine env
 export WINEDEBUG=fixme-all
@@ -75,9 +75,6 @@ rm src/{libhookexecv.so,wine-preloader_hook}
 
 cp AppRun $wineworkdir
 cp resource/* $wineworkdir
-
-ln -s lib32 lib
-mv lib $wineworkdir/usr
 
 ./appimagetool.AppImage --appimage-extract
 
