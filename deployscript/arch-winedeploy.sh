@@ -34,9 +34,6 @@ rm -rf cache; rm -rf include; rm -rf usr/lib; rm -rf share/man; rm -rf usr/inclu
 # Disable winemenubuilder
 sed -i 's/winemenubuilder.exe -a -r/winemenubuilder.exe -r/g' share/wine/wine.inf
 
-cd usr
-ln -s lib32 lib; cd ..
-
 # appimage
 cd -
 
@@ -79,9 +76,8 @@ rm src/{libhookexecv.so,wine-preloader_hook}
 cp AppRun $wineworkdir
 cp resource/* $wineworkdir
 
-ls -al
-ls -al $wineworkdir/
-ls -al $wineworkdir/bin
+ln -s lib32 lib
+mv lib $wineworkdir/usr
 
 ./appimagetool.AppImage --appimage-extract
 
