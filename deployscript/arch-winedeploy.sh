@@ -83,10 +83,35 @@ chkdvkh=$(env | grep DXVK_HUD | wc -l)
     fi
 fi
 
-if [ -n "$*" ] ; then
-    LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$HERE/bin/$@" | cat
+# Load winecfg if no arguments given
+APPLICATION=""
+if [ -z "$*" ] ; then
+  APPLICATION="winecfg"
+fi
+
+# Allow the AppImage to be symlinked to e.g., /usr/bin/wineserver
+if [ ! -z $APPIMAGE ] ; then
+  BINARY_NAME=$(basename "$ARGV0")
 else
-    LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$HERE/bin/wine" "$@" | cat
+  BINARY_NAME=$(basename "$0")
+fi
+
+if [ ! -z "$1" ] && [ -e "$HERE/bin/$1" ] ; then
+  MAIN="$HERE/bin/$1" ; shift
+elif [ ! -z "$1" ] && [ -e "$HERE/usr/bin/$1" ] ; then
+  MAIN="$HERE/usr/bin/$1" ; shift
+elif [ -e "$HERE/bin/$BINARY_NAME" ] ; then
+  MAIN="$HERE/bin/$BINARY_NAME"
+elif [ -e "$HERE/usr/bin/$BINARY_NAME" ] ; then
+  MAIN="$HERE/usr/bin/$BINARY_NAME"
+else
+  MAIN="$HERE/bin/wine"
+fi
+
+if [ -z "$APPLICATION" ] ; then
+  LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$@" | cat
+else
+  LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$APPLICATION" | cat
 fi
 EOF
 
