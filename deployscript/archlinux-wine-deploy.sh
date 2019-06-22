@@ -25,7 +25,7 @@ dependencys=$(pactree -s -u wine |grep lib32 | xargs)
 mkdir cache
 
 pacman -Scc --noconfirm
-pacman -Syw  --noconfirm --cachedir cache lib32-alsa-plugins lib32-fontconfig lib32-gnutls lib32-gst-plugins-base-libs lib32-mpg123 lib32-openal lib32-libpulse lib32-vulkan-intel lib32-vulkan-radeon lib32-vulkan-icd-loader $dependencys
+pacman -Syw --noconfirm --cachedir cache lib32-alsa-plugins lib32-faudio lib32-fontconfig lib32-gnutls lib32-gst-plugins-base-libs lib32-mpg123 lib32-openal lib32-libpulse lib32-libva lib32-libdrm lib32-vulkan-intel lib32-vulkan-radeon lib32-vulkan-icd-loader lib32-libxcomposite lib32-libxinerama lib32-libxslt $dependencys
 
 find ./cache -name '*tar.xz' -exec tar --warning=no-unknown-keyword -xJf {} \;
 
