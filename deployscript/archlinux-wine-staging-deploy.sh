@@ -9,6 +9,7 @@ pacman -S --noconfirm wget file pacman-contrib tar grep gcc lib32-gcc-libs
 wget -nv -c http://pool.mirror.archlinux32.org/i686/community-testing/wine-staging-4.10-1.0-i686.pkg.tar.xz
 mkdir wineversion
 tar xfv wine-staging* -C wineversion/
+mv wineversion/usr/* wineversion
 
 # compile & strip libhookexecv wine-preloader_hook
 gcc -shared -fPIC -m32 -ldl src/libhookexecv.c -o src/libhookexecv.so
