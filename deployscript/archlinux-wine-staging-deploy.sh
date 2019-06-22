@@ -6,9 +6,9 @@ pacman -Syyu --noconfirm
 pacman -S --noconfirm wget file pacman-contrib tar grep gcc lib32-gcc-libs
 
 # Get Wine
-wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.10-upstream-linux-x86.tar.gz
+wget -nv -c http://pool.mirror.archlinux32.org/i686/community-testing/wine-staging-4.10-1.0-i686.pkg.tar.xz
 mkdir wineversion
-tar xfv PlayOnLinux-wine-* -C wineversion/
+tar xfv wine-staging* -C wineversion/
 
 # compile & strip libhookexecv wine-preloader_hook
 gcc -shared -fPIC -m32 -ldl src/libhookexecv.c -o src/libhookexecv.so
@@ -29,7 +29,8 @@ pacman -Syw  --noconfirm --cachedir cache lib32-alsa-plugins lib32-fontconfig li
 
 find ./cache -name '*tar.xz' -exec tar --warning=no-unknown-keyword -xJf {} \;
 
-rm -rf cache; rm -rf include; rm -rf usr/lib; rm usr/lib32/{*.a,*.o}; rm -rf usr/lib32/pkgconfig; rm -rf share/man; rm -rf usr/include; rm -rf usr/share/{applications,doc,emacs,gtk-doc,java,licenses,man,info,pkgconfig}
+rm -rf cache
+# ; rm -rf include; rm -rf usr/lib; rm usr/lib32/{*.a,*.o}; rm -rf usr/lib32/pkgconfig; rm -rf share/man; rm -rf usr/include; rm -rf usr/share/{applications,doc,emacs,gtk-doc,java,licenses,man,info,pkgconfig}
 
 # Disable winemenubuilder
 sed -i 's/winemenubuilder.exe -a -r/winemenubuilder.exe -r/g' share/wine/wine.inf
@@ -128,4 +129,4 @@ sed -i -E 's,(^.+"library_path": ")/.*/,\1,' $wineworkdir/usr/share/vulkan/icd.d
 
 ./appimagetool.AppImage --appimage-extract
 
-export ARCH=x86_64; squashfs-root/AppRun -v $wineworkdir -u 'gh-releases-zsync|mmtrt|Wine_Appimage|continuous|wine*arch*.AppImage.zsync' wine-i386_${ARCH}-arch.latest.AppImage
+export ARCH=x86_64; squashfs-root/AppRun -v $wineworkdir -u 'gh-releases-zsync|mmtrt|Wine_Appimage|continuous|wine-staging*arch*.AppImage.zsync' wine-staging-i386_${ARCH}-archlinux.AppImage
