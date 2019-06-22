@@ -64,6 +64,15 @@ export WINELDLIBRARY="$HERE/usr/lib32/ld-linux.so.2"
 #Wine env
 export WINEDEBUG=fixme-all
 
+#Load vulkan icd files as per vendor
+checkdri=$(cat /var/log/Xorg.0.log | grep -e "DRI driver:" | awk '{print $8}')
+
+if [ "$checkdri" = "i965" ]; then
+    export VK_ICD_FILENAMES="$HERE/usr/share/vulkan/icd.d/intel_icd.i686.json":$VK_ICD_FILENAMES
+elif [ "$checkdri" = "radeonsi" ]; then
+    export VK_ICD_FILENAMES="$HERE/usr/share/vulkan/icd.d/radeon_icd.i686.json":$VK_ICD_FILENAMES
+fi
+
 if [ -n "$*" ] ; then
     LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$HERE/bin/$@" | cat
 else
