@@ -30,7 +30,7 @@ before_install:
   # - wget -nv -c https://dl.winehq.org/wine-builds/debian/dists/stretch/main/binary-i386/wine-staging-i386_4.9~stretch_i386.deb
 
   # archlinux
-  - wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.11-upstream-linux-x86.tar.gz
+  - wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.10-upstream-linux-x86.tar.gz
   - wget -nv -c http://pool.mirror.archlinux32.org/i686/community-testing/wine-staging-4.10-1.0-i686.pkg.tar.xz
 
   # appimagetool
