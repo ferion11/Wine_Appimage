@@ -73,6 +73,28 @@ elif [ "$checkdri" = "radeonsi" ]; then
     export VK_ICD_FILENAMES="$HERE/usr/share/vulkan/icd.d/radeon_icd.i686.json":$VK_ICD_FILENAMES
 fi
 
+# Checking for d3d9 native dlloverride
+chkd3d9=$(grep 'd3d9"=' ${WINEPREFIX}/user.reg | wc -l)
+
+if [ $chkd3d9 -eq 1 ]; then
+# Checking for d*vk hud env being used already if not then add it
+chkdvkh=$(env | grep DXVK_HUD | wc -l)
+    if [ $chkdvkh -eq 0 ]; then
+        export DXVK_HUD=1
+    fi
+fi
+
+# Checking for d3d11 native dlloverride
+chkd3d11=$(grep 'd3d11"=' ${WINEPREFIX}/user.reg | wc -l)
+
+if [ $chkd3d11 -eq 1 ]; then
+# Checking for d*vk hud env being used already if not then add it
+chkdvkh=$(env | grep DXVK_HUD | wc -l)
+    if [ $chkdvkh -eq 0 ]; then
+        export DXVK_HUD=1
+    fi
+fi
+
 if [ -n "$*" ] ; then
     LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$HERE/bin/$@" | cat
 else
