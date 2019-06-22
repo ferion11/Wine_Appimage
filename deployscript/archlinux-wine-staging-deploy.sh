@@ -10,6 +10,7 @@ wget -nv -c http://pool.mirror.archlinux32.org/i686/community-testing/wine-stagi
 mkdir wineversion
 tar xfv wine-staging* -C wineversion/
 mv wineversion/usr/* wineversion
+rm -rf wineversion/lib32
 
 # compile & strip libhookexecv wine-preloader_hook
 gcc -shared -fPIC -m32 -ldl src/libhookexecv.c -o src/libhookexecv.so
