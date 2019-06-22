@@ -79,6 +79,9 @@ rm src/{libhookexecv.so,wine-preloader_hook}
 cp AppRun $wineworkdir
 cp resource/* $wineworkdir
 
+# Remove library path from vk icd files
+sed -i -E 's,(^.+"library_path": ")/.*/,\1,' $wineworkdir/usr/share/vulkan/icd.d/*.json
+
 ./appimagetool.AppImage --appimage-extract
 
 export ARCH=x86_64; squashfs-root/AppRun -v $wineworkdir -u 'gh-releases-zsync|mmtrt|Wine_Appimage|continuous|wine*arch*.AppImage.zsync' wine-i386_${ARCH}-arch.latest.AppImage
