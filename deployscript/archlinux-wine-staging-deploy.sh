@@ -34,6 +34,11 @@ find ./cache -name '*tar.xz' -exec tar --warning=no-unknown-keyword -xJf {} \;
 # wineworkdir cleanup
 rm -rf cache; rm -rf include; rm -rf usr/lib; rm usr/lib32/{*.a,*.o}; rm -rf usr/lib32/pkgconfig; rm -rf share/man; rm -rf usr/include; rm -rf usr/share/{applications,doc,emacs,gtk-doc,java,licenses,man,info,pkgconfig}; rm usr/lib32/locale
 
+# fix broken link libglx_indirect
+rm usr/lib32/libGLX_indirect.so.0
+ln -s libGLX_mesa.so.0 libGLX_indirect.so.0
+mv libGLX_indirect.so.0 usr/lib32
+
 # Disable winemenubuilder
 sed -i 's/winemenubuilder.exe -a -r/winemenubuilder.exe -r/g' share/wine/wine.inf
 
