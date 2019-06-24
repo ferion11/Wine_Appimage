@@ -8,7 +8,7 @@ pacman -S --noconfirm wget file pacman-contrib tar grep gcc lib32-gcc-libs
 # Get Wine
 wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.10-upstream-linux-x86.tar.gz
 mkdir wineversion
-tar xfv PlayOnLinux-wine-* -C wineversion/
+tar xf PlayOnLinux-wine-* -C wineversion/
 
 # compile & strip libhookexecv wine-preloader_hook
 gcc -shared -fPIC -m32 -ldl src/libhookexecv.c -o src/libhookexecv.so
