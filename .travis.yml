@@ -6,8 +6,8 @@ services:
 
 before_install:
   # ubuntu bionic
-  - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-stable_4.0.1~bionic_i386.deb
-  - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-stable-i386_4.0.1~bionic_i386.deb
+  # - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-stable_4.0.1~bionic_i386.deb
+  # - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-stable-i386_4.0.1~bionic_i386.deb
   # - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-devel_4.9~bionic_i386.deb
   # - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-devel-i386_4.9~bionic_i386.deb
   # - wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-staging_4.10~bionic_i386.deb
@@ -31,14 +31,14 @@ before_install:
 
   # archlinux
   - wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.10-upstream-linux-x86.tar.gz
-  - wget -nv -c http://pool.mirror.archlinux32.org/i686/community-testing/wine-staging-4.10-1.0-i686.pkg.tar.xz
+  # - wget -nv -c http://pool.mirror.archlinux32.org/i686/community-testing/wine-staging-4.10-1.0-i686.pkg.tar.xz
 
   # appimagetool
   - wget -nv -c "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage" -O appimagetool.AppImage
 
 script:
   # ubuntu bionic
-  - docker build . -f deploydocker/Dockerfile.wine-stable-deploy.bionic -t wine-stable-appimage.bionic
+  # - docker build . -f deploydocker/Dockerfile.wine-stable-deploy.bionic -t wine-stable-appimage.bionic
   # - docker build . -f deploydocker/Dockerfile.wine-devel-deploy.bionic -t wine-devel-appimage.bionic
   # - docker build . -f deploydocker/Dockerfile.wine-staging-deploy.bionic -t wine-staging-appimage.bionic
 
@@ -54,14 +54,14 @@ script:
 
   # archlinux
   - docker build . -f deploydocker/Dockerfile.wine-deploy.archlinux -t wine-appimage.archlinux
-  - docker build . -f deploydocker/Dockerfile.wine-staging-deploy.archlinux -t wine-staging-appimage.archlinux
+  # - docker build . -f deploydocker/Dockerfile.wine-staging-deploy.archlinux -t wine-staging-appimage.archlinux
 
 after_success:
   - mkdir apps
 
   # ubuntu bionic
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-stable-appimage.bionic cp wine-stable-i386_x86_64-bionic.AppImage /tmp/apps
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-stable-appimage.bionic cp wine-stable-i386_x86_64-bionic.AppImage.zsync /tmp/apps
+  # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-stable-appimage.bionic cp wine-stable-i386_x86_64-bionic.AppImage /tmp/apps
+  # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-stable-appimage.bionic cp wine-stable-i386_x86_64-bionic.AppImage.zsync /tmp/apps
   # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-devel-appimage.bionic cp wine-devel-i386_x86_64-bionic.AppImage /tmp/apps
   # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-devel-appimage.bionic cp wine-devel-i386_x86_64-bionic.AppImage.zsync /tmp/apps
   # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.bionic cp wine-staging-i386_x86_64-bionic.AppImage /tmp/apps
@@ -86,8 +86,8 @@ after_success:
   # archlinux
   - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-appimage.archlinux cp wine-i386_x86_64-archlinux.AppImage /tmp/apps
   - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-appimage.archlinux cp wine-i386_x86_64-archlinux.AppImage.zsync /tmp/apps
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.archlinux cp wine-staging-i386_x86_64-archlinux.AppImage /tmp/apps
-  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.archlinux cp wine-staging-i386_x86_64-archlinux.AppImage.zsync /tmp/apps
+  # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.archlinux cp wine-staging-i386_x86_64-archlinux.AppImage /tmp/apps
+  # - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-staging-appimage.archlinux cp wine-staging-i386_x86_64-archlinux.AppImage.zsync /tmp/apps
 
   # uploadtool
   - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
