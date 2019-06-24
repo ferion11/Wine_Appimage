@@ -2,7 +2,7 @@
 # Enable Multilib
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 
-pacman -Syyu --noconfirm
+pacman -Syy
 pacman -S --noconfirm wget file pacman-contrib tar grep gcc lib32-gcc-libs
 
 # Get Wine
