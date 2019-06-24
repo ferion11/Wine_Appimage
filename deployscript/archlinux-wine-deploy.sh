@@ -29,7 +29,7 @@ pacman -Syw --noconfirm --cachedir cache lib32-alsa-lib lib32-alsa-plugins lib32
 
 ls -al
 # Remove non lib32 pkgs before extracting
-rm ./cache/`ls ./cache -I "lib32*"`
+find ./cache -type f ! -name "lib32*" -exec rm {} \;
 ls -al ./cache
 find ./cache -name '*tar.xz' -exec tar --warning=no-unknown-keyword -xJf {} \;
 
