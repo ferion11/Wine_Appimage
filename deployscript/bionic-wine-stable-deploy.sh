@@ -5,7 +5,7 @@ apt update
 apt install -y aptitude wget file bzip2 gcc-multilib
 
 # Purge PulseAudio
-apt purge pulseaudio pulseaudio-utils gstreamer0.10-pulseaudio libpulse-browse0 paman pavumeter pavucontrol
+apt purge -y pulseaudio pulseaudio-utils gstreamer0.10-pulseaudio libpulse-browse0 paman pavumeter pavucontrol
 rm /etc/asound.conf
 
 # Get Wine
