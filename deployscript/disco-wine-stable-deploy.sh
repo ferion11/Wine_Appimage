@@ -12,7 +12,8 @@ dpkg --add-architecture i386
 apt update
 apt install -y aptitude wget file bzip2 gcc-multilib
 
-mkdir -p wineversion
+wineworkdir="wineversion"
+mkdir -p $wineworkdir
 
 # compile & strip libhookexecv wine-preloader_hook
 gcc -shared -fPIC -m32 -ldl src/libhookexecv.c -o src/libhookexecv.so
@@ -20,7 +21,6 @@ gcc -std=c99 -m32 -static src/preloaderhook.c -o src/wine-preloader_hook
 strip src/libhookexecv.so src/wine-preloader_hook
 chmod +x src/wine-preloader_hook
 
-wineworkdir=(wineversion/*)
 cd $wineworkdir
 
 pkgcachedir='/tmp/.winedeploycache'
