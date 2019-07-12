@@ -14,10 +14,10 @@ export LD_LIBRARY_PATH="$HERE/usr/lib/i386-linux-gnu/alsa-lib":$LD_LIBRARY_PATH
 export LIBGL_DRIVERS_PATH="$HERE/usr/lib/i386-linux-gnu/dri":$LIBGL_DRIVERS_PATH
 
 #Font Config
-export FONTCONFIG_PATH="$HERE/etc/fonts"
+export FONTCONFIG_PATH="$HERE/etc/fonts":$FONTCONFIG_PATH
 
 #LD
-export WINELDLIBRARY="$HERE/lib/ld-linux.so.2"
+export WINELDLIBRARY="$HERE/lib/ld-linux.so.2":$WINELDLIBRARY
 
 # Workaround for: wine: loadlocale.c:129: _nl_intern_locale_data:
 # Assertion `cnt < (sizeof (_nl_value_type_LC_TIME) / sizeof (_nl_value_type_LC_TIME[0]))' failed.
