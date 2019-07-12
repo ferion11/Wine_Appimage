@@ -13,18 +13,16 @@ apt update
 apt install -y aptitude wget file bzip2 gcc-multilib
 
 # Purge PulseAudio
-apt purge -y pulseaudio pulseaudio-utils libpulse-browse0 paman pavumeter pavucontrol
-rm /etc/asound.conf
+apt purge -y pulseaudio pulseaudio-utils pavumeter pavucontrol
 
 ## Get Wine
-#wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-stable_4.0.1~bionic_i386.deb
+wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-stable_4.0.1~bionic_i386.deb
 #wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-i386/wine-stable-i386_4.0.1~bionic_i386.deb
 #wget -nv -c https://dl.winehq.org/wine-builds/ubuntu/dists/bionic/main/binary-amd64/wine-stable-amd64_4.0.1~bionic_amd64.deb
 
-#dpkg -x wine-stable_4.0.1~bionic_i386.deb wineversion/
+dpkg -x wine-stable_4.0.1~bionic_i386.deb wineversion/
 #dpkg -x wine-stable-i386_4.0.1~bionic_i386.deb wineversion/
 #dpkg -x wine-stable-amd64_4.0.1~bionic_amd64.deb wineversion/
-mkdir wineversion
 
 #cp -r "wineversion/opt/"* "wineversion"
 #rm -r "wineversion/opt"
