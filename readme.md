@@ -1,3 +1,3 @@
 # Appimage For Wine
 
-Appimage For Wine MultiArch without PulseAudio
+Appimage For Wine

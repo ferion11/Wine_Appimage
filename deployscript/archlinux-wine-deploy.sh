@@ -8,12 +8,11 @@ pacman -S --noconfirm wget file pacman-contrib tar grep
 
 #===========================================================================================
 # Get Wine
-wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.0.1-upstream-linux-x86.tar.gz
+#wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.0.1-upstream-linux-x86.tar.gz
 #wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-amd64/PlayOnLinux-wine-4.0.1-upstream-linux-amd64.tar.gz
 #wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-amd64/PlayOnLinux-wine-4.10-upstream-linux-amd64.tar.gz
 mkdir wineversion
-tar xf PlayOnLinux-wine-* -C wineversion/
-#mkdir wineversion/bin
+#tar xf PlayOnLinux-wine-* -C wineversion/
 
 wget -nv -c https://github.com/Hackerl/Wine_Appimage/releases/download/v0.9/libhookexecv.so
 wget -nv -c https://github.com/Hackerl/Wine_Appimage/releases/download/v0.9/wine-preloader_hook
@@ -37,10 +36,14 @@ pactree -s -u wine > dep_wine_list_for_debug.txt
 mkdir cache
 
 pacman -Scc --noconfirm
-pacman -Syw --noconfirm --cachedir cache lib32-alsa-lib lib32-alsa-plugins lib32-faudio lib32-fontconfig lib32-freetype2 lib32-gcc-libs lib32-gettext lib32-giflib lib32-glu lib32-gnutls lib32-gst-plugins-base-libs lib32-lcms2 lib32-libjpeg-turbo lib32-libldap lib32-libpcap lib32-libpng lib32-libsm lib32-libxcomposite lib32-libxcursor lib32-libxdamage lib32-libxi lib32-libxml2 lib32-libxmu lib32-libxrandr lib32-libxslt lib32-libxxf86vm lib32-mesa lib32-mesa-libgl lib32-mpg123 lib32-ncurses lib32-openal lib32-sdl2 lib32-v4l-utils lib32-libdrm lib32-libva $dependencys
+pacman -Syw --noconfirm --cachedir cache wine lib32-alsa-lib lib32-alsa-plugins lib32-faudio lib32-fontconfig lib32-freetype2 lib32-gcc-libs lib32-gettext lib32-giflib lib32-glu lib32-gnutls lib32-gst-plugins-base-libs lib32-lcms2 lib32-libjpeg-turbo lib32-libldap lib32-libpcap lib32-libpng lib32-libsm lib32-libxcomposite lib32-libxcursor lib32-libxdamage lib32-libxi lib32-libxml2 lib32-libxmu lib32-libxrandr lib32-libxslt lib32-libxxf86vm lib32-mesa lib32-mesa-libgl lib32-mpg123 lib32-ncurses lib32-openal lib32-sdl2 lib32-v4l-utils lib32-libdrm lib32-libva $dependencys
 
+mkdir native_wine
+mv cache/*wine* native_wine/
 # Remove non lib32 pkgs before extracting
 find ./cache -type f ! -name "lib32*" -exec rm {} \;
+mv native_wine/* cache/
+rm -rf native_wine
 
 find ./cache -name '*tar.xz' -exec tar --warning=no-unknown-keyword -xJf {} \;
 
