@@ -26,7 +26,7 @@ gcc -std=c99 -m32 -static src/preloaderhook.c -o src/wine-preloader_hook
 strip src/libhookexecv.so src/wine-preloader_hook
 chmod +x src/wine-preloader_hook
 
-wineworkdir=(wineversion/*)
+wineworkdir=wineversion
 cd $wineworkdir
 
 pkgcachedir='/tmp/.winedeploycache'
@@ -49,7 +49,7 @@ sed -i -e 's|/usr/lib|/ooo/ooo|g' lib/ld-linux.so.2
 #sed -i 's/winemenubuilder.exe -a -r/winemenubuilder.exe -r/g' share/wine/wine.inf
 
 # appimage
-cd -
+cd ..
 
 wget -nv -c "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage" -O  appimagetool.AppImage
 chmod +x appimagetool.AppImage
