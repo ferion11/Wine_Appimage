@@ -8,7 +8,8 @@ pacman -S --noconfirm wget file pacman-contrib tar grep
 
 #===========================================================================================
 # Get Wine
-wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-amd64/PlayOnLinux-wine-4.0.1-upstream-linux-amd64.tar.gz
+wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.0.1-upstream-linux-x86.tar.gz
+#wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-amd64/PlayOnLinux-wine-4.0.1-upstream-linux-amd64.tar.gz
 #wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-amd64/PlayOnLinux-wine-4.10-upstream-linux-amd64.tar.gz
 mkdir wineversion
 tar xf PlayOnLinux-wine-* -C wineversion/
@@ -29,7 +30,9 @@ wineworkdir=(wineversion)
 cd $wineworkdir
 
 # Add a dependency library, such as freetype font library
-dependencys=$(pactree -s -u wine | xargs)
+dependencys=$(pactree -s -u wine |grep lib32 | xargs)
+#dependencys=$(pactree -s -u wine | xargs)
+pactree -s -u wine > dep_wine_list_for_debug.txt
 
 mkdir cache
 
