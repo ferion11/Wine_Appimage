@@ -2,24 +2,21 @@
 HERE="$(dirname "$(readlink -f "${0}")")"
 
 # If not extract and overwrite, $HERE/lib is a link to $HERE/usr/lib, that link to $HERE/usr/lib64
-#export LD_LIBRARY_PATH="$HERE/lib64":$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH="$HERE/lib":$LD_LIBRARY_PATH
-#export LD_LIBRARY_PATH="$HERE/usr/lib64":$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH="$HERE/usr/lib32":$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH="$HERE/lib":$LD_LIBRARY_PATH
+
 
 #Sound Library
-#export LD_LIBRARY_PATH="$HERE/usr/lib64/alsa-lib":$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH="$HERE/usr/lib32/alsa-lib":$LD_LIBRARY_PATH
 
 # libGL drivers
-#export LIBGL_DRIVERS_PATH="$HERE/usr/lib64/dri":$LIBGL_DRIVERS_PATH
 export LIBGL_DRIVERS_PATH="$HERE/usr/lib32/dri":$LIBGL_DRIVERS_PATH
 
 #Font Config
 export FONTCONFIG_PATH="$HERE/etc/fonts":$FONTCONFIG_PATH
 
-#LD (the lib64 is a link to lib32)
-export WINELDLIBRARY="$HERE/usr/lib/ld-linux.so.2"
+#LD
+export WINELDLIBRARY="$HERE/usr/lib32/ld-linux.so.2"
 
 #Wine env
 export WINEDEBUG=fixme-all
@@ -50,7 +47,7 @@ else
 fi
 
 if [ -z "$APPLICATION" ] ; then
-  LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$@" | cat
+  LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" WINEPREFIX=~/.wine32 "$MAIN" "$@" | cat
 else
-  LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$APPLICATION" | cat
+  LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" WINEPREFIX=~/.wine32 "$MAIN" "$APPLICATION" | cat
 fi
