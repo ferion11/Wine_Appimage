@@ -8,10 +8,11 @@ pacman -S --noconfirm wget file pacman-contrib tar grep
 
 #===========================================================================================
 # Get Wine
+wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-amd64/PlayOnLinux-wine-4.0.1-upstream-linux-amd64.tar.gz
 #wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-amd64/PlayOnLinux-wine-4.10-upstream-linux-amd64.tar.gz
 mkdir wineversion
-#tar xf PlayOnLinux-wine-* -C wineversion/
-mkdir wineversion/bin
+tar xf PlayOnLinux-wine-* -C wineversion/
+#mkdir wineversion/bin
 
 wget -nv -c https://github.com/Hackerl/Wine_Appimage/releases/download/v0.9/libhookexecv.so
 wget -nv -c https://github.com/Hackerl/Wine_Appimage/releases/download/v0.9/wine-preloader_hook
