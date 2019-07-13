@@ -51,7 +51,8 @@ find ./cache -name '*tar.xz' -exec tar --warning=no-unknown-keyword -xJf {} \;
 # wineworkdir cleanup
 rm -rf cache; rm -rf include; rm usr/lib32/{*.a,*.o}; rm -rf usr/lib32/pkgconfig; rm -rf share/man; rm -rf usr/include; rm -rf usr/share/{applications,doc,emacs,gtk-doc,java,licenses,man,info,pkgconfig}; rm usr/lib32/locale
 rm -rf boot; rm -rf dev; rm -rf home; rm -rf mnt; rm -rf opt; rm -rf proc; rm -rf root; rm sbin; rm -rf srv; rm -rf sys; rm -rf tmp; rm -rf var
-rm -rf usr/src; rm -rf usr/share; rm usr/sbin; rm -rf usr/local; rm usr/lib/{*.a,*.o}
+#rm -rf usr/src; rm -rf usr/share; rm usr/sbin; rm -rf usr/local; rm usr/lib/{*.a,*.o}
+rm -rf usr/src; rm usr/sbin; rm -rf usr/local; rm usr/lib/{*.a,*.o}
 
 #===========================================================================================
 # fix broken link libglx_indirect and others
