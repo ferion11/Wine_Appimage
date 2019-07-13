@@ -33,13 +33,23 @@ pacman -Syw --noconfirm --cachedir cache lib32-alsa-lib lib32-alsa-plugins lib32
 find ./cache -name '*tar.xz' -exec tar --warning=no-unknown-keyword -xJf {} \;
 
 # wineworkdir cleanup
-#rm -rf cache; rm -rf include; rm usr/lib32/{*.a,*.o}; rm -rf usr/lib32/pkgconfig; rm -rf share/man; rm -rf usr/include; rm -rf usr/share/{applications,doc,emacs,gtk-doc,java,licenses,man,info,pkgconfig}; rm usr/lib32/locale
 rm -rf cache; rm -rf include; rm usr/lib32/{*.a,*.o}; rm -rf usr/lib32/pkgconfig; rm -rf share/man; rm -rf usr/include; rm -rf usr/share/{applications,doc,emacs,gtk-doc,java,licenses,man,info,pkgconfig}; rm usr/lib32/locale
+rm -rf boot; rm -rf dev; rm -rf home; rm -rf mnt; rm -rf opt; rm -rf proc; rm -rf root; rm sbin; rm -rf srv; rm -rf sys; rm -rf tmp; rm -rf var
+rm -rf usr/src; rm -rf usr/share; rm usr/sbin; rm -rf usr/local; rm usr/lib/{*.a,*.o}
 
-# fix broken link libglx_indirect
+# fix broken link libglx_indirect and others
 rm usr/lib32/libGLX_indirect.so.0
 ln -s libGLX_mesa.so.0 libGLX_indirect.so.0
 mv libGLX_indirect.so.0 usr/lib32
+
+rm usr/lib/libGLX_indirect.so.0
+ln -s libGLX_mesa.so.0 libGLX_indirect.so.0
+mv libGLX_indirect.so.0 usr/lib
+
+rm usr/lib/libkeyutils.so
+ln -s libkeyutils.so.1 libkeyutils.so
+mv libkeyutils.so usr/lib
+
 
 ## Disable winemenubuilder
 #sed -i 's/winemenubuilder.exe -a -r/winemenubuilder.exe -r/g' share/wine/wine.inf
@@ -54,20 +64,24 @@ cat > AppRun <<\EOF
 #!/bin/bash
 HERE="$(dirname "$(readlink -f "${0}")")"
 
-export LD_LIBRARY_PATH="$HERE/usr/lib32":$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH="$HERE/usr/lib":$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH="$HERE/usr/lib64":$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH="$HERE/lib":$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH="$HERE/lib64":$LD_LIBRARY_PATH
 
 #Sound Library
 export LD_LIBRARY_PATH="$HERE/usr/lib32/alsa-lib":$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH="$HERE/usr/lib/alsa-lib":$LD_LIBRARY_PATH
+
+# libGL drivers
+export LIBGL_DRIVERS_PATH="$HERE/usr/lib32/dri":$LIBGL_DRIVERS_PATH
+export LIBGL_DRIVERS_PATH="$HERE/usr/lib/dri":$LIBGL_DRIVERS_PATH
 
 #Font Config
 export FONTCONFIG_PATH="$HERE/etc/fonts"
 
-#libGL drivers
-export LIBGL_DRIVERS_PATH="$HERE/usr/lib32/dri":$LIBGL_DRIVERS_PATH
-
 #LD
-export WINELDLIBRARY="$HERE/usr/lib32/ld-linux.so.2"
+export WINELDLIBRARY="$HERE/usr/lib/ld-linux.so.2"
 
 #Wine env
 export WINEDEBUG=fixme-all
