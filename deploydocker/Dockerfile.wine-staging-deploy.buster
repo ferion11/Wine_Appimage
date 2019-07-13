@@ -1,6 +1,0 @@
-FROM debian:buster
-
-COPY . /srv/wineappimage
-
-WORKDIR /srv/wineappimage
-RUN /srv/wineappimage/deployscript/buster-wine-staging-deploy.sh

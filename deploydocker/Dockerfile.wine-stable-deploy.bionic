@@ -1,6 +1,0 @@
-FROM ubuntu
-
-COPY . /srv/wineappimage
-
-WORKDIR /srv/wineappimage
-RUN /srv/wineappimage/deployscript/bionic-wine-stable-deploy.sh
