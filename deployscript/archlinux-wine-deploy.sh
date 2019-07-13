@@ -3,17 +3,23 @@
 sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 
 pacman -Syy
-pacman -S --noconfirm wget file pacman-contrib tar grep gcc lib32-gcc-libs
+#pacman -S --noconfirm wget file pacman-contrib tar grep gcc lib32-gcc-libs
+pacman -S --noconfirm wget file pacman-contrib tar grep
 
 # Get Wine
-wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-amd64/PlayOnLinux-wine-4.10-upstream-linux-amd64.tar.gz
+#wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-amd64/PlayOnLinux-wine-4.10-upstream-linux-amd64.tar.gz
 mkdir wineversion
-tar xf PlayOnLinux-wine-* -C wineversion/
+#tar xf PlayOnLinux-wine-* -C wineversion/
+mkdir wineversion/bin
 
+wget -nv -c https://github.com/Hackerl/Wine_Appimage/releases/download/v0.9/libhookexecv.so
+wget -nv -c https://github.com/Hackerl/Wine_Appimage/releases/download/v0.9/wine-preloader_hook
+mv libhookexecv.so src/
+mv wine-preloader_hook src/
 # compile & strip libhookexecv wine-preloader_hook
-gcc -shared -fPIC -m32 -ldl src/libhookexecv.c -o src/libhookexecv.so
-gcc -std=c99 -m32 -static src/preloaderhook.c -o src/wine-preloader_hook
-strip src/libhookexecv.so src/wine-preloader_hook
+#gcc -shared -fPIC -m32 -ldl src/libhookexecv.c -o src/libhookexecv.so
+#gcc -std=c99 -m32 -static src/preloaderhook.c -o src/wine-preloader_hook
+#strip src/libhookexecv.so src/wine-preloader_hook
 chmod +x src/wine-preloader_hook
 
 wineworkdir=(wineversion)
@@ -59,64 +65,6 @@ cd ..
 
 wget -nv -c "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage" -O  appimagetool.AppImage
 chmod +x appimagetool.AppImage
-
-cat > AppRun <<\EOF
-#!/bin/bash
-HERE="$(dirname "$(readlink -f "${0}")")"
-
-export LD_LIBRARY_PATH="$HERE/usr/lib":$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH="$HERE/usr/lib64":$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH="$HERE/lib":$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH="$HERE/lib64":$LD_LIBRARY_PATH
-
-#Sound Library
-export LD_LIBRARY_PATH="$HERE/usr/lib32/alsa-lib":$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH="$HERE/usr/lib/alsa-lib":$LD_LIBRARY_PATH
-
-# libGL drivers
-export LIBGL_DRIVERS_PATH="$HERE/usr/lib32/dri":$LIBGL_DRIVERS_PATH
-export LIBGL_DRIVERS_PATH="$HERE/usr/lib/dri":$LIBGL_DRIVERS_PATH
-
-#Font Config
-export FONTCONFIG_PATH="$HERE/etc/fonts"
-
-#LD
-export WINELDLIBRARY="$HERE/usr/lib/ld-linux.so.2"
-
-#Wine env
-export WINEDEBUG=fixme-all
-
-# Load winecfg if no arguments given
-APPLICATION=""
-if [ -z "$*" ] ; then
-  APPLICATION="winecfg"
-fi
-
-# Allow the AppImage to be symlinked to e.g., /usr/bin/wineserver
-if [ ! -z $APPIMAGE ] ; then
-  BINARY_NAME=$(basename "$ARGV0")
-else
-  BINARY_NAME=$(basename "$0")
-fi
-
-if [ ! -z "$1" ] && [ -e "$HERE/bin/$1" ] ; then
-  MAIN="$HERE/bin/$1" ; shift
-elif [ ! -z "$1" ] && [ -e "$HERE/usr/bin/$1" ] ; then
-  MAIN="$HERE/usr/bin/$1" ; shift
-elif [ -e "$HERE/bin/$BINARY_NAME" ] ; then
-  MAIN="$HERE/bin/$BINARY_NAME"
-elif [ -e "$HERE/usr/bin/$BINARY_NAME" ] ; then
-  MAIN="$HERE/usr/bin/$BINARY_NAME"
-else
-  MAIN="$HERE/bin/wine"
-fi
-
-if [ -z "$APPLICATION" ] ; then
-  LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$@" | cat
-else
-  LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$APPLICATION" | cat
-fi
-EOF
 
 chmod +x AppRun
 

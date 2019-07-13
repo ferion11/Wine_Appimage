@@ -1,18 +1,18 @@
 #!/bin/bash
 HERE="$(dirname "$(readlink -f "${0}")")"
 
-export LD_LIBRARY_PATH="$HERE/usr/lib":$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH="$HERE/usr/lib64":$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH="$HERE/lib":$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH="$HERE/usr/lib":$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH="$HERE/lib64":$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH="$HERE/lib":$LD_LIBRARY_PATH
 
 #Sound Library
-export LD_LIBRARY_PATH="$HERE/usr/lib32/alsa-lib":$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH="$HERE/usr/lib/alsa-lib":$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH="$HERE/usr/lib32/alsa-lib":$LD_LIBRARY_PATH
 
 # libGL drivers
-export LIBGL_DRIVERS_PATH="$HERE/usr/lib32/dri":$LIBGL_DRIVERS_PATH
 export LIBGL_DRIVERS_PATH="$HERE/usr/lib/dri":$LIBGL_DRIVERS_PATH
+export LIBGL_DRIVERS_PATH="$HERE/usr/lib32/dri":$LIBGL_DRIVERS_PATH
 
 #Font Config
 export FONTCONFIG_PATH="$HERE/etc/fonts":$FONTCONFIG_PATH
