@@ -21,6 +21,10 @@ export WINELDLIBRARY="$HERE/usr/lib32/ld-linux.so.2"
 #Wine env
 export WINEDEBUG=fixme-all
 
+# arch and bottle
+export WINEARCH=win32
+export WINEPREFIX=~/.wine32
+
 # Load winecfg if no arguments given
 APPLICATION=""
 if [ -z "$*" ] ; then
@@ -47,7 +51,7 @@ else
 fi
 
 if [ -z "$APPLICATION" ] ; then
-  LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" WINEPREFIX=~/.wine32 "$MAIN" "$@" | cat
+  LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$@" | cat
 else
-  LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" WINEPREFIX=~/.wine32 "$MAIN" "$APPLICATION" | cat
+  LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$APPLICATION" | cat
 fi
