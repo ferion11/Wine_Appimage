@@ -8,7 +8,8 @@ pacman -S --noconfirm wget file pacman-contrib tar grep
 
 #===========================================================================================
 # Get Wine
-wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.10-upstream-linux-x86.tar.gz
+#wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.10-upstream-linux-x86.tar.gz
+wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.12.1-upstream-linux-x86.tar.gz
 mkdir wineversion
 tar xf PlayOnLinux-wine-* -C wineversion/
 
