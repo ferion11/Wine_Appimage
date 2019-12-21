@@ -38,6 +38,13 @@ else
   BINARY_NAME=$(basename "$0")
 fi
 
+# change some scripts to executables
+if [[ $1 =~ ^(winecfg|wineboot|regedit|regsvr32|msiexec|msidb|notepad|winefile|winemine)$ ]]; then
+  args=( "$@" )
+  args[0]="$1.exe"
+  set "${args[@]}"
+fi
+
 if [ ! -z "$1" ] && [ -e "$HERE/bin/$1" ] ; then
   MAIN="$HERE/bin/$1" ; shift
 elif [ ! -z "$1" ] && [ -e "$HERE/usr/bin/$1" ] ; then
