@@ -18,7 +18,7 @@ Appimage for last Wine 32bits from PlayOnLinux. You can just download the Appima
 #### For configuration, just run "wine" (it will run the winecfg) or:
 - `$ wine winecfg`
 #### For regedit:
-- `wine regedit.exe`
+- `wine regedit`
 #### For your Apps:
 - `wine xyz.exe`
 #### If you use PRIME, you can use something like that too:
