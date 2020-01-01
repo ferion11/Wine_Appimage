@@ -40,6 +40,27 @@ pacman -Syw --noconfirm --cachedir cache lib32-alsa-lib lib32-alsa-plugins lib32
 # Remove non lib32 pkgs before extracting
 find ./cache -type f ! -name "lib32*" -exec rm {} \;
 
+# Add the archlinux32 pentium4 packages (lib32-ffmpeg lib32-gst-libav and deps):
+wget -c http://pool.mirror.archlinux32.org/pentium4/extra/gst-libav-1.16.2-1.0-pentium4.pkg.tar.xz -P ./cache/
+wget -c http://pool.mirror.archlinux32.org/pentium4/staging/ffmpeg-1:4.2.1-4.5-pentium4.pkg.tar.xz -P ./cache/
+wget -c http://pool.mirror.archlinux32.org/pentium4/extra/aom-1.0.0.errata1-1.2-pentium4.pkg.tar.xz -P ./cache/
+wget -c http://pool.mirror.archlinux32.org/pentium4/extra/gsm-1.0.18-1.4-pentium4.pkg.tar.xz -P ./cache/
+wget -c http://pool.mirror.archlinux32.org/pentium4/extra/lame-3.100-2.1-pentium4.pkg.tar.xz -P ./cache/
+wget -c http://pool.mirror.archlinux32.org/pentium4/staging/libass-0.14.0-1.10-pentium4.pkg.tar.xz -P ./cache/
+wget -c http://pool.mirror.archlinux32.org/pentium4/staging/libbluray-1.1.2-1.7-pentium4.pkg.tar.xz -P ./cache/
+wget -c http://pool.mirror.archlinux32.org/pentium4/extra/dav1d-0.5.2-1.0-pentium4.pkg.tar.xz -P ./cache/
+wget -c http://pool.mirror.archlinux32.org/pentium4/extra/libomxil-bellagio-0.9.3-2.4-pentium4.pkg.tar.xz -P ./cache/
+wget -c http://pool.mirror.archlinux32.org/pentium4/extra/libsoxr-0.1.3-1.1-pentium4.pkg.tar.xz -P ./cache/
+wget -c http://pool.mirror.archlinux32.org/pentium4/extra/libssh-0.9.3-1.0-pentium4.pkg.tar.xz -P ./cache/
+wget -c http://pool.mirror.archlinux32.org/pentium4/extra/vid.stab-1.1-2.4-pentium4.pkg.tar.xz -P ./cache/
+wget -c http://pool.mirror.archlinux32.org/pentium4/extra/l-smash-2.14.5-1.4-pentium4.pkg.tar.xz -P ./cache/
+wget -c http://pool.mirror.archlinux32.org/pentium4/staging/x264-3:0.157.r2980.34c06d1-2.2-pentium4.pkg.tar.xz -P ./cache/
+wget -c http://pool.mirror.archlinux32.org/pentium4/extra/x265-3.2.1-1.0-pentium4.pkg.tar.xz -P ./cache/
+wget -c http://pool.mirror.archlinux32.org/pentium4/extra/xvidcore-1.3.6-1.0-pentium4.pkg.tar.xz -P ./cache/
+wget -c http://pool.mirror.archlinux32.org/pentium4/extra/opencore-amr-0.1.5-3.0-pentium4.pkg.tar.xz -P ./cache/
+wget -c http://pool.mirror.archlinux32.org/pentium4/extra/openjpeg2-2.3.1-1.0-pentium4.pkg.tar.xz -P ./cache/
+
+# extracting...
 find ./cache -name '*tar.xz' -exec tar --warning=no-unknown-keyword -xJf {} \;
 
 
