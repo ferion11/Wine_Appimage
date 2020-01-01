@@ -2,6 +2,7 @@
 HERE="$(dirname "$(readlink -f "${0}")")"
 
 # If not extract and overwrite, $HERE/lib is a link to $HERE/usr/lib, that link to $HERE/usr/lib64
+export LD_LIBRARY_PATH="$HERE/usr/lib":$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH="$HERE/usr/lib32":$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH="$HERE/lib":$LD_LIBRARY_PATH
 
