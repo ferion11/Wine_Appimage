@@ -20,6 +20,18 @@ export FONTCONFIG_PATH="$HERE/etc/fonts":$FONTCONFIG_PATH
 #LD
 export WINELDLIBRARY="$HERE/usr/lib32/ld-linux.so.2"
 
+# GStreamer environment variables
+export GST_REGISTRY_REUSE_PLUGIN_SCANNER="no"
+export GST_PLUGIN_SYSTEM_PATH_1_0="${HERE}/usr/lib32/gstreamer-1.0/"
+
+export GST_PLUGIN_SCANNER_1_0="${HERE}/usr/lib32/gstreamer-1.0/gst-plugin-scanner"
+export GST_PTP_HELPER_1_0="${HERE}/usr/lib32/gstreamer-1.0/gst-ptp-helper"
+
+export GST_PLUGIN_PATH=${GST_PLUGIN_SYSTEM_PATH_1_0}
+export GST_PLUGIN_SYSTEM_PATH=${GST_PLUGIN_SYSTEM_PATH_1_0}
+export GST_PLUGIN_SCANNER=${GST_PLUGIN_SCANNER_1_0}
+
+
 ##Wine env
 #export WINEDEBUG=fixme-all
 
