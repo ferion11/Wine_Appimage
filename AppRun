@@ -37,7 +37,10 @@ export GST_PLUGIN_SCANNER=${GST_PLUGIN_SCANNER_1_0}
 
 # arch and bottle
 export WINEARCH=win32
-export WINEPREFIX=~/.wine32
+if [ -z "$WINEPREFIX" ]
+then
+    export WINEPREFIX=~/.wine32
+fi
 
 # Load winecfg if no arguments given
 APPLICATION=""

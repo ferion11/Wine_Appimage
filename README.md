@@ -11,8 +11,8 @@ Appimage for last Wine 32bits from PlayOnLinux. You can just download the Appima
 - `$ ln -s wine-i386_x86_64-archlinux.AppImage wineserver`
 
 ## Have set:
-- WINEARCH=win32
-- WINEPREFIX=~/.wine32
+- WINEARCH=win32 (fixed and can't be changed)
+- WINEPREFIX=~/.wine32 (can be changed if needed)
 
 ## Usage:
 #### For configuration, just run "wine" (it will run the winecfg) or:
