@@ -8,6 +8,7 @@ export LD_LIBRARY_PATH="$HERE/lib":$LD_LIBRARY_PATH
 
 
 #Sound Library
+export LD_LIBRARY_PATH="$HERE/usr/lib32/pulseaudio":$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH="$HERE/usr/lib32/alsa-lib":$LD_LIBRARY_PATH
 
 # libGL drivers
