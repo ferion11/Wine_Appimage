@@ -34,11 +34,11 @@ dependencys=$(pactree -s -u wine |grep lib32 | xargs)
 mkdir cache
 
 pacman -Scc --noconfirm
-pacman -Syw --noconfirm --cachedir cache lib32-alsa-lib lib32-alsa-plugins lib32-faudio lib32-fontconfig lib32-freetype2 lib32-gcc-libs lib32-gettext lib32-giflib lib32-glu lib32-gnutls lib32-gst-plugins-base lib32-lcms2 lib32-libjpeg-turbo lib32-libjpeg6-turbo lib32-libldap lib32-libpcap lib32-libpng lib32-libpng12 lib32-libsm lib32-libxcomposite lib32-libxcursor lib32-libxdamage lib32-libxi lib32-libxml2 lib32-libxmu lib32-libxrandr lib32-libxslt lib32-libxxf86vm lib32-mesa lib32-mesa-libgl lib32-mpg123 lib32-ncurses lib32-openal lib32-sdl2 lib32-v4l-utils lib32-libdrm lib32-libva lib32-krb5 lib32-flac lib32-gst-plugins-good lib32-libcups lib32-libwebp lib32-libvpx lib32-libvpx1.3 lib32-portaudio lib32-sdl lib32-sdl2_image lib32-sdl2_mixer lib32-sdl2_ttf lib32-sdl_image lib32-sdl_mixer lib32-sdl_ttf lib32-smpeg lib32-speex lib32-speexdsp lib32-twolame lib32-virtualgl lib32-ladspa lib32-libao lib32-soundtouch lib32-libxvmc lib32-vulkan-icd-loader lib32-vulkan-intel lib32-libvdpau lib32-libpulse lib32-libcanberra-pulse lib32-libcanberra-gstreamer lib32-glew lib32-mesa-demos lib32-llvm-libs $dependencys
+pacman -Syw --noconfirm --cachedir cache lib32-alsa-lib lib32-alsa-plugins lib32-faudio lib32-fontconfig lib32-freetype2 lib32-gcc-libs lib32-gettext lib32-giflib lib32-glu lib32-gnutls lib32-gst-plugins-base lib32-lcms2 lib32-libjpeg-turbo lib32-libjpeg6-turbo lib32-libldap lib32-libpcap lib32-libpng lib32-libpng12 lib32-libsm lib32-libxcomposite lib32-libxcursor lib32-libxdamage lib32-libxi lib32-libxml2 lib32-libxmu lib32-libxrandr lib32-libxslt lib32-libxxf86vm lib32-mesa lib32-mesa-libgl lib32-mpg123 lib32-ncurses lib32-openal lib32-sdl2 lib32-v4l-utils lib32-libdrm lib32-libva lib32-krb5 lib32-flac lib32-gst-plugins-good lib32-libcups lib32-libwebp lib32-libvpx lib32-libvpx1.3 lib32-portaudio lib32-sdl lib32-sdl2_image lib32-sdl2_mixer lib32-sdl2_ttf lib32-sdl_image lib32-sdl_mixer lib32-sdl_ttf lib32-smpeg lib32-speex lib32-speexdsp lib32-twolame lib32-virtualgl lib32-ladspa lib32-libao lib32-soundtouch lib32-libxvmc lib32-vulkan-icd-loader lib32-vulkan-intel lib32-libvdpau lib32-libpulse lib32-libcanberra-pulse lib32-libcanberra-gstreamer lib32-glew lib32-mesa-demos lib32-llvm-libs lib32-jansson $dependencys
 #*don't have package (using the archlinux32 packages below): lib32-ffmpeg lib32-gst-libav
 
 # Remove non lib32 pkgs before extracting
-echo "All files in ./cache: $(ls ./cache)"
+#echo "All files in ./cache: $(ls ./cache)"
 find ./cache -type f ! -name "lib32*" -exec rm {} \; -exec echo "Removing: {}" \;
 #find ./cache -type f -name "*x86_64*" -exec rm {} \; -exec echo "Removing: {}" \; #don't work because the name of lib32 multilib packages have the x86_64 too
 echo "All files in ./cache: $(ls ./cache)"
@@ -63,6 +63,28 @@ wget -c http://pool.mirror.archlinux32.org/pentium4/extra/xvidcore-1.3.6-1.0-pen
 wget -c http://pool.mirror.archlinux32.org/pentium4/extra/opencore-amr-0.1.5-3.0-pentium4.pkg.tar.xz -P ./cache/
 wget -c http://pool.mirror.archlinux32.org/pentium4/extra/openjpeg2-2.3.1-1.0-pentium4.pkg.tar.xz -P ./cache/
 
+# Add the archlinux32 pentium4 packages (smbclient and deps):
+wget -c http://pool.mirror.archlinux32.org/pentium4/extra/libwbclient-4.10.10-2.0-pentium4.pkg.tar.xz -P ./cache/
+wget -c http://pool.mirror.archlinux32.org/pentium4/core/libtirpc-1.2.5-1.0-pentium4.pkg.tar.xz -P ./cache/
+# FIXME: tevent have incomplete python deps
+wget -c http://pool.mirror.archlinux32.org/pentium4/extra/tevent-1:0.9.39-4.1-pentium4.pkg.tar.xz -P ./cache/
+# FIXME: talloc have incomplete python deps
+wget -c http://pool.mirror.archlinux32.org/pentium4/extra/talloc-2.3.1-1.0-pentium4.pkg.tar.xz -P ./cache/
+# FIXME: ldb incomplete deps
+wget -c http://pool.mirror.archlinux32.org/pentium4/extra/ldb-1:1.5.6-2.1-pentium4.pkg.tar.xz -P ./cache/
+wget -c http://pool.mirror.archlinux32.org/pentium4/extra/libbsd-0.10.0-1.0-pentium4.pkg.tar.xz -P ./cache/
+# FIXME: avahi incomplete deps
+wget -c http://pool.mirror.archlinux32.org/pentium4/extra/avahi-0.7+18+g1b5f401-3.1-pentium4.pkg.tar.xz -P ./cache/
+wget -c http://pool.mirror.archlinux32.org/pentium4/testing/libarchive-3.4.0-3.0-pentium4.pkg.tar.xz -P ./cache/
+wget -c http://pool.mirror.archlinux32.org/pentium4/extra/smbclient-4.10.10-2.0-pentium4.pkg.tar.xz -P ./cache/
+
+# FIXME: "wine --check-libs" have:
+#libcapi20.so.3: missing
+#libgtk-3.so.0: missing
+#libodbc.so.2: missing
+#libsane.so.1: missing
+#libXinerama.so.1: missing
+
 # extracting *tar.xz...
 find ./cache -name '*tar.xz' -exec tar --warning=no-unknown-keyword -xJf {} \;
 
@@ -81,13 +103,32 @@ ln -s libGLX_mesa.so.0 libGLX_indirect.so.0
 mv libGLX_indirect.so.0 usr/lib32
 
 rm usr/lib/libGLX_indirect.so.0
-ln -s libGLX_mesa.so.0 libGLX_indirect.so.0
+ln -s ../lib32/libGLX_mesa.so.0 libGLX_indirect.so.0
 mv libGLX_indirect.so.0 usr/lib
+#--------
+
+rm usr/lib32/libkeyutils.so
+ln -s libkeyutils.so.1 libkeyutils.so
+mv libkeyutils.so usr/lib32
 
 rm usr/lib/libkeyutils.so
-ln -s libkeyutils.so.1 libkeyutils.so
+ln -s ../lib32/libkeyutils.so.1 libkeyutils.so
 mv libkeyutils.so usr/lib
+#--------
 
+# workaround some of "wine --check-libs" wrong versions
+ln -s libncurses.so libncurses.so.5
+mv libncurses.so.5 usr/lib32
+
+ln -s libpcap.so libpcap.so.0.8
+mv libpcap.so.0.8 usr/lib32
+
+ln -s libva.so libva.so.1
+ln -s libva-drm.so libva-drm.so.1
+ln -s libva-x11.so libva-x11.so.1
+mv libva.so.1 usr/lib32
+mv libva-drm.so.1 usr/lib32
+mv libva-x11.so.1 usr/lib32
 #===========================================================================================
 # Disable PulseAudio
 rm etc/asound.conf; rm -rf etc/modprobe.d/alsa.conf; rm -rf etc/pulse
