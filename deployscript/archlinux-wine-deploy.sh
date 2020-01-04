@@ -4,7 +4,7 @@ sed -i "/\[multilib\]/,/Include/"'s/^#//' /etc/pacman.conf
 
 pacman -Syy
 #pacman -S --noconfirm wget file pacman-contrib tar grep gcc lib32-gcc-libs
-pacman -S --noconfirm wget file pacman-contrib tar grep
+pacman -S --noconfirm wget file pacman-contrib tar grep zstd xz
 
 #===========================================================================================
 # Get Wine
@@ -38,7 +38,10 @@ pacman -Syw --noconfirm --cachedir cache lib32-alsa-lib lib32-alsa-plugins lib32
 #*don't have package (using the archlinux32 packages below): lib32-ffmpeg lib32-gst-libav
 
 # Remove non lib32 pkgs before extracting
-find ./cache -type f ! -name "lib32*" -exec rm {} \;
+echo "All files in ./cache: $(ls ./cache)"
+find ./cache -type f ! -name "lib32*" -exec rm {} \; -exec echo "Removing: {}" \;
+#find ./cache -type f -name "*x86_64*" -exec rm {} \; -exec echo "Removing: {}" \; #don't work because the name of lib32 multilib packages have the x86_64 too
+echo "All files in ./cache: $(ls ./cache)"
 
 # Add the archlinux32 pentium4 packages (lib32-ffmpeg lib32-gst-libav and deps):
 wget -c http://pool.mirror.archlinux32.org/pentium4/extra/gst-libav-1.16.2-1.0-pentium4.pkg.tar.xz -P ./cache/
@@ -60,9 +63,11 @@ wget -c http://pool.mirror.archlinux32.org/pentium4/extra/xvidcore-1.3.6-1.0-pen
 wget -c http://pool.mirror.archlinux32.org/pentium4/extra/opencore-amr-0.1.5-3.0-pentium4.pkg.tar.xz -P ./cache/
 wget -c http://pool.mirror.archlinux32.org/pentium4/extra/openjpeg2-2.3.1-1.0-pentium4.pkg.tar.xz -P ./cache/
 
-# extracting...
+# extracting *tar.xz...
 find ./cache -name '*tar.xz' -exec tar --warning=no-unknown-keyword -xJf {} \;
 
+# extracting *tar.zst...
+find ./cache -name '*tar.zst' -exec tar --warning=no-unknown-keyword --zstd -xf {} \;
 
 # wineworkdir cleanup
 rm -rf cache; rm -rf include; rm usr/lib32/{*.a,*.o}; rm -rf usr/lib32/pkgconfig; rm -rf share/man; rm -rf usr/include; rm -rf usr/share/{applications,doc,emacs,gtk-doc,java,licenses,man,info,pkgconfig}; rm usr/lib32/locale
