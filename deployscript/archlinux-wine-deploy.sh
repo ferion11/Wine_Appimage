@@ -34,8 +34,10 @@ dependencys=$(pactree -s -u wine |grep lib32 | xargs)
 mkdir cache
 
 pacman -Scc --noconfirm
-pacman -Syw --noconfirm --cachedir cache lib32-alsa-lib lib32-alsa-plugins lib32-faudio lib32-fontconfig lib32-freetype2 lib32-gcc-libs lib32-gettext lib32-giflib lib32-glu lib32-gnutls lib32-gst-plugins-base lib32-lcms2 lib32-libjpeg-turbo lib32-libjpeg6-turbo lib32-libldap lib32-libpcap lib32-libpng lib32-libpng12 lib32-libsm lib32-libxcomposite lib32-libxcursor lib32-libxdamage lib32-libxi lib32-libxml2 lib32-libxmu lib32-libxrandr lib32-libxslt lib32-libxxf86vm lib32-mesa lib32-mesa-libgl lib32-mpg123 lib32-ncurses lib32-openal lib32-sdl2 lib32-v4l-utils lib32-libdrm lib32-libva lib32-krb5 lib32-flac lib32-gst-plugins-good lib32-libcups lib32-libwebp lib32-libvpx lib32-libvpx1.3 lib32-portaudio lib32-sdl lib32-sdl2_image lib32-sdl2_mixer lib32-sdl2_ttf lib32-sdl_image lib32-sdl_mixer lib32-sdl_ttf lib32-smpeg lib32-speex lib32-speexdsp lib32-twolame lib32-virtualgl lib32-ladspa lib32-libao lib32-soundtouch lib32-libxvmc lib32-vulkan-icd-loader lib32-vulkan-intel lib32-libvdpau lib32-libpulse lib32-libcanberra-pulse lib32-libcanberra-gstreamer lib32-glew lib32-mesa-demos lib32-llvm-libs lib32-jansson $dependencys
+pacman -Syw --noconfirm --cachedir cache lib32-alsa-lib lib32-alsa-plugins lib32-faudio lib32-fontconfig lib32-freetype2 lib32-gcc-libs lib32-gettext lib32-giflib lib32-glu lib32-gnutls lib32-gst-plugins-base lib32-lcms2 lib32-libjpeg-turbo lib32-libjpeg6-turbo lib32-libldap lib32-libpcap lib32-libpng lib32-libpng12 lib32-libsm lib32-libxcomposite lib32-libxcursor lib32-libxdamage lib32-libxi lib32-libxml2 lib32-libxmu lib32-libxrandr lib32-libxslt lib32-libxxf86vm lib32-mesa lib32-mesa-libgl lib32-mpg123 lib32-ncurses lib32-openal lib32-sdl2 lib32-v4l-utils lib32-libdrm lib32-libva lib32-krb5 lib32-flac lib32-gst-plugins-good lib32-libcups lib32-libwebp lib32-libvpx lib32-libvpx1.3 lib32-portaudio lib32-sdl lib32-sdl2_image lib32-sdl2_mixer lib32-sdl2_ttf lib32-sdl_image lib32-sdl_mixer lib32-sdl_ttf lib32-smpeg lib32-speex lib32-speexdsp lib32-twolame lib32-virtualgl lib32-ladspa lib32-libao lib32-soundtouch lib32-libxvmc lib32-vulkan-icd-loader lib32-vulkan-intel lib32-libvdpau lib32-libpulse lib32-libcanberra-pulse lib32-libcanberra-gstreamer lib32-glew lib32-mesa-demos lib32-jansson lib32-libxinerama lib32-atk lib32-at-spi2-atk lib32-colord lib32-json-glib lib32-libepoxy lib32-librsvg lib32-libxkbcommon lib32-rest lib32-gtk3 $dependencys
 #*don't have package (using the archlinux32 packages below): lib32-ffmpeg lib32-gst-libav
+# removed for small size: lib32-llvm-libs
+# removed for small size because wine don't need: lib32-gtk2 lib32-wxgtk2
 
 # Remove non lib32 pkgs before extracting
 #echo "All files in ./cache: $(ls ./cache)"
@@ -80,10 +82,10 @@ wget -c http://pool.mirror.archlinux32.org/pentium4/extra/smbclient-4.10.10-2.0-
 
 # FIXME: "wine --check-libs" have:
 #libcapi20.so.3: missing
-#libgtk-3.so.0: missing
+#libgtk-3.so.0: missing (trying)
 #libodbc.so.2: missing
 #libsane.so.1: missing
-#libXinerama.so.1: missing
+#libXinerama.so.1: missing (trying)
 
 # extracting *tar.xz...
 find ./cache -name '*tar.xz' -exec tar --warning=no-unknown-keyword -xJf {} \;
