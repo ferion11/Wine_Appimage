@@ -97,13 +97,6 @@ find ./cache -name '*tar.zst' -exec tar --warning=no-unknown-keyword --zstd -xf 
 rm -rf cache; rm -rf include; rm usr/lib32/{*.a,*.o}; rm -rf usr/lib32/pkgconfig; rm -rf share/man; rm -rf usr/include; rm -rf usr/share/{applications,doc,emacs,gtk-doc,java,licenses,man,info,pkgconfig}; rm usr/lib32/locale
 rm -rf boot; rm -rf dev; rm -rf home; rm -rf mnt; rm -rf opt; rm -rf proc; rm -rf root; rm sbin; rm -rf srv; rm -rf sys; rm -rf tmp; rm -rf var
 rm -rf usr/src; rm -rf usr/share; rm usr/sbin; rm -rf usr/local; rm usr/lib/{*.a,*.o}
-
-#removing libLLVM for size (needed only for opencl and some vulkan drivers):
-rm -rf usr/lib32/libLLVM*
-rm -rf usr/lib32/libLTO.so*
-rm -rf usr/lib32/LLVMgold.so
-rm -rf usr/lib32/bfd-plugins/LLVMgold.so
-
 #===========================================================================================
 # fix broken link libglx_indirect and others
 rm usr/lib32/libGLX_indirect.so.0
