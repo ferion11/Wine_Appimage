@@ -39,43 +39,43 @@ export GST_PLUGIN_SCANNER=${GST_PLUGIN_SCANNER_1_0}
 export WINEARCH=win32
 if [ -z "$WINEPREFIX" ]
 then
-    export WINEPREFIX=~/.wine32
+	export WINEPREFIX=~/.wine32
 fi
 
 # Load winecfg if no arguments given
 APPLICATION=""
 if [ -z "$*" ] ; then
-  APPLICATION="winecfg"
+	APPLICATION="winecfg"
 fi
 
 # Allow the AppImage to be symlinked to e.g., /usr/bin/wineserver
-if [ ! -z $APPIMAGE ] ; then
-  BINARY_NAME=$(basename "$ARGV0")
+if [ -n "$APPIMAGE" ] ; then
+	BINARY_NAME=$(basename "$ARGV0")
 else
-  BINARY_NAME=$(basename "$0")
+	BINARY_NAME=$(basename "$0")
 fi
 
 # change some scripts to executables
 if [[ $1 =~ ^(winecfg|wineboot|regedit|regsvr32|msiexec|msidb|notepad|winefile|winemine)$ ]]; then
-  args=( "$@" )
-  args[0]="$1.exe"
-  set "${args[@]}"
+	args=( "$@" )
+	args[0]="$1.exe"
+	set "${args[@]}"
 fi
 
-if [ ! -z "$1" ] && [ -e "$HERE/bin/$1" ] ; then
-  MAIN="$HERE/bin/$1" ; shift
-elif [ ! -z "$1" ] && [ -e "$HERE/usr/bin/$1" ] ; then
-  MAIN="$HERE/usr/bin/$1" ; shift
+if [ -n "$1" ] && [ -e "$HERE/bin/$1" ] ; then
+	MAIN="$HERE/bin/$1" ; shift
+elif [ -n "$1" ] && [ -e "$HERE/usr/bin/$1" ] ; then
+	MAIN="$HERE/usr/bin/$1" ; shift
 elif [ -e "$HERE/bin/$BINARY_NAME" ] ; then
-  MAIN="$HERE/bin/$BINARY_NAME"
+	MAIN="$HERE/bin/$BINARY_NAME"
 elif [ -e "$HERE/usr/bin/$BINARY_NAME" ] ; then
-  MAIN="$HERE/usr/bin/$BINARY_NAME"
+	MAIN="$HERE/usr/bin/$BINARY_NAME"
 else
-  MAIN="$HERE/bin/wine"
+	MAIN="$HERE/bin/wine"
 fi
 
 if [ -z "$APPLICATION" ] ; then
-  LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$@" | cat
+	LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$@" | cat
 else
-  LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$APPLICATION" | cat
+	LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$APPLICATION" | cat
 fi
