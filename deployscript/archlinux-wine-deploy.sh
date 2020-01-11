@@ -7,6 +7,9 @@ die() { echo >&2 "$*"; exit 1; };
  get_archlinux32_pkg() {
 	#WARNING: Only work on well formatted html
 	#usage:  get_archlinux32_pkg [link] [dest]
+	# get_archlinux32_pkg http://pool.mirror.archlinux32.org/pentium4/extra/aom-1.0.0.errata1-1.2-pentium4.pkg.tar.xz ./cache/
+	# get_archlinux32_pkg https://www.archlinux32.org/packages/pentium4/extra/xvidcore/ ./cache/
+	
 	REAL_LINK=""
 	PAR_PKG_LINK=$(echo $1 | grep "pkg.tar")
 	
@@ -15,11 +18,11 @@ die() { echo >&2 "$*"; exit 1; };
 	else
 		rm -rf tmp_file_html
 		wget -nv -c $1 -O tmp_file_html
-		REAL_LINK=$(sed -n 's/.*href="\([^"]*\).*/\1/p' tmp_file_html | grep "pkg.tar")
+		REAL_LINK=$(grep "pkg.tar" tmp_file_html | grep --invert-match ".sig" | sed -n 's/.*href="\([^"]*\).*/\1/p')
 		rm -rf tmp_file_html
 		
 		if [ -z "$REAL_LINK" ]; then
-			echo "* ERROR: Fail to download: $1"
+			echo "* ERROR get_archlinux32_pkg: Fail to download: $1"
 			return 1;
 		fi
 	fi
@@ -28,6 +31,37 @@ die() { echo >&2 "$*"; exit 1; };
 }
 
 get_archlinux32_pkgs() {
+	#Usage: get_archlinux32_pkgs [dest] pack1 pack2...
+	#https://mirror.datacenter.by/pub/archlinux32/$arch/$repo/"
+	
+	rm -rf tmp_pentium4_core_html
+	rm -rf tmp_pentium4_core_html
+	wget -nv -c https://mirror.datacenter.by/pub/archlinux32/pentium4/core/ -O tmp_pentium4_core_html
+	wget -nv -c https://mirror.datacenter.by/pub/archlinux32/pentium4/extra/ -O tmp_pentium4_extra_html
+	
+	for current_pkg in "${@:2}"
+	do
+		PKG_NAME_CORE=$(grep "$current_pkg-[0-9]" tmp_pentium4_core_html | grep --invert-match ".sig" | sed -n 's/.*href="\([^"]*\).*/\1/p' | grep "^$current_pkg")
+		
+		if [ -n "$PKG_NAME_CORE" ]; then
+			#echo "CORE: Downloading $current_pkg in $1 : $PKG_NAME_CORE"
+			#echo "http://pool.mirror.archlinux32.org/pentium4/core/$PKG_NAME_CORE"
+			get_archlinux32_pkg "http://pool.mirror.archlinux32.org/pentium4/core/$PKG_NAME_CORE" $1
+		else
+			PKG_NAME_EXTRA=$(grep "$current_pkg-[0-9]" tmp_pentium4_extra_html | grep --invert-match ".sig" | sed -n 's/.*href="\([^"]*\).*/\1/p' | grep "^$current_pkg")
+			
+			if [ -n "$PKG_NAME_EXTRA" ]; then
+				#echo "EXTRA: Downloading $current_pkg in $1 : $PKG_NAME_EXTRA"
+				#echo "http://pool.mirror.archlinux32.org/pentium4/extra/$PKG_NAME_EXTRA"
+				get_archlinux32_pkg "http://pool.mirror.archlinux32.org/pentium4/extra/$PKG_NAME_EXTRA" $1
+			else
+				echo "ERROR get_archlinux32_pkgs: Package don't found: $current_pkg"
+			fi
+		fi
+	done
+	
+	rm -rf tmp_pentium4_core_html
+	rm -rf tmp_pentium4_extra_html
 }
 #=========================
 
@@ -77,39 +111,12 @@ find ./cache -type f ! -name "lib32*" -exec rm {} \; -exec echo "Removing: {}" \
 echo "All files in ./cache: $(ls ./cache)"
 
 # Add the archlinux32 pentium4 packages (lib32-ffmpeg lib32-gst-libav and deps):
- get_archlinux32_pkg http://pool.mirror.archlinux32.org/pentium4/extra/gst-libav-1.16.2-1.0-pentium4.pkg.tar.xz ./cache/
- get_archlinux32_pkg http://pool.mirror.archlinux32.org/pentium4/staging/ffmpeg-1:4.2.1-4.5-pentium4.pkg.tar.xz ./cache/
- get_archlinux32_pkg http://pool.mirror.archlinux32.org/pentium4/extra/aom-1.0.0.errata1-1.2-pentium4.pkg.tar.xz ./cache/
- get_archlinux32_pkg http://pool.mirror.archlinux32.org/pentium4/extra/gsm-1.0.18-1.4-pentium4.pkg.tar.xz ./cache/
- get_archlinux32_pkg http://pool.mirror.archlinux32.org/pentium4/extra/lame-3.100-2.1-pentium4.pkg.tar.xz ./cache/
- get_archlinux32_pkg http://pool.mirror.archlinux32.org/pentium4/staging/libass-0.14.0-1.10-pentium4.pkg.tar.xz ./cache/
- get_archlinux32_pkg http://pool.mirror.archlinux32.org/pentium4/staging/libbluray-1.1.2-1.7-pentium4.pkg.tar.xz ./cache/
- get_archlinux32_pkg http://pool.mirror.archlinux32.org/pentium4/extra/dav1d-0.5.2-1.0-pentium4.pkg.tar.xz ./cache/
- get_archlinux32_pkg http://pool.mirror.archlinux32.org/pentium4/extra/libomxil-bellagio-0.9.3-2.4-pentium4.pkg.tar.xz ./cache/
- get_archlinux32_pkg http://pool.mirror.archlinux32.org/pentium4/extra/libsoxr-0.1.3-1.1-pentium4.pkg.tar.xz ./cache/
- get_archlinux32_pkg http://pool.mirror.archlinux32.org/pentium4/extra/libssh-0.9.3-1.0-pentium4.pkg.tar.xz ./cache/
- get_archlinux32_pkg http://pool.mirror.archlinux32.org/pentium4/extra/vid.stab-1.1-2.4-pentium4.pkg.tar.xz ./cache/
- get_archlinux32_pkg http://pool.mirror.archlinux32.org/pentium4/extra/l-smash-2.14.5-1.4-pentium4.pkg.tar.xz ./cache/
- get_archlinux32_pkg http://pool.mirror.archlinux32.org/pentium4/staging/x264-3:0.157.r2980.34c06d1-2.2-pentium4.pkg.tar.xz ./cache/
- get_archlinux32_pkg http://pool.mirror.archlinux32.org/pentium4/extra/x265-3.2.1-1.0-pentium4.pkg.tar.xz ./cache/
- get_archlinux32_pkg https://www.archlinux32.org/packages/pentium4/extra/xvidcore/ ./cache/
- get_archlinux32_pkg http://pool.mirror.archlinux32.org/pentium4/extra/opencore-amr-0.1.5-3.0-pentium4.pkg.tar.xz ./cache/
- get_archlinux32_pkg http://pool.mirror.archlinux32.org/pentium4/extra/openjpeg2-2.3.1-1.0-pentium4.pkg.tar.xz ./cache/
-
 # Add the archlinux32 pentium4 packages (smbclient and deps):
- get_archlinux32_pkg http://pool.mirror.archlinux32.org/pentium4/extra/libwbclient-4.10.10-2.0-pentium4.pkg.tar.xz ./cache/
- get_archlinux32_pkg http://pool.mirror.archlinux32.org/pentium4/core/libtirpc-1.2.5-1.0-pentium4.pkg.tar.xz ./cache/
 # FIXME: tevent have incomplete python deps
- get_archlinux32_pkg http://pool.mirror.archlinux32.org/pentium4/extra/tevent-1:0.9.39-4.1-pentium4.pkg.tar.xz ./cache/
 # FIXME: talloc have incomplete python deps
- get_archlinux32_pkg http://pool.mirror.archlinux32.org/pentium4/extra/talloc-2.3.1-1.0-pentium4.pkg.tar.xz ./cache/
 # FIXME: ldb incomplete deps
- get_archlinux32_pkg http://pool.mirror.archlinux32.org/pentium4/extra/ldb-1:1.5.6-2.1-pentium4.pkg.tar.xz ./cache/
- get_archlinux32_pkg http://pool.mirror.archlinux32.org/pentium4/extra/libbsd-0.10.0-1.0-pentium4.pkg.tar.xz ./cache/
 # FIXME: avahi incomplete deps
- get_archlinux32_pkg http://pool.mirror.archlinux32.org/pentium4/extra/avahi-0.7+18+g1b5f401-3.1-pentium4.pkg.tar.xz ./cache/
- get_archlinux32_pkg https://www.archlinux32.org/packages/pentium4/core/libarchive/ ./cache/
- get_archlinux32_pkg http://pool.mirror.archlinux32.org/pentium4/extra/smbclient-4.10.10-2.0-pentium4.pkg.tar.xz ./cache/
+get_archlinux32_pkgs ./cache/ gst-libav ffmpeg aom gsm lame libass libbluray dav1d libomxil-bellagio libsoxr libssh vid.stab l-smash x264 x265 xvidcore opencore-amr openjpeg2 libwbclient libtirpc tevent talloc ldb libbsd avahi libarchive smbclient
 
 # FIXME: "wine --check-libs" have:
 #libcapi20.so.3: missing (from isdn4k-utils)
