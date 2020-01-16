@@ -74,6 +74,7 @@ else
 	MAIN="$HERE/bin/wine"
 fi
 
+export PATH=$HERE/bin:$HERE/usr/bin:$PATH
 if [ -z "$APPLICATION" ] ; then
 	LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$@" | cat
 else
