@@ -1,11 +1,20 @@
 #!/bin/bash
 HERE="$(dirname "$(readlink -f "${0}")")"
+MY_APPIMAGE_TMP_DIR="$HERE_tmp"
+#===================================================================
 
+# Create a tmp dir to some utils like vulkan:
+if [ -d "$1" ]; then
+	rm -rf "$MY_APPIMAGE_TMP_DIR"
+fi
+mkdir "$MY_APPIMAGE_TMP_DIR"
+
+#===================================================================
 # If not extract and overwrite, $HERE/lib is a link to $HERE/usr/lib, that link to $HERE/usr/lib64
 export LD_LIBRARY_PATH="$HERE/usr/lib":$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH="$HERE/usr/lib32":$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH="$HERE/lib":$LD_LIBRARY_PATH
-
+#----------------------------------------
 
 #Sound Library
 export LD_LIBRARY_PATH="$HERE/usr/lib32/pulseaudio":$LD_LIBRARY_PATH
@@ -19,6 +28,7 @@ export FONTCONFIG_PATH="$HERE/etc/fonts":$FONTCONFIG_PATH
 
 #LD
 export WINELDLIBRARY="$HERE/usr/lib32/ld-linux.so.2"
+#----------------------------------------
 
 # GStreamer environment variables
 export GST_REGISTRY_REUSE_PLUGIN_SCANNER="no"
@@ -30,7 +40,38 @@ export GST_PTP_HELPER_1_0="${HERE}/usr/lib32/gstreamer-1.0/gst-ptp-helper"
 export GST_PLUGIN_PATH=${GST_PLUGIN_SYSTEM_PATH_1_0}
 export GST_PLUGIN_SYSTEM_PATH=${GST_PLUGIN_SYSTEM_PATH_1_0}
 export GST_PLUGIN_SCANNER=${GST_PLUGIN_SCANNER_1_0}
+#===================================================================
 
+#TODO: make all (at least to intel + amdgpu) the vulkan json (see arch mesa files) files on "$MY_APPIMAGE_TMP_DIR" and set VK_ICD_FILENAMES
+# intel try:
+cat > $MY_APPIMAGE_TMP_DIR/intel_icd.x86_64.json << EOF
+{
+    "ICD": {
+        "api_version": "1.1.102",
+        "library_path": "$HERE/usr/lib32/libvulkan_intel.so"
+    },
+    "file_format_version": "1.0.0"
+}
+EOF
+
+#radeon try:
+cat > $MY_APPIMAGE_TMP_DIR/radeon_icd.x86_64.json << EOF
+{
+    "ICD": {
+        "api_version": "1.1.107",
+        "library_path": "$HERE/usr/lib32/libvulkan_radeon.so"
+    },
+    "file_format_version": "1.0.0"
+}
+EOF
+#----------------------------------------
+
+# TODO: Make the find and set, setting just intel for now
+if [ -z "$VK_ICD_FILENAMES" ]
+then
+	export VK_ICD_FILENAMES="$MY_APPIMAGE_TMP_DIR/intel_icd.x86_64.json"
+fi
+#===================================================================
 
 ##Wine env
 #export WINEDEBUG=fixme-all
@@ -41,6 +82,7 @@ if [ -z "$WINEPREFIX" ]
 then
 	export WINEPREFIX=~/.wine32
 fi
+#----------------------------------------
 
 # Load winecfg if no arguments given
 APPLICATION=""
@@ -55,7 +97,7 @@ else
 	BINARY_NAME=$(basename "$0")
 fi
 
-# change some scripts to executables
+# change some scripts to exe executables
 if [[ $1 =~ ^(winecfg|wineboot|regedit|regsvr32|msiexec|msidb|notepad|winefile|winemine)$ ]]; then
 	args=( "$@" )
 	args[0]="$1.exe"
@@ -78,6 +120,7 @@ fi
 if [ "$BINARY_NAME" = "ExternalExec" ] && [ -n "$1" ] && [ -x "$1" ]; then
 	MAIN="$1" ; shift
 fi
+#===================================================================
 
 export PATH=$HERE/bin:$HERE/usr/bin:$PATH
 if [ -z "$APPLICATION" ] ; then
@@ -85,3 +128,7 @@ if [ -z "$APPLICATION" ] ; then
 else
 	LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$APPLICATION" | cat
 fi
+#===================================================================
+
+# clean tmp files:
+rm -rf "$MY_APPIMAGE_TMP_DIR"

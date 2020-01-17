@@ -141,14 +141,14 @@ echo "All files in ./cache: $(ls ./cache)"
 # FIXME: avahi incomplete deps
 #ORIGINAL: get_archlinux32_pkgs ./cache/ gst-libav ffmpeg aom gsm lame libass libbluray dav1d libomxil-bellagio libsoxr libssh vid.stab l-smash x264 x265 xvidcore opencore-amr openjpeg2 libwbclient libtirpc tevent talloc ldb libbsd avahi libarchive smbclient
 # Can't get from arch64_lib32_plus_user_repo: lib32-ffmpeg lib32-gst-libav lib32-libwbclient lib32-tevent lib32-talloc lib32-ldb lib32-libbsd lib32-avahi lib32-libarchive lib32-smbclient
-get_archlinux32_pkgs ./cache/ ffmpeg gst-libav libwbclient tevent talloc ldb libbsd avahi libarchive smbclient libsoxr libssh vid.stab l-smash libtirpc
+# removed smbclient and libwbclient smbclient (the .so file isn't loading)
+get_archlinux32_pkgs ./cache/ ffmpeg gst-libav tevent talloc ldb libbsd avahi libarchive libsoxr libssh vid.stab l-smash libtirpc unixodbc
 
 # FIXME: "wine --check-libs" have:
 #libcapi20.so.3: missing (from isdn4k-utils)
-#libodbc.so.2: missing (from unixodbc)
+#libodbc.so.2: missing (from unixodbc trying)
 #libsane.so.1: missing (from sane: bigger package just for scanning paper)
-#libncurses.so.5: missing (testing! link don't work)
-#libnetapi.so: missing (the lib is there, but missing!?)
+#libnetapi.so: missing (removed because, if the lib is there, in smbclient, then missing!?)
 
 # extracting *tar.xz...
 find ./cache -name '*tar.xz' -exec tar --warning=no-unknown-keyword -xJf {} \;
