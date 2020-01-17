@@ -1,5 +1,6 @@
 #!/bin/bash
 WINE_WORKDIR="wineversion"
+PKG_WORKDIR="pkg_work"
 
 #=========================
 die() { echo >&2 "$*"; exit 1; };
@@ -93,15 +94,46 @@ echo "" >> /etc/pacman.conf
 pacman -Syy && pacman -S archlinuxcn-keyring
 
 pacman -Syy
-#Add "gcc lib32-gcc-libs" for compile in the list:
-pacman -S --noconfirm wget file pacman-contrib tar grep sed zstd xz
+#Add "base-devel multilib-devel" for compile in the list:
+pacman -S --noconfirm wget base-devel multilib-devel pacman-contrib git tar grep sed zstd xz
 #===========================================================================================
+
+mkdir "$WINE_WORKDIR"
+mkdir "$PKG_WORKDIR"
+
+#----------- AUR ----------------
+#Delete a nobody's password (make it empty):
+passwd -d nobody
+
+# Allow the nobody passwordless sudo:
+printf 'nobody ALL=(ALL) ALL\n' | tee -a /etc/sudoers
+
+# change workind dir to nobody own:
+chown nobody.nobody "$PKG_WORKDIR"
+#------------
+
+# INFO: https://wiki.archlinux.org/index.php/Makepkg
+cd "$PKG_WORKDIR" || die "ERROR: Directory don't exist: $PKG_WORKDIR"
+
+# lib32-isdn4k-utils  https://aur.archlinux.org/packages/lib32-isdn4k-utils
+sudo -u nobody git clone https://aur.archlinux.org/lib32-isdn4k-utils.git
+cd lib32-isdn4k-utils
+sudo -u nobody makepkg --syncdeps --noconfirm
+echo "* All files HERE: $(ls ./)"
+mv *.pkg.tar* ../
+cd ..
+#------------
+
+mv *.pkg.tar* ../"$WINE_WORKDIR"
+
+cd ..
+rm -rf "$PKG_WORKDIR"
+#-----------------------------------
 
 # Get Wine
 #wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.10-upstream-linux-x86.tar.gz
 #wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.21-upstream-linux-x86.tar.gz
 wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/staging-linux-x86/PlayOnLinux-wine-4.21-staging-linux-x86.tar.gz
-mkdir "$WINE_WORKDIR"
 tar xf PlayOnLinux-wine-* -C "$WINE_WORKDIR"/
 
 wget -nv -c https://github.com/ferion11/libsutil/releases/download/wine_hook_v0.9/libhookexecv.so
@@ -121,6 +153,7 @@ cd "$WINE_WORKDIR" || die "ERROR: Directory don't exist: $WINE_WORKDIR"
 dependencys=$(pactree -s -u wine |grep lib32 | xargs)
 
 mkdir cache
+mv *.pkg.tar* ./cache/
 
 pacman -Scc --noconfirm
 pacman -Syw --noconfirm --cachedir cache lib32-alsa-lib lib32-alsa-plugins lib32-faudio lib32-fontconfig lib32-freetype2 lib32-gcc-libs lib32-gettext lib32-giflib lib32-glu lib32-gnutls lib32-gst-plugins-base lib32-lcms2 lib32-libjpeg-turbo lib32-libjpeg6-turbo lib32-libldap lib32-libpcap lib32-libpng lib32-libpng12 lib32-libsm lib32-libxcomposite lib32-libxcursor lib32-libxdamage lib32-libxi lib32-libxml2 lib32-libxmu lib32-libxrandr lib32-libxslt lib32-libxxf86vm lib32-mesa lib32-mesa-libgl lib32-mpg123 lib32-ncurses lib32-openal lib32-sdl2 lib32-v4l-utils lib32-libdrm lib32-libva lib32-krb5 lib32-flac lib32-gst-plugins-good lib32-libcups lib32-libwebp lib32-libvpx lib32-libvpx1.3 lib32-portaudio lib32-sdl lib32-sdl2_image lib32-sdl2_mixer lib32-sdl2_ttf lib32-sdl_image lib32-sdl_mixer lib32-sdl_ttf lib32-smpeg lib32-speex lib32-speexdsp lib32-twolame lib32-virtualgl lib32-ladspa lib32-libao lib32-soundtouch lib32-libxvmc lib32-libvdpau lib32-libpulse lib32-libcanberra-pulse lib32-libcanberra-gstreamer lib32-glew lib32-mesa-demos lib32-jansson lib32-libxinerama lib32-atk lib32-at-spi2-atk lib32-colord lib32-json-glib lib32-libepoxy lib32-librsvg lib32-libxkbcommon lib32-rest lib32-gtk3 lib32-vulkan-icd-loader lib32-vulkan-intel lib32-vulkan-radeon lib32-vkd3d lib32-aom lib32-gsm lib32-lame lib32-libass lib32-libbluray lib32-dav1d lib32-libomxil-bellagio lib32-x264 lib32-x265 lib32-xvidcore lib32-opencore-amr lib32-openjpeg2 lib32-ncurses5-compat-libs $dependencys || die "ERROR: Some packages not found!!!"
@@ -141,12 +174,12 @@ echo "All files in ./cache: $(ls ./cache)"
 # FIXME: avahi incomplete deps
 #ORIGINAL: get_archlinux32_pkgs ./cache/ gst-libav ffmpeg aom gsm lame libass libbluray dav1d libomxil-bellagio libsoxr libssh vid.stab l-smash x264 x265 xvidcore opencore-amr openjpeg2 libwbclient libtirpc tevent talloc ldb libbsd avahi libarchive smbclient
 # Can't get from arch64_lib32_plus_user_repo: lib32-ffmpeg lib32-gst-libav lib32-libwbclient lib32-tevent lib32-talloc lib32-ldb lib32-libbsd lib32-avahi lib32-libarchive lib32-smbclient
-# removed smbclient and libwbclient smbclient (the .so file isn't loading)
+# removed smbclient and libwbclient smbclient (the .so file isn't loading on wine)
 get_archlinux32_pkgs ./cache/ ffmpeg gst-libav tevent talloc ldb libbsd avahi libarchive libsoxr libssh vid.stab l-smash libtirpc unixodbc
 
 # FIXME: "wine --check-libs" have:
-#libcapi20.so.3: missing (from isdn4k-utils)
-#libodbc.so.2: missing (from unixodbc trying)
+#libcapi20.so.3: missing (from isdn4k-utils trying now from aur)
+#libodbc.so.2: missing (from unixodbc trying now from archlinux32)
 #libsane.so.1: missing (from sane: bigger package just for scanning paper)
 #libnetapi.so: missing (removed because, if the lib is there, in smbclient, then missing!?)
 
@@ -163,6 +196,7 @@ wget -nv -c https://github.com/ferion11/libsutil/releases/download/vulkan32_tool
 mv -n vkcube32 usr/bin
 mv -n vkcubepp32 usr/bin
 mv -n vulkaninfo32 usr/bin
+#----------------------------------------------
 
 # WINE_WORKDIR cleanup
 rm -rf cache; rm -rf include; rm usr/lib32/{*.a,*.o}; rm -rf usr/lib32/pkgconfig; rm -rf share/man; rm -rf usr/include; rm -rf usr/share/{applications,doc,emacs,gtk-doc,java,licenses,man,info,pkgconfig}; rm usr/lib32/locale
