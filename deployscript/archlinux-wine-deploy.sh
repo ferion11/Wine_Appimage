@@ -111,9 +111,10 @@ printf 'nobody ALL=(ALL) ALL\n' | tee -a /etc/sudoers
 chown nobody.nobody "$PKG_WORKDIR"
 #------------
 
-## INFO: https://wiki.archlinux.org/index.php/Makepkg
-#cd "$PKG_WORKDIR" || die "ERROR: Directory don't exist: $PKG_WORKDIR"
-#
+# INFO: https://wiki.archlinux.org/index.php/Makepkg
+cd "$PKG_WORKDIR" || die "ERROR: Directory don't exist: $PKG_WORKDIR"
+#------------
+
 ## lib32-isdn4k-utils  https://aur.archlinux.org/packages/lib32-isdn4k-utils
 #sudo -u nobody git clone https://aur.archlinux.org/lib32-isdn4k-utils.git
 #cd lib32-isdn4k-utils
