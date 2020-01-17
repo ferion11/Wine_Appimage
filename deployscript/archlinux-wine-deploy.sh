@@ -23,8 +23,7 @@ die() { echo >&2 "$*"; exit 1; };
 		rm -rf tmp_file_html
 		
 		if [ -z "$REAL_LINK" ]; then
-			echo "* ERROR get_archlinux32_pkg: Fail to download: $1"
-			return 1;
+			die "* ERROR get_archlinux32_pkg: Fail to download: $1"
 		fi
 	fi
 	
@@ -56,7 +55,7 @@ get_archlinux32_pkgs() {
 				#echo "http://pool.mirror.archlinux32.org/pentium4/extra/$PKG_NAME_EXTRA"
 				get_archlinux32_pkg "http://pool.mirror.archlinux32.org/pentium4/extra/$PKG_NAME_EXTRA" $1
 			else
-				echo "ERROR get_archlinux32_pkgs: Package don't found: $current_pkg"
+				die "ERROR get_archlinux32_pkgs: Package don't found: $current_pkg"
 			fi
 		fi
 	done
@@ -120,7 +119,7 @@ sudo -u nobody git clone https://aur.archlinux.org/lib32-isdn4k-utils.git
 cd lib32-isdn4k-utils
 sudo -u nobody makepkg --syncdeps --noconfirm
 echo "* All files HERE: $(ls ./)"
-mv *.pkg.tar* ../
+mv *.pkg.tar* ../ || die "ERROR: Can't create the lib32-isdn4k-utils package"
 cd ..
 #------------
 
