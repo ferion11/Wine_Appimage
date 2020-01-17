@@ -156,6 +156,14 @@ find ./cache -name '*tar.xz' -exec tar --warning=no-unknown-keyword -xJf {} \;
 # extracting *tar.zst...
 find ./cache -name '*tar.zst' -exec tar --warning=no-unknown-keyword --zstd -xf {} \;
 
+# Install vulkan tools:
+wget -nv -c https://github.com/ferion11/libsutil/releases/download/vulkan32_tools_v1.0/vkcube32
+wget -nv -c https://github.com/ferion11/libsutil/releases/download/vulkan32_tools_v1.0/vkcubepp32
+wget -nv -c https://github.com/ferion11/libsutil/releases/download/vulkan32_tools_v1.0/vulkaninfo32
+mv -n vkcube32 usr/bin
+mv -n vkcubepp32 usr/bin
+mv -n vulkaninfo32 usr/bin
+
 # WINE_WORKDIR cleanup
 rm -rf cache; rm -rf include; rm usr/lib32/{*.a,*.o}; rm -rf usr/lib32/pkgconfig; rm -rf share/man; rm -rf usr/include; rm -rf usr/share/{applications,doc,emacs,gtk-doc,java,licenses,man,info,pkgconfig}; rm usr/lib32/locale
 rm -rf boot; rm -rf dev; rm -rf home; rm -rf mnt; rm -rf opt; rm -rf proc; rm -rf root; rm sbin; rm -rf srv; rm -rf sys; rm -rf tmp; rm -rf var
