@@ -74,6 +74,11 @@ else
 	MAIN="$HERE/bin/wine"
 fi
 
+# Exec outside apps with inside environment (make the link name "ExternalExec")
+if [ "$BINARY_NAME" = "ExternalExec" ] && [ -n "$1" ] && [ -x "$1" ]; then
+	MAIN="$1" ; shift
+fi
+
 export PATH=$HERE/bin:$HERE/usr/bin:$PATH
 if [ -z "$APPLICATION" ] ; then
 	LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$@" | cat
