@@ -44,7 +44,7 @@ export GST_PLUGIN_SCANNER=${GST_PLUGIN_SCANNER_1_0}
 
 #TODO: make all (at least to intel + amdgpu) the vulkan json (see arch mesa files) files on "$MY_APPIMAGE_TMP_DIR" and set VK_ICD_FILENAMES
 # intel try:
-cat > $MY_APPIMAGE_TMP_DIR/intel_icd.x86_64.json << EOF
+cat > $MY_APPIMAGE_TMP_DIR/intel_icd.i686.json << EOF
 {
     "ICD": {
         "api_version": "1.1.102",
@@ -55,7 +55,7 @@ cat > $MY_APPIMAGE_TMP_DIR/intel_icd.x86_64.json << EOF
 EOF
 
 #radeon try:
-cat > $MY_APPIMAGE_TMP_DIR/radeon_icd.x86_64.json << EOF
+cat > $MY_APPIMAGE_TMP_DIR/radeon_icd.i686.json << EOF
 {
     "ICD": {
         "api_version": "1.1.107",
@@ -69,7 +69,7 @@ EOF
 # TODO: Make the find and set, setting just intel for now
 if [ -z "$VK_ICD_FILENAMES" ]
 then
-	export VK_ICD_FILENAMES="$MY_APPIMAGE_TMP_DIR/intel_icd.x86_64.json"
+	export VK_ICD_FILENAMES="$MY_APPIMAGE_TMP_DIR/intel_icd.i686.json"
 fi
 #===================================================================
 
