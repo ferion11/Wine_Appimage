@@ -175,11 +175,11 @@ echo "All files in ./cache: $(ls ./cache)"
 #ORIGINAL: get_archlinux32_pkgs ./cache/ gst-libav ffmpeg aom gsm lame libass libbluray dav1d libomxil-bellagio libsoxr libssh vid.stab l-smash x264 x265 xvidcore opencore-amr openjpeg2 libwbclient libtirpc tevent talloc ldb libbsd avahi libarchive smbclient
 # Can't get from arch64_lib32_plus_user_repo: lib32-ffmpeg lib32-gst-libav lib32-libwbclient lib32-tevent lib32-talloc lib32-ldb lib32-libbsd lib32-avahi lib32-libarchive lib32-smbclient
 # removed smbclient and libwbclient smbclient (the .so file isn't loading on wine)
-get_archlinux32_pkgs ./cache/ ffmpeg gst-libav tevent talloc ldb libbsd avahi libarchive libsoxr libssh vid.stab l-smash libtirpc unixodbc
+get_archlinux32_pkgs ./cache/ ffmpeg gst-libav tevent talloc ldb libbsd avahi libarchive libsoxr libssh vid.stab l-smash libtirpc
 
 # FIXME: "wine --check-libs" have:
 #libcapi20.so.3: missing (from isdn4k-utils trying now from aur)
-#libodbc.so.2: missing (from unixodbc trying now from archlinux32)
+#libodbc.so.2: missing (removed because, if the lib is there, in unixodbc, then missing!?)
 #libsane.so.1: missing (from sane: bigger package just for scanning paper)
 #libnetapi.so: missing (removed because, if the lib is there, in smbclient, then missing!?)
 
@@ -193,6 +193,7 @@ find ./cache -name '*tar.zst' -exec tar --warning=no-unknown-keyword --zstd -xf 
 wget -nv -c https://github.com/ferion11/libsutil/releases/download/vulkan32_tools_v1.0/vkcube32
 wget -nv -c https://github.com/ferion11/libsutil/releases/download/vulkan32_tools_v1.0/vkcubepp32
 wget -nv -c https://github.com/ferion11/libsutil/releases/download/vulkan32_tools_v1.0/vulkaninfo32
+chmod +x vkcube32 vkcubepp32 vulkaninfo32
 mv -n vkcube32 usr/bin
 mv -n vkcubepp32 usr/bin
 mv -n vulkaninfo32 usr/bin
