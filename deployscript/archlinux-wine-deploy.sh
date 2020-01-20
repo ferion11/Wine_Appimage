@@ -124,7 +124,7 @@ cd "$PKG_WORKDIR" || die "ERROR: Directory don't exist: $PKG_WORKDIR"
 #cd ..
 #------------
 
-mv *.pkg.tar* ../"$WINE_WORKDIR" || echo "ERROR: None package builded from AUR"
+#mv *.pkg.tar* ../"$WINE_WORKDIR" || die "ERROR: None package builded from AUR"
 
 cd ..
 rm -rf "$PKG_WORKDIR"
@@ -248,7 +248,6 @@ sed -i 's/winemenubuilder.exe -a -r/winemenubuilder.exe -r/g' share/wine/wine.in
 
 # Disable FileOpenAssociations
 sed -i 's|    LicenseInformation|    LicenseInformation,\\\n    FileOpenAssociations|g;$a \\n[FileOpenAssociations]\nHKCU,Software\\Wine\\FileOpenAssociations,"Enable",,"N"' share/wine/wine.inf
-
 #===========================================================================================
 
 # appimage
@@ -264,7 +263,14 @@ rm src/{libhookexecv.so,wine-preloader_hook}
 
 cp AppRun $WINE_WORKDIR
 cp resource/* $WINE_WORKDIR
+#-----------------------------
+
+##test for others AppImage variations (have to change .travis.yml too):
+#cp -rp $WINE_WORKDIR test2
+#mkdir test2/mark_test2
+#-----------------------------
 
 ./appimagetool.AppImage --appimage-extract
 
 export ARCH=x86_64; squashfs-root/AppRun -v $WINE_WORKDIR -u 'gh-releases-zsync|ferion11|Wine_Appimage|continuous|wine-i386*arch*.AppImage.zsync' wine-i386_${ARCH}-archlinux.AppImage
+#export ARCH=x86_64; squashfs-root/AppRun -v test2 -u 'gh-releases-zsync|ferion11|Wine_Appimage|continuous|wine-test2-i386*arch*.AppImage.zsync' wine-test2-i386_${ARCH}-archlinux.AppImage
