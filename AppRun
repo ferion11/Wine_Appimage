@@ -73,15 +73,26 @@ then
 fi
 #===================================================================
 
-##Wine env
-#export WINEDEBUG=fixme-all
-
-# arch and bottle
+##Wine ENVs (see: https://wiki.winehq.org/Wine-Staging_Environment_Variables)
+# arch and bottle first:
 export WINEARCH=win32
 if [ -z "$WINEPREFIX" ]
 then
 	export WINEPREFIX=~/.wine32
 fi
+#export WINEVERPATH=${WINEVERPATH:-"$HERE"}
+export WINEVERPATH="$HERE"
+export WINESERVER="$HERE/bin/wineserver"
+export WINELOADER="$HERE/bin/wine"
+export WINEPATH="$HERE/bin":"$HERE/lib/wine":"$WINEPATH"
+export WINEDLLPATH="$HERE/lib/wine/fakedlls":"$WINEDLLPATH"
+#export WINEDEBUG=${WINEDEBUG:-"-all"}
+#export WINEDEBUG=fixme-all
+#export WINEDLLOVERRIDES=${WINEDLLOVERRIDES:-"mscoree,mshtml="}
+#export WINEESYNC=0
+#export WINEESYNC=${WINEESYNC:-"1"}
+
+export LD_LIBRARY_PATH="$HERE/lib/wine":$LD_LIBRARY_PATH
 #----------------------------------------
 
 # Load winecfg if no arguments given
