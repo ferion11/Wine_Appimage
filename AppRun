@@ -34,6 +34,8 @@ mkdir "$F11_APPIMAGE_TMP_DIR"
 export LD_LIBRARY_PATH="$HERE/usr/lib":$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH="$HERE/usr/lib32":$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH="$HERE/lib":$LD_LIBRARY_PATH
+
+export PATH=$HERE/bin:$HERE/usr/bin:$PATH
 #----------------------------------------
 
 #Sound Library
@@ -60,6 +62,12 @@ export GST_PTP_HELPER_1_0="${HERE}/usr/lib32/gstreamer-1.0/gst-ptp-helper"
 export GST_PLUGIN_PATH=${GST_PLUGIN_SYSTEM_PATH_1_0}
 export GST_PLUGIN_SYSTEM_PATH=${GST_PLUGIN_SYSTEM_PATH_1_0}
 export GST_PLUGIN_SCANNER=${GST_PLUGIN_SCANNER_1_0}
+#===================================================================
+
+# Gdk Pixbuf
+export GDK_PIXBUF_MODULE_FILE="${F11_APPIMAGE_TMP_DIR}/gdk_pixbuf_loaders.cache"
+export GDK_PIXBUF_MODULEDIR="${HERE}/usr/lib32/gdk-pixbuf-2.0/2.10.0/loaders"
+$WINELDLIBRARY "${HERE}/usr/bin/gdk-pixbuf-query-loaders-32" --update-cache
 #===================================================================
 
 # For Vulkan drivers:
@@ -165,7 +173,6 @@ if [ "$BINARY_NAME" = "ExternalExec" ] && [ -n "$1" ] && [ -x "$1" ]; then
 fi
 #===================================================================
 
-export PATH=$HERE/bin:$HERE/usr/bin:$PATH
 if [ -z "$APPLICATION" ] ; then
 	LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$@" | cat
 else
