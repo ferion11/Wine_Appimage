@@ -27,7 +27,11 @@ after_success:
   - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-appimage.archlinux cp wine-i386_x86_64-archlinux.AppImage.zsync /tmp/apps
 #  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-appimage.archlinux cp wine-test2-i386_x86_64-archlinux.AppImage /tmp/apps
 #  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-appimage.archlinux cp wine-test2-i386_x86_64-archlinux.AppImage.zsync /tmp/apps
-  
+
+  # md5sum tool
+  - wget -c https://github.com/ferion11/libsutil/releases/download/md5sum_util_v0.1/md5sum_util.sh
+  - bash md5sum_util.sh apps
+
   # uploadtool
   - wget -c https://github.com/probonopd/uploadtool/raw/master/upload.sh
   - bash upload.sh apps/*
