@@ -35,9 +35,11 @@ get_archlinux32_pkgs() {
 	#https://mirror.datacenter.by/pub/archlinux32/$arch/$repo/"
 	
 	rm -rf tmp_pentium4_core_html
-	rm -rf tmp_pentium4_core_html
+	rm -rf tmp_pentium4_extra_html
+	rm -rf tmp_pentium4_community_html
 	wget -nv -c https://mirror.datacenter.by/pub/archlinux32/pentium4/core/ -O tmp_pentium4_core_html
 	wget -nv -c https://mirror.datacenter.by/pub/archlinux32/pentium4/extra/ -O tmp_pentium4_extra_html
+	wget -nv -c https://mirror.datacenter.by/pub/archlinux32/pentium4/community/ -O tmp_pentium4_community_html
 	
 	for current_pkg in "${@:2}"
 	do
@@ -55,13 +57,22 @@ get_archlinux32_pkgs() {
 				#echo "http://pool.mirror.archlinux32.org/pentium4/extra/$PKG_NAME_EXTRA"
 				get_archlinux32_pkg "http://pool.mirror.archlinux32.org/pentium4/extra/$PKG_NAME_EXTRA" $1
 			else
-				die "ERROR get_archlinux32_pkgs: Package don't found: $current_pkg"
+				PKG_NAME_COMMUNITY=$(grep "$current_pkg-[0-9]" tmp_pentium4_community_html | grep --invert-match ".sig" | sed -n 's/.*href="\([^"]*\).*/\1/p' | grep "^$current_pkg")
+				
+				if [ -n "$PKG_NAME_COMMUNITY" ]; then
+					#echo "COMMUNITY: Downloading $current_pkg in $1 : $PKG_NAME_COMMUNITY"
+					#echo "http://pool.mirror.archlinux32.org/pentium4/community/$PKG_NAME_COMMUNITY"
+					get_archlinux32_pkg "http://pool.mirror.archlinux32.org/pentium4/community/$PKG_NAME_COMMUNITY" $1
+				else
+					die "ERROR get_archlinux32_pkgs: Package don't found: $current_pkg"
+				fi
 			fi
 		fi
 	done
 	
 	rm -rf tmp_pentium4_core_html
 	rm -rf tmp_pentium4_extra_html
+	rm -rf tmp_pentium4_community_html
 }
 #=========================
 
