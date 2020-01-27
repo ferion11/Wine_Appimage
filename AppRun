@@ -52,6 +52,10 @@ export FONTCONFIG_PATH="$HERE/etc/fonts":$FONTCONFIG_PATH
 export WINELDLIBRARY="$HERE/usr/lib32/ld-linux.so.2"
 #----------------------------------------
 
+# GTK 3.0
+export GTK_PATH="$HERE/usr/lib32/gtk-3.0"
+#------------------------------
+
 # GStreamer environment variables
 export GST_REGISTRY_REUSE_PLUGIN_SCANNER="no"
 export GST_PLUGIN_SYSTEM_PATH_1_0="${HERE}/usr/lib32/gstreamer-1.0/"
