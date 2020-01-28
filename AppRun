@@ -41,6 +41,7 @@ export PATH=$HERE/bin:$HERE/usr/bin:$PATH
 #Sound Library
 export LD_LIBRARY_PATH="$HERE/usr/lib32/pulseaudio":$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH="$HERE/usr/lib32/alsa-lib":$LD_LIBRARY_PATH
+export LADSPA_PATH="$HERE/usr/lib32/ladspa":$LADSPA_PATH
 
 # libGL drivers
 export LIBGL_DRIVERS_PATH="$HERE/usr/lib32/dri":$LIBGL_DRIVERS_PATH
