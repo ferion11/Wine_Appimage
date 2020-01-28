@@ -46,6 +46,9 @@ export LADSPA_PATH="$HERE/usr/lib32/ladspa":$LADSPA_PATH
 # libGL drivers
 export LIBGL_DRIVERS_PATH="$HERE/usr/lib32/dri":$LIBGL_DRIVERS_PATH
 
+# Gallium Nine
+export D3D_MODULE_PATH="$HERE/usr/lib32/d3d":$D3D_MODULE_PATH
+
 #Font Config
 export FONTCONFIG_PATH="$HERE/etc/fonts":$FONTCONFIG_PATH
 
