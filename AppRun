@@ -79,12 +79,14 @@ export GST_PLUGIN_SCANNER=${GST_PLUGIN_SCANNER_1_0}
 # Gdk Pixbuf
 export GDK_PIXBUF_MODULE_FILE="${F11_APPIMAGE_TMP_DIR}/gdk_pixbuf_loaders.cache"
 export GDK_PIXBUF_MODULEDIR="${HERE}/usr/lib32/gdk-pixbuf-2.0/2.10.0/loaders"
-$WINELDLIBRARY "${HERE}/usr/bin/gdk-pixbuf-query-loaders-32" --update-cache
+if [ -d "$F11_APPIMAGE_TMP_DIR" ]; then
+	$WINELDLIBRARY "${HERE}/usr/bin/gdk-pixbuf-query-loaders-32" --update-cache
+fi
 #===================================================================
 
 # For Vulkan drivers:
 # Setting VK_ICD_FILENAMES... But the user can use his own variable for local drivers
-if [ -n "$VK_ICD_FILENAMES" ]
+if [ -n "$VK_ICD_FILENAMES" ] && [ -d "$F11_APPIMAGE_TMP_DIR" ]
 then
 	echo "Using user \$VK_ICD_FILENAMES: $VK_ICD_FILENAMES"
 elif [ -f "$F11_APPIMAGE_VKCONF" ]; then
