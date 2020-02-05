@@ -62,8 +62,8 @@ export FONTCONFIG_PATH="$HERE/etc/fonts":$FONTCONFIG_PATH
 #LD
 export WINELDLIBRARY="$HERE/usr/lib32/ld-linux.so.2"
 
-##TODO: For webcam V4L: have to change the execution line first
-#LD_PRELOAD="$HERE/usr/lib32/libv4l/v4l1compat.so"
+#For webcam V4L
+export V4LCLDLIBRARY="$HERE/usr/lib32/libv4l/v4l1compat.so"
 #----------------------------------------
 
 # GTK 3.0
@@ -194,9 +194,9 @@ fi
 #===================================================================
 
 if [ -z "$APPLICATION" ] ; then
-	LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$@" | cat
+	LD_PRELOAD="$V4LCLDLIBRARY $HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$@" | cat
 else
-	LD_PRELOAD="$HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$APPLICATION" | cat
+	LD_PRELOAD="$V4LCLDLIBRARY $HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$APPLICATION" | cat
 fi
 #===================================================================
 
