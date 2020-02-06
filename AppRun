@@ -67,7 +67,7 @@ export D3D_MODULE_PATH="$HERE/usr/lib32/d3d":$D3D_MODULE_PATH
 export FONTCONFIG_PATH="$HERE/etc/fonts":$FONTCONFIG_PATH
 
 #LD
-export WINELDLIBRARY="$HERE/usr/lib32/ld-linux.so.2"
+export MAIN32LDLIBRARY="$HERE/usr/lib32/ld-linux.so.2"
 
 #For webcam V4L
 export V4LCLDLIBRARY="$HERE/usr/lib32/libv4l/v4l1compat.so"
@@ -93,7 +93,7 @@ export GST_PLUGIN_SCANNER=${GST_PLUGIN_SCANNER_1_0}
 export GDK_PIXBUF_MODULE_FILE="${F11_APPIMAGE_TMP_DIR}/gdk_pixbuf_loaders.cache"
 export GDK_PIXBUF_MODULEDIR="${HERE}/usr/lib32/gdk-pixbuf-2.0/2.10.0/loaders"
 if [ -d "$F11_APPIMAGE_TMP_DIR" ]; then
-	$WINELDLIBRARY "${HERE}/usr/bin/gdk-pixbuf-query-loaders-32" --update-cache
+	$MAIN32LDLIBRARY "${HERE}/usr/bin/gdk-pixbuf-query-loaders-32" --update-cache
 fi
 #===================================================================
 
@@ -201,7 +201,7 @@ fi
 #===================================================================
 
 if [ -z "$APPLICATION" ] ; then
-	LD_PRELOAD="$V4LCLDLIBRARY $HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$@" | cat
+	LD_PRELOAD="$V4LCLDLIBRARY $HERE/bin/libhookexecv.so" "$MAIN32LDLIBRARY" "$MAIN" "$@" | cat
 else
-	LD_PRELOAD="$V4LCLDLIBRARY $HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$APPLICATION" | cat
+	LD_PRELOAD="$V4LCLDLIBRARY $HERE/bin/libhookexecv.so" "$MAIN32LDLIBRARY" "$MAIN" "$APPLICATION" | cat
 fi
