@@ -249,6 +249,10 @@ mv -n libva-x11.so.1 usr/lib32
 # gst-libav link
 ln -s ../../lib/gstreamer-1.0/libgstlibav.so libgstlibav.so
 mv libgstlibav.so usr/lib32/gstreamer-1.0/
+
+# temp workaroud to gst-libav load x264. TODO: recompile package and avoid archlinux32 (or use all codecs tree from it)
+ln -s libx264.so libx264.so.157
+mv -n libx264.so.157 usr/lib32
 #===========================================================================================
 
 # Disable PulseAudio
