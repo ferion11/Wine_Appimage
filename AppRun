@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 HERE="$(dirname "$(readlink -f "${0}")")"
 F11_APPIMAGE_TMP_DIR="$HERE"_tmp
 F11_APPIMAGE_CONF_DIR="$HOME/.config/f11conf"
@@ -6,6 +6,11 @@ F11_APPIMAGE_VKCONF="$F11_APPIMAGE_CONF_DIR/vulkan.conf"
 #===================================================================
 
 make_dir() { [ ! -d "$1" ] && mkdir -p "$1"; };
+
+function cleanup {
+	# clean tmp files:
+	rm -rf "$F11_APPIMAGE_TMP_DIR"
+}
 #------------------------------
 
 # Configure AppImage:
@@ -28,6 +33,8 @@ if [ -d "$F11_APPIMAGE_TMP_DIR" ]; then
 	rm -rf "$F11_APPIMAGE_TMP_DIR"
 fi
 mkdir "$F11_APPIMAGE_TMP_DIR"
+
+trap cleanup EXIT
 #===================================================================
 
 # If not extract and overwrite, $HERE/lib is a link to $HERE/usr/lib, that link to $HERE/usr/lib64
@@ -198,7 +205,3 @@ if [ -z "$APPLICATION" ] ; then
 else
 	LD_PRELOAD="$V4LCLDLIBRARY $HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$APPLICATION" | cat
 fi
-#===================================================================
-
-# clean tmp files:
-rm -rf "$F11_APPIMAGE_TMP_DIR"
