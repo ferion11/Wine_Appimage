@@ -160,6 +160,7 @@ export WINEDLLPATH="$HERE/lib/wine/fakedlls":"$WINEDLLPATH"
 #export WINEESYNC=${WINEESYNC:-"1"}
 
 export LD_LIBRARY_PATH="$HERE/lib/wine":$LD_LIBRARY_PATH
+export WINELDLIBRARY="$MAIN32LDLIBRARY"
 #----------------------------------------
 
 # Load winecfg if no arguments given
@@ -201,7 +202,7 @@ fi
 #===================================================================
 
 if [ -z "$APPLICATION" ] ; then
-	LD_PRELOAD="$V4LCLDLIBRARY $HERE/bin/libhookexecv.so" "$MAIN32LDLIBRARY" "$MAIN" "$@" | cat
+	LD_PRELOAD="$V4LCLDLIBRARY $HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$@" | cat
 else
-	LD_PRELOAD="$V4LCLDLIBRARY $HERE/bin/libhookexecv.so" "$MAIN32LDLIBRARY" "$MAIN" "$APPLICATION" | cat
+	LD_PRELOAD="$V4LCLDLIBRARY $HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$APPLICATION" | cat
 fi
