@@ -142,8 +142,6 @@ rm -rf "$PKG_WORKDIR"
 #-----------------------------------
 
 # Get Wine
-#wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.10-upstream-linux-x86.tar.gz
-#wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.21-upstream-linux-x86.tar.gz
 wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/staging-linux-x86/PlayOnLinux-wine-4.21-staging-linux-x86.tar.gz
 tar xf PlayOnLinux-wine-* -C "$WINE_WORKDIR"/
 
@@ -288,4 +286,3 @@ cp resource/* $WINE_WORKDIR
 ./appimagetool.AppImage --appimage-extract
 
 export ARCH=x86_64; squashfs-root/AppRun -v $WINE_WORKDIR -u 'gh-releases-zsync|ferion11|Wine_Appimage|continuous|wine-i386*arch*.AppImage.zsync' wine-i386_${ARCH}-archlinux.AppImage
-#export ARCH=x86_64; squashfs-root/AppRun -v test2 -u 'gh-releases-zsync|ferion11|Wine_Appimage|continuous|wine-test2-i386*arch*.AppImage.zsync' wine-test2-i386_${ARCH}-archlinux.AppImage

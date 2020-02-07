@@ -8,9 +8,7 @@ before_install:
   # archlinux
   - wget -nv -c https://github.com/ferion11/libsutil/releases/download/wine_hook_v0.9/libhookexecv.so
   - wget -nv -c https://github.com/ferion11/libsutil/releases/download/wine_hook_v0.9/wine-preloader_hook
-#  - wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.21-upstream-linux-x86.tar.gz
   - wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/staging-linux-x86/PlayOnLinux-wine-4.21-staging-linux-x86.tar.gz
-  #- wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-4.10-upstream-linux-x86.tar.gz
 
   # appimagetool
   - wget -nv -c "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage" -O appimagetool.AppImage
@@ -25,8 +23,6 @@ after_success:
   # archlinux
   - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-appimage.archlinux cp wine-i386_x86_64-archlinux.AppImage /tmp/apps
   - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-appimage.archlinux cp wine-i386_x86_64-archlinux.AppImage.zsync /tmp/apps
-#  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-appimage.archlinux cp wine-test2-i386_x86_64-archlinux.AppImage /tmp/apps
-#  - docker run --rm -v $(pwd)/apps:/tmp/apps -ti wine-appimage.archlinux cp wine-test2-i386_x86_64-archlinux.AppImage.zsync /tmp/apps
 
   # md5sum tool
   - wget -c https://github.com/ferion11/libsutil/releases/download/md5sum_util_v0.1/md5sum_util.sh
