@@ -1,5 +1,7 @@
 [Desktop Entry]
 Name=Wine
+GenericName=Wine Is Not an Emulator
+Comment=A compatibility layer capable of running Windows applications
 Exec=AppRun
 Icon=Wine
 Type=Application
