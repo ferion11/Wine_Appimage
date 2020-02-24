@@ -1,4 +1,10 @@
 #!/bin/bash
+P_URL="https://www.playonlinux.com/wine/binaries/phoenicis/staging-linux-x86/PlayOnLinux-wine-4.21-staging-linux-x86.tar.gz"
+P_NAME=$(echo $P_URL | cut -d/ -f4)
+P_MVERSION=$(echo $P_URL | cut -d/ -f7)
+P_FILENAME=$(echo $P_URL | cut -d/ -f8)
+P_CSOURCE=$(echo $P_FILENAME | cut -d- -f1)
+P_VERSION=$(echo $P_FILENAME | cut -d- -f3)
 WINE_WORKDIR="wineversion"
 PKG_WORKDIR="pkg_work"
 
@@ -142,8 +148,8 @@ rm -rf "$PKG_WORKDIR"
 #-----------------------------------
 
 # Get Wine
-wget -nv -c https://www.playonlinux.com/wine/binaries/phoenicis/staging-linux-x86/PlayOnLinux-wine-4.21-staging-linux-x86.tar.gz
-tar xf PlayOnLinux-wine-* -C "$WINE_WORKDIR"/
+wget -nv -c $P_URL
+tar xf $P_FILENAME -C "$WINE_WORKDIR"/
 
 wget -nv -c https://github.com/ferion11/libsutil/releases/download/wine_hook_v0.9/libhookexecv.so
 wget -nv -c https://github.com/ferion11/libsutil/releases/download/wine_hook_v0.9/wine-preloader_hook
@@ -286,6 +292,7 @@ cp resource/* $WINE_WORKDIR
 ./appimagetool.AppImage --appimage-extract
 
 export ARCH=x86_64; squashfs-root/AppRun -v $WINE_WORKDIR -u 'gh-releases-zsync|ferion11|Wine_Appimage|continuous|wine-i386*arch*.AppImage.zsync' wine-i386_${ARCH}-archlinux.AppImage
+export ARCH=x86_64; squashfs-root/AppRun -v $WINE_WORKDIR -u 'gh-releases-zsync|ferion11|Wine_Appimage|continuous|${P_NAME}-${P_MVERSION}-v${P_VERSION}-${P_CSOURCE}-*arch*.AppImage.zsync' ${P_NAME}-${P_MVERSION}-v${P_VERSION}-${P_CSOURCE}-${ARCH}.AppImage
 
 echo "Packing tar result file..."
 rm -rf appimagetool.AppImage
