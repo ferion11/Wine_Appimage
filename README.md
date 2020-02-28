@@ -1,5 +1,6 @@
-[![Build Status](https://travis-ci.org/ferion11/Wine_Appimage.svg?branch=master)](https://travis-ci.org/ferion11/Wine_Appimage)
-#  Appimage For Wine
+[![Build Status](https://travis-ci.org/ferion11/Wine_Appimage.svg?branch=master)](https://travis-ci.org/ferion11/Wine_Appimage) [![AppImage Build](https://img.shields.io/badge/AppImage-build-blue)](https://github.com/ferion11/Wine_Appimage/releases)
+
+# Appimage For Wine
 
 >  Appimage for last Wine 32bits from PlayOnLinux. You can just download the Appimage, put in the directory you like and make symbolic links for it (for wine, wineserver...).
 
