@@ -147,7 +147,7 @@ mkdir "$PKG_WORKDIR"
 #alias makepkg="sudo -u nobody makepkg"
 
 # pacthing makepkg instead of using nobody user (root error will be on the EUID=9875):
-sed -i 's/EUID == 0/EUID == 9875/g' /usr/bin/makepkg
+#sed -i 's/EUID == 0/EUID == 9875/g' /usr/bin/makepkg
 #------------
 
 #FIXME: HAVE_SECURE_MKSTEMP on fakeroot
