@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/ferion11/Wine_Appimage.svg?branch=master)](https://travis-ci.org/ferion11/Wine_Appimage) [![AppImage Build](https://img.shields.io/badge/AppImage-build-blue)](https://github.com/ferion11/Wine_Appimage/releases)
+[![Build Status](https://travis-ci.com/ferion11/Wine_Appimage.svg?branch=master)](https://travis-ci.com/ferion11/Wine_Appimage) [![AppImage Build](https://img.shields.io/badge/AppImage-build-blue)](https://github.com/ferion11/Wine_Appimage/releases)
 
 # Appimage For Wine
 
