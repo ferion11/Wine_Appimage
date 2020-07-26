@@ -1,5 +1,5 @@
 #!/bin/bash
-P_URL="https://www.playonlinux.com/wine/binaries/phoenicis/staging-linux-x86/PlayOnLinux-wine-4.21-staging-linux-x86.tar.gz"
+P_URL="https://www.playonlinux.com/wine/binaries/phoenicis/staging-linux-x86/PlayOnLinux-wine-5.13-staging-linux-x86.tar.gz"
 P_NAME=$(echo $P_URL | cut -d/ -f4)
 P_MVERSION=$(echo $P_URL | cut -d/ -f7)
 P_FILENAME=$(echo $P_URL | cut -d/ -f8)
@@ -82,9 +82,6 @@ get_archlinux32_pkgs() {
 }
 #=========================
 
-# sudo workaround bug https://bugzilla.redhat.com/show_bug.cgi?id=1773148
-echo "Set disable_coredump false" >> /etc/sudo.conf
-
 #Initializing the keyring requires entropy
 pacman-key --init
 
@@ -98,8 +95,8 @@ sed -i '/#MAKEFLAGS=/c MAKEFLAGS="-j2"' /etc/makepkg.conf
 #sed -i "s/^PKGEXT='.pkg.tar.gz'/PKGEXT='.pkg.tar.xz'/" /etc/makepkg.conf
 #sed -i '$a   CFLAGS="$CFLAGS -w"'   /etc/makepkg.conf
 #sed -i '$a CXXFLAGS="$CXXFLAGS -w"' /etc/makepkg.conf
-sed -i 's/^CFLAGS\s*=.*/CFLAGS="-mtune=nehalem -O2 -pipe -fno-stack-protector"/' /etc/makepkg.conf
-sed -i 's/^CXXFLAGS\s*=.*/CXXFLAGS="-mtune=nehalem -O2 -pipe -fno-stack-protector"/' /etc/makepkg.conf
+sed -i 's/^CFLAGS\s*=.*/CFLAGS="-mtune=nehalem -O2 -pipe -ftree-vectorize -fno-stack-protector"/' /etc/makepkg.conf
+sed -i 's/^CXXFLAGS\s*=.*/CXXFLAGS="-mtune=nehalem -O2 -pipe -ftree-vectorize -fno-stack-protector"/' /etc/makepkg.conf
 #sed -i 's/^LDFLAGS\s*=.*/LDFLAGS="-Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now"/' /etc/makepkg.conf
 sed -i 's/^#PACKAGER\s*=.*/PACKAGER="DanielDevBR"/' /etc/makepkg.conf
 sed -i 's/^PKGEXT\s*=.*/PKGEXT=".pkg.tar"/' /etc/makepkg.conf
@@ -110,23 +107,36 @@ echo "" >> /etc/pacman.conf
 
 # https://github.com/archlinuxcn/repo
 echo "[archlinuxcn]" >> /etc/pacman.conf
-echo "SigLevel = Optional TrustAll" >> /etc/pacman.conf
+#echo "SigLevel = Optional TrustAll" >> /etc/pacman.conf
+echo "SigLevel = Never" >> /etc/pacman.conf
 echo "Server = https://repo.archlinuxcn.org/\$arch" >> /etc/pacman.conf
 echo "" >> /etc/pacman.conf
 
 # https://lonewolf.pedrohlc.com/chaotic-aur/
 echo "[chaotic-aur]" >> /etc/pacman.conf
-echo "SigLevel = Optional TrustAll" >> /etc/pacman.conf
+#echo "SigLevel = Optional TrustAll" >> /etc/pacman.conf
+echo "SigLevel = Never" >> /etc/pacman.conf
 echo "Server = http://lonewolf-builder.duckdns.org/\$repo/x86_64" >> /etc/pacman.conf
 echo "Server = http://chaotic.bangl.de/\$repo/x86_64" >> /etc/pacman.conf
 echo "Server = https://repo.kitsuna.net/x86_64" >> /etc/pacman.conf
 echo "" >> /etc/pacman.conf
 #pacman-key --keyserver keys.mozilla.org -r 3056513887B78AEB
 #pacman-key --lsign-key 3056513887B78AEB
+#sudo pacman-key --keyserver hkp://p80.pool.sks-keyservers.net:80 -r 3056513887B78AEB
+#sudo pacman-key --lsign-key 3056513887B78AEB
 
-pacman -Syy && pacman -S archlinuxcn-keyring
+# workaround one bug: https://bugzilla.redhat.com/show_bug.cgi?id=1773148
+echo "Set disable_coredump false" >> /etc/sudo.conf
 
-pacman -Syy
+echo "DEBUG: updating pacmam keys"
+pacman -Syy --noconfirm && pacman --noconfirm -S archlinuxcn-keyring
+
+echo "DEBUG: pacmam sync"
+pacman -Syy --noconfirm
+
+echo "DEBUG: pacmam updating system"
+pacman -Syu --noconfirm
+
 #Add "base-devel multilib-devel" for compile in the list:
 pacman -S --noconfirm wget base-devel multilib-devel pacman-contrib git tar grep sed zstd xz bzip2
 #===========================================================================================
