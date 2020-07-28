@@ -107,15 +107,15 @@ echo "" >> /etc/pacman.conf
 
 # https://github.com/archlinuxcn/repo
 echo "[archlinuxcn]" >> /etc/pacman.conf
-#echo "SigLevel = Optional TrustAll" >> /etc/pacman.conf
-echo "SigLevel = Never" >> /etc/pacman.conf
+echo "SigLevel = Optional TrustAll" >> /etc/pacman.conf
+#echo "SigLevel = Never" >> /etc/pacman.conf
 echo "Server = https://repo.archlinuxcn.org/\$arch" >> /etc/pacman.conf
 echo "" >> /etc/pacman.conf
 
 # https://lonewolf.pedrohlc.com/chaotic-aur/
 echo "[chaotic-aur]" >> /etc/pacman.conf
-#echo "SigLevel = Optional TrustAll" >> /etc/pacman.conf
-echo "SigLevel = Never" >> /etc/pacman.conf
+echo "SigLevel = Optional TrustAll" >> /etc/pacman.conf
+#echo "SigLevel = Never" >> /etc/pacman.conf
 echo "Server = http://lonewolf-builder.duckdns.org/\$repo/x86_64" >> /etc/pacman.conf
 echo "Server = http://chaotic.bangl.de/\$repo/x86_64" >> /etc/pacman.conf
 echo "Server = https://repo.kitsuna.net/x86_64" >> /etc/pacman.conf
