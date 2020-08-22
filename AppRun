@@ -1,80 +1,80 @@
 #!/bin/bash -e
 HERE="$(dirname "$(readlink -f "${0}")")"
-F11_APPIMAGE_TMP_DIR="$HERE"_tmp
-F11_APPIMAGE_CONF_DIR="$HOME/.config/f11conf"
-F11_APPIMAGE_VKCONF="$F11_APPIMAGE_CONF_DIR/vulkan.conf"
+F11_APPIMAGE_TMP_DIR="${HERE}_tmp"
+F11_APPIMAGE_CONF_DIR="${HOME}/.config/f11conf"
+F11_APPIMAGE_VKCONF="${F11_APPIMAGE_CONF_DIR}/vulkan.conf"
 #===================================================================
 
-make_dir() { [ ! -d "$1" ] && mkdir -p "$1"; };
+make_dir() { [ ! -d "${1}" ] && mkdir -p "${1}"; };
 
 function cleanup {
 	# clean tmp files:
-	rm -rf "$F11_APPIMAGE_TMP_DIR"
+	rm -rf "${F11_APPIMAGE_TMP_DIR}"
 }
 #------------------------------
 
 # Configure AppImage:
-if [ "$1" = "f11conf" ] ; then
+if [ "${1}" = "f11conf" ] ; then
 	echo "Init Configuration:"
-	make_dir $F11_APPIMAGE_CONF_DIR
+	make_dir "${F11_APPIMAGE_CONF_DIR}"
 	#like: wine.appimage f11conf vulkan radeon:intel
-	if [ "$2" = "vulkan" ] ; then
-		cat > $F11_APPIMAGE_VKCONF << EOF
-F11_VULKAN=$3
+	if [ "${2}" = "vulkan" ] ; then
+		cat > "${F11_APPIMAGE_VKCONF}" << EOF
+F11_VULKAN="${3}"
 EOF
-		cat $F11_APPIMAGE_VKCONF
+		cat "${F11_APPIMAGE_VKCONF}"
 	fi
 	echo "Configuration done! "
 	exit 0
 fi
 
 # Create a tmp dir to some utils like vulkan (need one new, so remove the old):
-if [ -d "$F11_APPIMAGE_TMP_DIR" ]; then
-	rm -rf "$F11_APPIMAGE_TMP_DIR"
+if [ -d "${F11_APPIMAGE_TMP_DIR}" ]; then
+	rm -rf "${F11_APPIMAGE_TMP_DIR}"
 fi
-mkdir "$F11_APPIMAGE_TMP_DIR"
+mkdir "${F11_APPIMAGE_TMP_DIR}"
 
 trap cleanup EXIT
 #===================================================================
 
-# If not extract and overwrite, $HERE/lib is a link to $HERE/usr/lib, that link to $HERE/usr/lib64
-export LD_LIBRARY_PATH="$HERE/usr/lib":$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH="$HERE/usr/lib32":$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH="$HERE/lib":$LD_LIBRARY_PATH
+# If not extract and overwrite, ${HERE}/lib is a link to ${HERE}/usr/lib, that link to ${HERE}/usr/lib64
+export LD_LIBRARY_PATH="${HERE}/usr/lib:${LD_LIBRARY_PATH}"
+export LD_LIBRARY_PATH="${HERE}/usr/lib32:${LD_LIBRARY_PATH}"
+export LD_LIBRARY_PATH="${HERE}/lib:${LD_LIBRARY_PATH}"
 
-export PATH=$HERE/bin:$HERE/usr/bin:$PATH
+export PATH="${HERE}/bin:${HERE}/usr/bin:${PATH}"
 #----------------------------------------
 
 #Sound Library
-export LD_LIBRARY_PATH="$HERE/usr/lib32/pulseaudio":$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH="$HERE/usr/lib32/alsa-lib":$LD_LIBRARY_PATH
-export LADSPA_PATH="$HERE/usr/lib32/ladspa":$LADSPA_PATH
-export AO_PLUGIN_PATH="$HERE/usr/lib32/ao/plugins-4":$AO_PLUGIN_PATH
+export LD_LIBRARY_PATH="${HERE}/usr/lib32/pulseaudio:${LD_LIBRARY_PATH}"
+export LD_LIBRARY_PATH="${HERE}/usr/lib32/alsa-lib:${LD_LIBRARY_PATH}"
+export LADSPA_PATH="${HERE}/usr/lib32/ladspa:${LADSPA_PATH}"
+export AO_PLUGIN_PATH="${HERE}/usr/lib32/ao/plugins-4:${AO_PLUGIN_PATH}"
 
 # For mpg123
-export LD_LIBRARY_PATH="$HERE/usr/lib32/mpg123":$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH="${HERE}/usr/lib32/mpg123:${LD_LIBRARY_PATH}"
 
 # for libomxil-bellagio
-export BELLAGIO_SEARCH_PATH="$HERE/usr/lib32/bellagio":"$HERE/usr/lib32/omxloaders":"$HERE/usr/lib32"
+export BELLAGIO_SEARCH_PATH="${HERE}/usr/lib32/bellagio:${HERE}/usr/lib32/omxloaders:${HERE}/usr/lib32"
 
 # libGL drivers
-export LIBGL_DRIVERS_PATH="$HERE/usr/lib32/dri":$LIBGL_DRIVERS_PATH
+export LIBGL_DRIVERS_PATH="${HERE}/usr/lib32/dri:${LIBGL_DRIVERS_PATH}"
 
 # Gallium Nine
-export D3D_MODULE_PATH="$HERE/usr/lib32/d3d":$D3D_MODULE_PATH
+export D3D_MODULE_PATH="${HERE}/usr/lib32/d3d:${D3D_MODULE_PATH}"
 
 #Font Config
-export FONTCONFIG_PATH="$HERE/etc/fonts":$FONTCONFIG_PATH
+export FONTCONFIG_PATH="${HERE}/etc/fonts:${FONTCONFIG_PATH}"
 
 #LD
-export MAIN32LDLIBRARY="$HERE/usr/lib32/ld-linux.so.2"
+export MAIN32LDLIBRARY="${HERE}/usr/lib32/ld-linux.so.2"
 
-#For webcam V4L
-export V4LCLDLIBRARY="$HERE/usr/lib32/libv4l/v4l1compat.so"
+#For webcam V4L (but only for v4l1, not for v4l2)
+#export V4LCLDLIBRARY="${HERE}/usr/lib32/libv4l/v4l1compat.so"
 #----------------------------------------
 
 # GTK 3.0
-export GTK_PATH="$HERE/usr/lib32/gtk-3.0"
+export GTK_PATH="${HERE}/usr/lib32/gtk-3.0"
 #------------------------------
 
 # GStreamer environment variables
@@ -84,125 +84,126 @@ export GST_PLUGIN_SYSTEM_PATH_1_0="${HERE}/usr/lib32/gstreamer-1.0/"
 export GST_PLUGIN_SCANNER_1_0="${HERE}/usr/lib32/gstreamer-1.0/gst-plugin-scanner"
 export GST_PTP_HELPER_1_0="${HERE}/usr/lib32/gstreamer-1.0/gst-ptp-helper"
 
-export GST_PLUGIN_PATH=${GST_PLUGIN_SYSTEM_PATH_1_0}
-export GST_PLUGIN_SYSTEM_PATH=${GST_PLUGIN_SYSTEM_PATH_1_0}
-export GST_PLUGIN_SCANNER=${GST_PLUGIN_SCANNER_1_0}
+export GST_PLUGIN_PATH="${GST_PLUGIN_SYSTEM_PATH_1_0}"
+export GST_PLUGIN_SYSTEM_PATH="${GST_PLUGIN_SYSTEM_PATH_1_0}"
+export GST_PLUGIN_SCANNER="${GST_PLUGIN_SCANNER_1_0}"
 #===================================================================
 
 # Gdk Pixbuf
 export GDK_PIXBUF_MODULE_FILE="${F11_APPIMAGE_TMP_DIR}/gdk_pixbuf_loaders.cache"
 export GDK_PIXBUF_MODULEDIR="${HERE}/usr/lib32/gdk-pixbuf-2.0/2.10.0/loaders"
-if [ -d "$F11_APPIMAGE_TMP_DIR" ]; then
-	$MAIN32LDLIBRARY "${HERE}/usr/bin/gdk-pixbuf-query-loaders-32" --update-cache
+if [ -d "${F11_APPIMAGE_TMP_DIR}" ]; then
+	"${MAIN32LDLIBRARY}" "${HERE}/usr/bin/gdk-pixbuf-query-loaders-32" --update-cache
 fi
 #===================================================================
 
 # For Vulkan drivers:
 # Setting VK_ICD_FILENAMES... But the user can use his own variable for local drivers
-if [ -n "$VK_ICD_FILENAMES" ] && [ -d "$F11_APPIMAGE_TMP_DIR" ]
+if [ -n "${VK_ICD_FILENAMES}" ] && [ -d "${F11_APPIMAGE_TMP_DIR}" ]
 then
-	echo "Using user \$VK_ICD_FILENAMES: $VK_ICD_FILENAMES"
-elif [ -f "$F11_APPIMAGE_VKCONF" ]; then
-	. "$F11_APPIMAGE_VKCONF"
-	
-	IFS_TMP=$IFS
+	echo "Using user VK_ICD_FILENAMES: ${VK_ICD_FILENAMES}"
+elif [ -f "${F11_APPIMAGE_VKCONF}" ]; then
+	# shellcheck source=/dev/null
+	. "${F11_APPIMAGE_VKCONF}"
+
+	IFS_TMP="${IFS}"
 	IFS=:
-	for driver in $F11_VULKAN; do
-		#echo "$driver"
-		if [ "$driver" = "intel" ]; then
-			export VK_ICD_FILENAMES="$VK_ICD_FILENAMES:$F11_APPIMAGE_TMP_DIR/intel_icd.i686.json"
-			cat > $F11_APPIMAGE_TMP_DIR/intel_icd.i686.json << EOF
+	for driver in ${F11_VULKAN}; do
+		#echo "${driver}"
+		if [ "${driver}" = "intel" ]; then
+			export VK_ICD_FILENAMES="${VK_ICD_FILENAMES}:${F11_APPIMAGE_TMP_DIR}/intel_icd.i686.json"
+			cat > "${F11_APPIMAGE_TMP_DIR}/intel_icd.i686.json" << EOF
 {
     "ICD": {
-        "api_version": "1.1.102",
-        "library_path": "$HERE/usr/lib32/libvulkan_intel.so"
+        "api_version": "1.2.131",
+        "library_path": "${HERE}/usr/lib32/libvulkan_intel.so"
     },
     "file_format_version": "1.0.0"
 }
 EOF
-		elif [ "$driver" = "radeon" ]; then
-			export VK_ICD_FILENAMES="$VK_ICD_FILENAMES:$F11_APPIMAGE_TMP_DIR/radeon_icd.i686.json"
-			cat > $F11_APPIMAGE_TMP_DIR/radeon_icd.i686.json << EOF
+		elif [ "${driver}" = "radeon" ]; then
+			export VK_ICD_FILENAMES="${VK_ICD_FILENAMES}:${F11_APPIMAGE_TMP_DIR}/radeon_icd.i686.json"
+			cat > "${F11_APPIMAGE_TMP_DIR}/radeon_icd.i686.json" << EOF
 {
     "ICD": {
-        "api_version": "1.1.107",
-        "library_path": "$HERE/usr/lib32/libvulkan_radeon.so"
+        "api_version": "1.2.131",
+        "library_path": "${HERE}/usr/lib32/libvulkan_radeon.so"
     },
     "file_format_version": "1.0.0"
 }
 EOF
 		else
-			echo "ERROR: Driver \"$driver\" unsupported yet!!!"
+			echo "ERROR: Driver \"${driver}\" unsupported yet!!!"
 		fi
 	done
-	
-	IFS=$IFS_TMP
+
+	IFS="${IFS_TMP}"
 fi
 #===================================================================
 
 ##Wine ENVs (see: https://wiki.winehq.org/Wine-Staging_Environment_Variables)
 # arch and bottle first:
 export WINEARCH=win32
-if [ -z "$WINEPREFIX" ]
+if [ -z "${WINEPREFIX}" ]
 then
-	export WINEPREFIX=~/.wine32
+	export WINEPREFIX="${HOME}/.wine32"
 fi
-#export WINEVERPATH=${WINEVERPATH:-"$HERE"}
-export WINEVERPATH="$HERE"
-export WINESERVER="$HERE/bin/wineserver"
-export WINELOADER="$HERE/bin/wine"
-export WINEPATH="$HERE/bin":"$HERE/lib/wine":"$WINEPATH"
-export WINEDLLPATH="$HERE/lib/wine/fakedlls":"$WINEDLLPATH"
-#export WINEDEBUG=${WINEDEBUG:-"-all"}
+#export WINEVERPATH="${WINEVERPATH:-"${HERE}"}"
+export WINEVERPATH="${HERE}"
+export WINESERVER="${HERE}/bin/wineserver"
+export WINELOADER="${HERE}/bin/wine"
+export WINEPATH="${HERE}/bin:${HERE}/lib/wine:${WINEPATH}"
+export WINEDLLPATH="${HERE}/lib/wine/fakedlls:${WINEDLLPATH}"
+#export WINEDEBUG="${WINEDEBUG:-"-all"}"
 #export WINEDEBUG=fixme-all
-#export WINEDLLOVERRIDES=${WINEDLLOVERRIDES:-"mscoree,mshtml="}
+#export WINEDLLOVERRIDES="${WINEDLLOVERRIDES:-"mscoree,mshtml="}"
 #export WINEESYNC=0
-#export WINEESYNC=${WINEESYNC:-"1"}
+#export WINEESYNC="${WINEESYNC:-"1"}"
 
-export LD_LIBRARY_PATH="$HERE/lib/wine":$LD_LIBRARY_PATH
-export WINELDLIBRARY="$MAIN32LDLIBRARY"
+export LD_LIBRARY_PATH="${HERE}/lib/wine:${LD_LIBRARY_PATH}"
+export WINELDLIBRARY="${MAIN32LDLIBRARY}"
 #----------------------------------------
 
 # Load winecfg if no arguments given
 APPLICATION=""
-if [ -z "$*" ] ; then
+if [ -z "${*}" ] ; then
 	APPLICATION="winecfg"
 fi
 
 # Allow the AppImage to be symlinked to e.g., /usr/bin/wineserver
-if [ -n "$APPIMAGE" ] ; then
-	BINARY_NAME=$(basename "$ARGV0")
+if [ -n "${APPIMAGE}" ] ; then
+	BINARY_NAME="$(basename "${ARGV0}")"
 else
-	BINARY_NAME=$(basename "$0")
+	BINARY_NAME="$(basename "${0}")"
 fi
 
 # change some scripts to exe executables
-if [[ $1 =~ ^(winecfg|wineboot|regedit|regsvr32|msiexec|msidb|notepad|winefile|winemine)$ ]]; then
-	args=( "$@" )
-	args[0]="$1.exe"
+if [[ "${1}" =~ ^(winecfg|wineboot|regedit|regsvr32|msiexec|msidb|notepad|winefile|winemine)$ ]]; then
+	args=( "${@}" )
+	args[0]="${1}.exe"
 	set "${args[@]}"
 fi
 
-if [ -n "$1" ] && [ -x "$HERE/bin/$1" ] ; then
-	MAIN="$HERE/bin/$1" ; shift
-elif [ -n "$1" ] && [ -x "$HERE/usr/bin/$1" ] ; then
-	MAIN="$HERE/usr/bin/$1" ; shift
-elif [ -x "$HERE/bin/$BINARY_NAME" ] ; then
-	MAIN="$HERE/bin/$BINARY_NAME"
-elif [ -x "$HERE/usr/bin/$BINARY_NAME" ] ; then
-	MAIN="$HERE/usr/bin/$BINARY_NAME"
+if [ -n "${1}" ] && [ -x "${HERE}/bin/${1}" ] ; then
+	MAIN="${HERE}/bin/${1}" ; shift
+elif [ -n "${1}" ] && [ -x "${HERE}/usr/bin/${1}" ] ; then
+	MAIN="${HERE}/usr/bin/${1}" ; shift
+elif [ -x "${HERE}/bin/${BINARY_NAME}" ] ; then
+	MAIN="${HERE}/bin/${BINARY_NAME}"
+elif [ -x "${HERE}/usr/bin/${BINARY_NAME}" ] ; then
+	MAIN="${HERE}/usr/bin/${BINARY_NAME}"
 else
-	MAIN="$HERE/bin/wine"
+	MAIN="${HERE}/bin/wine"
 fi
 
 # Exec outside apps with inside environment (make the link name "ExternalExec")
-if [ "$BINARY_NAME" = "ExternalExec" ] && [ -n "$1" ] && [ -x "$1" ]; then
-	MAIN="$1" ; shift
+if [ "${BINARY_NAME}" = "ExternalExec" ] && [ -n "${1}" ] && [ -x "${1}" ]; then
+	MAIN="${1}" ; shift
 fi
 #===================================================================
 
-if [ -z "$APPLICATION" ] ; then
-	LD_PRELOAD="$V4LCLDLIBRARY $HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$@" | cat
+if [ -z "${APPLICATION}" ] ; then
+	LD_PRELOAD="${HERE}/bin/libhookexecv.so" "${WINELDLIBRARY}" "${MAIN}" "${@}" | cat
 else
-	LD_PRELOAD="$V4LCLDLIBRARY $HERE/bin/libhookexecv.so" "$WINELDLIBRARY" "$MAIN" "$APPLICATION" | cat
+	LD_PRELOAD="${HERE}/bin/libhookexecv.so" "${WINELDLIBRARY}" "${MAIN}" "${APPLICATION}" | cat
 fi
