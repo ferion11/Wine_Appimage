@@ -1,5 +1,5 @@
 #!/bin/bash
-P_URL="https://www.playonlinux.com/wine/binaries/phoenicis/staging-linux-x86/PlayOnLinux-wine-5.11-staging-linux-x86.tar.gz"
+P_URL="https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-5.0.2-upstream-linux-x86.tar.gz"
 P_NAME=$(echo $P_URL | cut -d/ -f4)
 P_MVERSION=$(echo $P_URL | cut -d/ -f7)
 P_FILENAME=$(echo $P_URL | cut -d/ -f8)

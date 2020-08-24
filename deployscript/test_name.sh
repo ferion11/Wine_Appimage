@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # If it's a Release Candidate, you will have to change P_VERSION to include the "-rc2" kind of string
-P_URL="https://www.playonlinux.com/wine/binaries/phoenicis/staging-linux-x86/PlayOnLinux-wine-5.2-staging-linux-x86.tar.gz"
+P_URL="https://www.playonlinux.com/wine/binaries/phoenicis/upstream-linux-x86/PlayOnLinux-wine-5.0.2-upstream-linux-x86.tar.gz"
 
 # wine
 P_NAME=$(echo $P_URL | cut -d/ -f4)
