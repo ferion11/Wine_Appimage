@@ -5,14 +5,17 @@
 >  Appimage for last Wine 32bits from PlayOnLinux. You can just download the Appimage, put in the directory you like and make symbolic links for it (for wine, wineserver...).
 
 ####  1- Download wine-VERSION.AppImage for your AppImage directory [HERE][WINE_release_continuous]
+
 ####  2- Make executable:
 ```
 $ chmod +x wine-VERSION.AppImage
 ```
+
 ####  3- Make the wine link in your bin directory:
 ```
 $ ln -s wine-VERSION.AppImage wine
 ```
+
 ####  4- Make the wineserver link (for winetricks) in your bin directory:
 ```
 $ ln -s wine-VERSION.AppImage wineserver
@@ -39,16 +42,19 @@ wine xyz.exe
 ```
 DRI_PRIME=1 wine xyz.exe
 ```
+
 ####  Optional 1- To test the OpenGL of your video card:
 ```
 $ wine glxinfo32
 $ wine glxgears32 -info
 $ wine shape32
 ```
+
 ####  Optional 2- You can use PRIME too:
 ```
 $ DRI_PRIME=1 wine glxgears32 -info
 ```
+
 ####  Optional 3- Configure and run vulkan (only intel and radeon are supported now):
 - Configure for intel:
 ```
